@@ -57,6 +57,7 @@ git push -u origin main
 
 - 页面 404：确认根目录有 `index.html`，且 Pages 的目录选的是 root 不是 `/docs`。
 - 中文文件名 404：确认 `.nojekyll` 在根目录（注意是空文件，不是空文件夹）。
+- 图示空白：先看是否断网。脚本按 npmmirror → unpkg → jsdelivr 顺序自动回退，国内网络下第一个源通常可用；三个都失败才降级为源码显示。
 - 样式全丢：确认 `index.html` 是完整单文件，没有被编辑器截断。
 - 改了内容没生效：Pages 有缓存，等两分钟或强制刷新（Ctrl+F5）。
 

@@ -32,17 +32,17 @@
  {
   "check": "start 末章渲染",
   "pass": true,
-  "extra": "2201 字符"
+  "extra": "2168 字符"
  },
  {
   "check": "modeling 首章渲染",
   "pass": true,
-  "extra": "2142 字符"
+  "extra": "2017 字符"
  },
  {
   "check": "modeling 末章渲染",
   "pass": true,
-  "extra": "2137 字符"
+  "extra": "1983 字符"
  },
  {
   "check": "exercises 首章渲染",
@@ -57,22 +57,22 @@
  {
   "check": "latex 首章渲染",
   "pass": true,
-  "extra": "2169 字符"
+  "extra": "2043 字符"
  },
  {
   "check": "latex 末章渲染",
   "pass": true,
-  "extra": "3541 字符"
+  "extra": "3403 字符"
  },
  {
   "check": "cases 首章渲染",
   "pass": true,
-  "extra": "1656 字符"
+  "extra": "1531 字符"
  },
  {
   "check": "cases 末章渲染",
   "pass": true,
-  "extra": "1659 字符"
+  "extra": "1534 字符"
  },
  {
   "check": "start 测验题数",

@@ -313,19 +313,31 @@ function attachMermaidHint(){document.querySelectorAll('.mermaid').forEach(el=>{
 function renderMermaid(){
   if(!document.querySelector('.mermaid')) return;
   if(window.__mmFailed){attachMermaidHint();return;}
-  const s=document.createElement('script');
-  s.src='https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
-  s.onload=()=>{ try{
+  const doRender=()=>{ try{
     mermaid.initialize({startOnLoad:false, theme: matchMedia('(prefers-color-scheme: dark)').matches?'dark':'default'});
     document.querySelectorAll('.mermaid').forEach(el=>{
-      const code=el.textContent;
+      if(el.dataset.rendered) return;
+      const code=el.dataset.src||el.textContent;
+      el.dataset.src=code;
       mermaid.render('mm'+Math.random().toString(36).slice(2), code)
-        .then(({svg})=>{ el.innerHTML=svg; })
+        .then(({svg})=>{ el.innerHTML=svg; el.dataset.rendered='1'; })
         .catch(()=>{ el.textContent=code; });
     });
   }catch(e){} };
-  s.onerror=()=>{window.__mmFailed=1;attachMermaidHint();};
-  document.head.appendChild(s);
+  if(window.mermaid){ doRender(); return; }
+  const srcs=['https://registry.npmmirror.com/mermaid/10.9.1/files/dist/mermaid.min.js',
+              'https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js',
+              'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js'];
+  let si=0;
+  const tryNext=()=>{
+    if(si>=srcs.length){ window.__mmFailed=1; attachMermaidHint(); return; }
+    const s=document.createElement('script');
+    s.src=srcs[si++];
+    s.onload=doRender;
+    s.onerror=tryNext;
+    document.head.appendChild(s);
+  };
+  tryNext();
 }
 
 /* ---------- 深色模式 ---------- */
