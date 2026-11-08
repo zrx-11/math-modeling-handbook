@@ -1,0 +1,35 @@
+{
+  "slug": "modeling",
+  "title": "数学建模算法与应用（第3版）精讲",
+  "subtitle": "按题型识别，而不是按章序死磕",
+  "book": {"title": "数学建模算法与应用（第3版）", "author": "司守奎、孙玺菁", "source": ["数学建模算法与应用第3版 (司守奎,孙玺菁).pdf"]},
+  "audience": "学完起步册的理工科本科生",
+  "goal": "能识别赛题类型并调用对应算法完成求解与检验",
+  "chapters": [
+    {"id": "ch01", "file": "chapters/ch01-linear-programming.md", "difficulty": 2},
+    {"id": "ch02", "file": "chapters/ch02-integer-programming.md", "difficulty": 2},
+    {"id": "ch03", "file": "chapters/ch03-nonlinear-programming.md", "difficulty": 3},
+    {"id": "ch04", "file": "chapters/ch04-graph-network.md", "difficulty": 2},
+    {"id": "ch05", "file": "chapters/ch05-interpolation-fitting.md", "difficulty": 2},
+    {"id": "ch06", "file": "chapters/ch06-differential-equations.md", "difficulty": 3},
+    {"id": "ch07", "file": "chapters/ch07-statistics.md", "difficulty": 3},
+    {"id": "ch08", "file": "chapters/ch08-difference-equations.md", "difficulty": 2},
+    {"id": "ch09", "file": "chapters/ch09-svm.md", "difficulty": 3},
+    {"id": "ch10", "file": "chapters/ch10-multivariate.md", "difficulty": 3},
+    {"id": "ch11", "file": "chapters/ch11-pls.md", "difficulty": 3},
+    {"id": "ch12", "file": "chapters/ch12-modern-optimization.md", "difficulty": 2},
+    {"id": "ch13", "file": "chapters/ch13-image-processing.md", "difficulty": 2},
+    {"id": "ch14", "file": "chapters/ch14-comprehensive-evaluation.md", "difficulty": 2},
+    {"id": "ch15", "file": "chapters/ch15-forecasting.md", "difficulty": 3},
+    {"id": "ch16", "file": "chapters/ch16-multiobjective.md", "difficulty": 3}
+  ],
+  "learningPath": [
+    {"step": "01", "title": "先学规划，占赛题一半", "chapterIds": ["ch01", "ch02", "ch03"], "checkpoint": "能手算 (2,6)=26 与影子价格 1，会用分枝定界"},
+    {"step": "02", "title": "图论：点和点的关系", "chapterIds": ["ch04"], "checkpoint": "手跑 Dijkstra 得 1→5 最短 6，Kruskal 得总权 6"},
+    {"step": "03", "title": "连续与离散的分析工具", "chapterIds": ["ch05", "ch06", "ch08"], "checkpoint": "手算三点插值 2.875 与差分平衡点 100"},
+    {"step": "04", "title": "统计：从样本猜总体", "chapterIds": ["ch07"], "checkpoint": "手算 t=1.414 并正确表述不显著"},
+    {"step": "05", "title": "分类与降维", "chapterIds": ["ch09", "ch10", "ch11"], "checkpoint": "说清聚类与判别、PCA 与因子分析的区别"},
+    {"step": "06", "title": "解空间太大时", "chapterIds": ["ch12", "ch13"], "checkpoint": "能设计 GA 五件套与退火温度表"},
+    {"step": "07", "title": "排序、预测与折中", "chapterIds": ["ch14", "ch15", "ch16"], "checkpoint": "手算加权排序并说明权重灵敏度"}
+  ]
+}

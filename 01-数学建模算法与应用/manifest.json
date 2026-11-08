@@ -1,0 +1,1704 @@
+{
+  "slug": "modeling",
+  "title": "数学建模算法与应用（第3版）精讲",
+  "subtitle": "按题型识别，而不是按章序死磕",
+  "book": {
+    "title": "数学建模算法与应用（第3版）",
+    "author": "司守奎、孙玺菁",
+    "source": [
+      "数学建模算法与应用第3版 (司守奎,孙玺菁).pdf"
+    ]
+  },
+  "audience": "学完起步册的理工科本科生",
+  "goal": "能识别赛题类型并调用对应算法完成求解与检验",
+  "learningPath": [
+    {
+      "step": "01",
+      "title": "先学规划，占赛题一半",
+      "chapterIds": [
+        "ch01",
+        "ch02",
+        "ch03"
+      ],
+      "checkpoint": "能手算 (2,6)=26 与影子价格 1，会用分枝定界"
+    },
+    {
+      "step": "02",
+      "title": "图论：点和点的关系",
+      "chapterIds": [
+        "ch04"
+      ],
+      "checkpoint": "手跑 Dijkstra 得 1→5 最短 6，Kruskal 得总权 6"
+    },
+    {
+      "step": "03",
+      "title": "连续与离散的分析工具",
+      "chapterIds": [
+        "ch05",
+        "ch06",
+        "ch08"
+      ],
+      "checkpoint": "手算三点插值 2.875 与差分平衡点 100"
+    },
+    {
+      "step": "04",
+      "title": "统计：从样本猜总体",
+      "chapterIds": [
+        "ch07"
+      ],
+      "checkpoint": "手算 t=1.414 并正确表述不显著"
+    },
+    {
+      "step": "05",
+      "title": "分类与降维",
+      "chapterIds": [
+        "ch09",
+        "ch10",
+        "ch11"
+      ],
+      "checkpoint": "说清聚类与判别、PCA 与因子分析的区别"
+    },
+    {
+      "step": "06",
+      "title": "解空间太大时",
+      "chapterIds": [
+        "ch12",
+        "ch13"
+      ],
+      "checkpoint": "能设计 GA 五件套与退火温度表"
+    },
+    {
+      "step": "07",
+      "title": "排序、预测与折中",
+      "chapterIds": [
+        "ch14",
+        "ch15",
+        "ch16"
+      ],
+      "checkpoint": "手算加权排序并说明权重灵敏度"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch01",
+      "title": "第 1 章：线性规划",
+      "file": "chapters/ch01-linear-programming.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch02",
+      "title": "第 2 章：整数规划",
+      "file": "chapters/ch02-integer-programming.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch03",
+      "title": "第 3 章：非线性规划",
+      "file": "chapters/ch03-nonlinear-programming.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch04",
+      "title": "第 4 章：图与网络模型及方法",
+      "file": "chapters/ch04-graph-network.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch05",
+      "title": "第 5 章：插值与拟合",
+      "file": "chapters/ch05-interpolation-fitting.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch06",
+      "title": "第 6 章：微分方程",
+      "file": "chapters/ch06-differential-equations.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch07",
+      "title": "第 7 章：数理统计",
+      "file": "chapters/ch07-statistics.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch08",
+      "title": "第 8 章：差分方程",
+      "file": "chapters/ch08-difference-equations.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch09",
+      "title": "第 9 章：支持向量机",
+      "file": "chapters/ch09-svm.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch10",
+      "title": "第 10 章：多元分析",
+      "file": "chapters/ch10-multivariate.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch11",
+      "title": "第 11 章：偏最小二乘回归分析",
+      "file": "chapters/ch11-pls.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch12",
+      "title": "第 12 章：现代优化算法",
+      "file": "chapters/ch12-modern-optimization.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch13",
+      "title": "第 13 章：数字图像处理",
+      "file": "chapters/ch13-image-processing.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch14",
+      "title": "第 14 章：综合评价与决策方法",
+      "file": "chapters/ch14-comprehensive-evaluation.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch15",
+      "title": "第 15 章：预测方法",
+      "file": "chapters/ch15-forecasting.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch16",
+      "title": "第 16 章：多目标规划和目标规划",
+      "file": "chapters/ch16-multiobjective.md",
+      "difficulty": 3
+    }
+  ],
+  "concepts": [
+    {
+      "id": "c01",
+      "title": "标准化与权重",
+      "file": "concepts/biao-zhun-hua.md",
+      "chapterIds": [
+        "ch14",
+        "ch10"
+      ]
+    },
+    {
+      "id": "c02",
+      "title": "间隔与支持向量",
+      "file": "concepts/jian-ge.md",
+      "chapterIds": [
+        "ch09"
+      ]
+    },
+    {
+      "id": "c03",
+      "title": "可行域与顶点",
+      "file": "concepts/ke-xing-yu.md",
+      "chapterIds": [
+        "ch01",
+        "ch02",
+        "ch16"
+      ]
+    },
+    {
+      "id": "c04",
+      "title": "Pareto 前沿",
+      "file": "concepts/pareto.md",
+      "chapterIds": [
+        "ch16",
+        "ch14"
+      ]
+    },
+    {
+      "id": "c05",
+      "title": "凸性",
+      "file": "concepts/tu-xing.md",
+      "chapterIds": [
+        "ch03",
+        "ch10",
+        "ch16"
+      ]
+    },
+    {
+      "id": "c06",
+      "title": "稳定性",
+      "file": "concepts/wen-ding-xing.md",
+      "chapterIds": [
+        "ch06",
+        "ch08"
+      ]
+    },
+    {
+      "id": "c07",
+      "title": "影子价格",
+      "file": "concepts/ying-zi-jia-ge.md",
+      "chapterIds": [
+        "ch01",
+        "ch14"
+      ]
+    },
+    {
+      "id": "c08",
+      "title": "最小二乘",
+      "file": "concepts/zui-xiao-er-cheng.md",
+      "chapterIds": [
+        "ch05",
+        "ch07",
+        "ch11"
+      ]
+    }
+  ],
+  "patterns": {
+    "file": "patterns.md"
+  },
+  "cheatsheet": {
+    "file": "cheatsheet.md"
+  },
+  "glossary": [
+    {
+      "term": "线性规划",
+      "def": "目标与约束都是一次式的优化问题，可行域为凸多边形",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "标准型",
+      "def": "目标最大化、约束全为 ≤、变量非负的统一写法",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "可行域",
+      "def": "所有满足约束的点组成的集合",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "顶点",
+      "def": "两条约束线的交点，线性规划最优解的候选位置",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "松弛变量",
+      "def": "把 ≤ 约束变成等式的非负辅助变量",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "影子价格",
+      "def": "约束右端项加一单位带来的目标增量，等于对偶变量",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "整数规划",
+      "def": "要求部分或全部变量取整数的规划问题",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "0-1 变量",
+      "def": "只取 0 或 1 的变量，用来表示选或不选",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "分枝定界",
+      "def": "用线性松弛解作上界、逐变量分枝搜索整数解的方法",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "指派问题",
+      "def": "n 人做 n 事、每人一事、每事一人的 0-1 规划",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "非线性规划",
+      "def": "目标或约束含非线性项的优化问题",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "凸函数",
+      "def": "图像呈碗形、任意两点连线在图像上方的函数",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "凸规划",
+      "def": "目标凸且可行域凸的规划，局部最优即全局最优",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "KKT 条件",
+      "def": "带约束极值点必须满足的梯度平衡与互补松弛条件",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "互补松弛",
+      "def": "约束未起作用时对应乘子为零的条件，λᵢgᵢ = 0",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "二次规划",
+      "def": "二次目标加线性约束的优化问题",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "罚函数法",
+      "def": "把约束违反量加进目标函数、用大系数逼迫可行的办法",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "邻接矩阵",
+      "def": "用矩阵元素表示两点之间有无边或权值的存图方式",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "最短路",
+      "def": "两点之间总权值最小的路径",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "最小生成树",
+      "def": "连通全部点且总权值最小的无环子图",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "最大流",
+      "def": "源点到汇点在不超容量的前提下能输送的最大流量",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "关键路径",
+      "def": "项目中总时差为零、决定总工期的工序链",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "TSP",
+      "def": "遍历所有点各一次并回到起点的最短回路问题",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "插值",
+      "def": "构造必须经过全部已知点的曲线",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "拟合",
+      "def": "不要求穿过点、只要求残差平方和最小的近似",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "Runge 现象",
+      "def": "等距节点上高次插值在区间边缘剧烈振荡",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "三次样条",
+      "def": "分段三次多项式且在节点处一二阶导数连续",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "最小二乘",
+      "def": "使残差平方和最小来估计参数的准则",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "微分方程",
+      "def": "含未知函数及其导数的方程，描述变化机制",
+      "chapterId": "ch06"
+    },
+    {
+      "term": "初值条件",
+      "def": "给定某时刻状态、决定落在哪条解曲线上的条件",
+      "chapterId": "ch06"
+    },
+    {
+      "term": "Euler 法",
+      "def": "用当前斜率直线外推的一阶数值解法",
+      "chapterId": "ch06"
+    },
+    {
+      "term": "RK4",
+      "def": "每步四次求斜率再加权的四阶数值解法",
+      "chapterId": "ch06"
+    },
+    {
+      "term": "SIR 模型",
+      "def": "把人群分为易感、感染、康复三类的传染病模型",
+      "chapterId": "ch06"
+    },
+    {
+      "term": "基本再生数",
+      "def": "R₀ = β/γ，一个感染者平均传染的人数",
+      "chapterId": "ch06"
+    },
+    {
+      "term": "点估计",
+      "def": "用样本统计量直接猜总体参数",
+      "chapterId": "ch07"
+    },
+    {
+      "term": "区间估计",
+      "def": "给出覆盖真值的概率范围的估计方法",
+      "chapterId": "ch07"
+    },
+    {
+      "term": "p 值",
+      "def": "H₀ 为真时出现当前或更极端结果的概率",
+      "chapterId": "ch07"
+    },
+    {
+      "term": "Bootstrap",
+      "def": "有放回重抽样模拟抽样分布的方法",
+      "chapterId": "ch07"
+    },
+    {
+      "term": "方差分析",
+      "def": "把总变异拆成组间与组内、用 F 检验比较均值的办法",
+      "chapterId": "ch07"
+    },
+    {
+      "term": "差分方程",
+      "def": "描述相邻两期数值关系的方程",
+      "chapterId": "ch08"
+    },
+    {
+      "term": "平衡点",
+      "def": "使下一期等于本期、系统不再变化的取值",
+      "chapterId": "ch08"
+    },
+    {
+      "term": "稳定性",
+      "def": "初值小扰动会随时间消失的性质",
+      "chapterId": "ch08"
+    },
+    {
+      "term": "Leslie 矩阵",
+      "def": "由繁殖率首行与存活率次对角线构成的种群投影矩阵",
+      "chapterId": "ch08"
+    },
+    {
+      "term": "支持向量机",
+      "def": "最大化分类间隔的二分类模型",
+      "chapterId": "ch09"
+    },
+    {
+      "term": "间隔",
+      "def": "两类支持向量之间的距离，等于 2/‖w‖（规范化情形）",
+      "chapterId": "ch09"
+    },
+    {
+      "term": "支持向量",
+      "def": "离分类超平面最近、决定边界的样本点",
+      "chapterId": "ch09"
+    },
+    {
+      "term": "软间隔",
+      "def": "允许个别样本越界的 SVM 形式，由 C 控制容忍度",
+      "chapterId": "ch09"
+    },
+    {
+      "term": "核函数",
+      "def": "隐式把样本映射到高维、只需算内积的函数",
+      "chapterId": "ch09"
+    },
+    {
+      "term": "聚类",
+      "def": "无标签、按相似度把样本分组的分析",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "K-means",
+      "def": "迭代更新 k 个中心、按最近中心分组的聚类算法",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "主成分分析",
+      "def": "把变量线性组合成少数互不相关新变量的降维方法",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "贡献率",
+      "def": "某主成分特征值占特征值总和的比例",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "判别分析",
+      "def": "有标签、学习分类规则并给新样本归类的分析",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "因子分析",
+      "def": "假设少数潜在因子生成观测变量的统计模型",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "典型相关分析",
+      "def": "找两组变量各自线性组合使相关系数最大",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "多维标度",
+      "def": "只凭距离矩阵反推低维坐标的方法",
+      "chapterId": "ch10"
+    },
+    {
+      "term": "多重共线性",
+      "def": "自变量之间近似线性相关，导致系数估计不稳定",
+      "chapterId": "ch11"
+    },
+    {
+      "term": "方差膨胀因子",
+      "def": "衡量某变量被其余变量解释程度的指标，VIF > 10 视为严重共线",
+      "chapterId": "ch11"
+    },
+    {
+      "term": "偏最小二乘",
+      "def": "同时考虑 X 变异与 X–Y 相关来提取成分的回归方法",
+      "chapterId": "ch11"
+    },
+    {
+      "term": "VIP 值",
+      "def": "变量重要性投影，大于 1 通常视为重要变量",
+      "chapterId": "ch11"
+    },
+    {
+      "term": "模拟退火",
+      "def": "按 exp(−Δ/T) 概率接受差解的随机搜索算法",
+      "chapterId": "ch12"
+    },
+    {
+      "term": "遗传算法",
+      "def": "用编码、适应度、选择、交叉、变异模拟进化的搜索算法",
+      "chapterId": "ch12"
+    },
+    {
+      "term": "精英保留",
+      "def": "每代把最优个体直接复制到下一代，防止退化",
+      "chapterId": "ch12"
+    },
+    {
+      "term": "灰度化",
+      "def": "把三通道彩色图按亮度权重合成单通道图",
+      "chapterId": "ch13"
+    },
+    {
+      "term": "空间滤波",
+      "def": "用小窗口在图上滑动做加权和的处理方式",
+      "chapterId": "ch13"
+    },
+    {
+      "term": "中值滤波",
+      "def": "取窗口内中位数作为中心像素值的非线性滤波",
+      "chapterId": "ch13"
+    },
+    {
+      "term": "直方图均衡",
+      "def": "按累计分布重排灰度、使直方图平坦的对比度增强",
+      "chapterId": "ch13"
+    },
+    {
+      "term": "LSB 水印",
+      "def": "把信息写入像素最低位的隐蔽水印方法",
+      "chapterId": "ch13"
+    },
+    {
+      "term": "综合评价",
+      "def": "多指标标准化加权后排序的方法体系",
+      "chapterId": "ch14"
+    },
+    {
+      "term": "极差标准化",
+      "def": "用 (x−min)/(max−min) 把指标压到 0–1 区间",
+      "chapterId": "ch14"
+    },
+    {
+      "term": "熵权法",
+      "def": "按指标区分度分配权重的客观赋权方法",
+      "chapterId": "ch14"
+    },
+    {
+      "term": "理想解法",
+      "def": "按到正负理想解的距离排序的 TOPSIS 方法",
+      "chapterId": "ch14"
+    },
+    {
+      "term": "数据包络分析",
+      "def": "用投入产出比评价决策单元效率的方法",
+      "chapterId": "ch14"
+    },
+    {
+      "term": "秩和比",
+      "def": "用秩次合成评价结果、抗异常值的方法",
+      "chapterId": "ch14"
+    },
+    {
+      "term": "PageRank",
+      "def": "按链接关系迭代给节点打分的排序算法",
+      "chapterId": "ch14"
+    },
+    {
+      "term": "灰色预测",
+      "def": "用累加生成近似指数趋势、适合小样本的预测方法",
+      "chapterId": "ch15"
+    },
+    {
+      "term": "级比检验",
+      "def": "GM(1,1) 建模前检查序列是否适合的比值判据",
+      "chapterId": "ch15"
+    },
+    {
+      "term": "马尔可夫链",
+      "def": "下一状态只依赖当前状态、按转移概率演化的过程",
+      "chapterId": "ch15"
+    },
+    {
+      "term": "ARIMA",
+      "def": "自回归差分移动平均模型",
+      "chapterId": "ch15"
+    },
+    {
+      "term": "样本外检验",
+      "def": "留出末段数据不建模、用来评估预测能力",
+      "chapterId": "ch15"
+    },
+    {
+      "term": "MAPE",
+      "def": "平均绝对百分比误差，衡量相对预测偏差",
+      "chapterId": "ch15"
+    },
+    {
+      "term": "多目标规划",
+      "def": "同时优化多个可能冲突目标的规划问题",
+      "chapterId": "ch16"
+    },
+    {
+      "term": "Pareto 有效解",
+      "def": "不存在全面更优解的非劣解",
+      "chapterId": "ch16"
+    },
+    {
+      "term": "加权和法",
+      "def": "把多目标按权重合成单一目标求解的方法",
+      "chapterId": "ch16"
+    },
+    {
+      "term": "ε 约束法",
+      "def": "把次要目标改成约束、扫描阈值求前沿的方法",
+      "chapterId": "ch16"
+    },
+    {
+      "term": "目标规划",
+      "def": "把目标写成约束、最小化偏差变量的方法",
+      "chapterId": "ch16"
+    },
+    {
+      "term": "偏差变量",
+      "def": "d⁺ 表示超出目标、d⁻ 表示不足目标的辅助变量",
+      "chapterId": "ch16"
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "q0101",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "线性规划的可行域一定是？",
+      "options": [
+        "凸多边形或凸多面体",
+        "圆形",
+        "任意形状",
+        "一条曲线"
+      ],
+      "answer": 0,
+      "explain": "线性不等式组的交集是凸集，二维时表现为凸多边形，这也是顶点枚举有效的原因。"
+    },
+    {
+      "id": "q0102",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "某约束的影子价格为 0，说明？",
+      "options": [
+        "该资源完全用尽",
+        "该资源还有剩余，再增加它不能提高目标值",
+        "模型无解",
+        "该约束写错了"
+      ],
+      "answer": 1,
+      "explain": "影子价格为零意味着该约束不是紧约束，资源尚有闲置，追加投入不改变最优值。"
+    },
+    {
+      "id": "q0103",
+      "chapterId": "ch01",
+      "type": "blank",
+      "question": "把 max z 转成 scipy 能接受的形式，需要把目标系数全部________。",
+      "options": [],
+      "answer": "取负",
+      "explain": "`linprog` 只做最小化，最大化问题等价于最小化 −z，最后把结果取负还原。"
+    },
+    {
+      "id": "q0201",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "线性规划松弛解为 (2.67, 0)，下列做法正确的是？",
+      "options": [
+        "直接四舍五入得 (3, 0)",
+        "以松弛解为上界做分枝定界",
+        "认为问题无解",
+        "把约束改成等式"
+      ],
+      "answer": 1,
+      "explain": "松弛解给出上界，分枝定界在此之上搜索整数解；直接取整可能违反约束。"
+    },
+    {
+      "id": "q0202",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "「A、B 两个项目最多上一个」应写成？",
+      "options": [
+        "y_A + y_B ≤ 1",
+        "y_A + y_B ≥ 1",
+        "y_A − y_B ≤ 1",
+        "y_A × y_B ≤ 1"
+      ],
+      "answer": 0,
+      "explain": "两个 0-1 变量之和不超过 1，恰好表达「至多选一个」；乘积不是线性式，不能出现在线性约束里。"
+    },
+    {
+      "id": "q0203",
+      "chapterId": "ch02",
+      "type": "blank",
+      "question": "指派问题的约束特点是每行之和为 1、每列之和为________。",
+      "options": [],
+      "answer": "1",
+      "explain": "一个人只做一件事、一件事只由一个人做，两个方向都恰好为 1，这才构成合法指派。"
+    },
+    {
+      "id": "q0301",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "判断多元目标函数是否凸，主要看？",
+      "options": [
+        "一阶导数是否为零",
+        "海森矩阵是否半正定",
+        "变量个数",
+        "约束个数"
+      ],
+      "answer": 1,
+      "explain": "海森矩阵半正定等价于函数凸，这是一元二阶导数判据的推广。"
+    },
+    {
+      "id": "q0302",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "KKT 条件中「互补松弛」的含义是？",
+      "options": [
+        "所有约束都必须取等号",
+        "约束未起作用时对应乘子为零",
+        "乘子必须为负",
+        "目标函数必须为零"
+      ],
+      "answer": 1,
+      "explain": "λᵢgᵢ = 0 表示约束与乘子至少一个为零，未起作用的约束不产生「价格」。"
+    },
+    {
+      "id": "q0303",
+      "chapterId": "ch03",
+      "type": "blank",
+      "question": "把 (1, 2) 投影到直线 x₁ + x₂ = 2 上，得到的点是________。",
+      "options": [],
+      "answer": "(0.5, 1.5)",
+      "explain": "沿法向 (1,1) 移动 (3−2)/2 = 0.5，坐标各减 0.5。"
+    },
+    {
+      "id": "q0401",
+      "chapterId": "ch04",
+      "type": "single",
+      "question": "n 个点的最小生成树有几条边？",
+      "options": [
+        "n",
+        "n−1",
+        "n+1",
+        "不确定"
+      ],
+      "answer": 1,
+      "explain": "树的性质：n 个顶点、n−1 条边、无环且连通。"
+    },
+    {
+      "id": "q0402",
+      "chapterId": "ch04",
+      "type": "single",
+      "question": "Dijkstra 算法不适用的情形是？",
+      "options": [
+        "边权为正",
+        "存在负权边",
+        "图是稠密图",
+        "图是有向图"
+      ],
+      "answer": 1,
+      "explain": "负权会破坏「已确定点的距离不会再变小」这一前提，需要改用 Bellman-Ford。"
+    },
+    {
+      "id": "q0403",
+      "chapterId": "ch04",
+      "type": "blank",
+      "question": "关键路径上任何一道工序延误，整个工期都会________。",
+      "options": [],
+      "answer": "延误",
+      "explain": "关键路径的总时差为零，路径上工序没有机动时间，任一延误直接传导到总工期。"
+    },
+    {
+      "id": "q0501",
+      "chapterId": "ch05",
+      "type": "single",
+      "question": "插值与拟合最根本的区别是？",
+      "options": [
+        "插值用多项式，拟合不用",
+        "插值必须经过所有数据点，拟合不要求",
+        "插值只能用于一维",
+        "拟合需要更多数据"
+      ],
+      "answer": 1,
+      "explain": "是否穿过数据点，决定了误差的处理方式，也是一切方法选择的起点。"
+    },
+    {
+      "id": "q0502",
+      "chapterId": "ch05",
+      "type": "single",
+      "question": "Runge 现象说明？",
+      "options": [
+        "节点越多，插值一定越准",
+        "等距节点上高次多项式插值在边缘会剧烈振荡",
+        "三次样条不收敛",
+        "拟合不能用于函数逼近"
+      ],
+      "answer": 1,
+      "explain": "次数升高时边缘误差可能发散，这是等距节点的固有缺陷。"
+    },
+    {
+      "id": "q0503",
+      "chapterId": "ch05",
+      "type": "blank",
+      "question": "数据 (1,2)、(2,3)、(3,5) 的最小二乘直线斜率为________。",
+      "options": [],
+      "answer": "1.5",
+      "explain": "分子 3、分母 2，斜率 1.5，截距约 0.333。"
+    },
+    {
+      "id": "q0601",
+      "chapterId": "ch06",
+      "type": "single",
+      "question": "R₀ = β/γ 大于 1 意味着？",
+      "options": [
+        "疫情必然消失",
+        "一个感染者平均传染超过一个人，疫情可能扩散",
+        "病毒致死率高",
+        "康复速度过快"
+      ],
+      "answer": 1,
+      "explain": "R₀ 是基本再生数，大于 1 时感染链能自我维持。"
+    },
+    {
+      "id": "q0602",
+      "chapterId": "ch06",
+      "type": "single",
+      "question": "Euler 法的主要缺点是？",
+      "options": [
+        "无法处理线性方程",
+        "只有一阶精度，步长大时误差显著",
+        "需要解析解",
+        "不能处理初值问题"
+      ],
+      "answer": 1,
+      "explain": "用直线代替曲线，步长越大偏差越大；提高精度要用 RK4 或减小步长。"
+    },
+    {
+      "id": "q0603",
+      "chapterId": "ch06",
+      "type": "blank",
+      "question": "用 Euler 法解 dy/dt = y、y(0)=1、h=0.5，两步后 y₂ = ________。",
+      "options": [],
+      "answer": "2.25",
+      "explain": "y₁ = 1.5，y₂ = 1.5 + 0.5×1.5 = 2.25，与精确值 e 有约 17% 的相对误差。"
+    },
+    {
+      "id": "q0701",
+      "chapterId": "ch07",
+      "type": "single",
+      "question": "p 值的正确解读是？",
+      "options": [
+        "H₀ 为真的概率",
+        "H₀ 为真时出现当前或更极端结果的概率",
+        "结论正确的概率",
+        "效应量大小"
+      ],
+      "answer": 1,
+      "explain": "p 值是条件概率，条件是 H₀ 成立，它不告诉你 H₀ 本身真不真。"
+    },
+    {
+      "id": "q0702",
+      "chapterId": "ch07",
+      "type": "single",
+      "question": "Bootstrap 的核心操作是？",
+      "options": [
+        "增加样本量",
+        "有放回重抽样并重复计算统计量",
+        "对数据做正态化变换",
+        "删除异常值"
+      ],
+      "answer": 1,
+      "explain": "通过重抽样模拟抽样分布，避免对分布形式做强假设。"
+    },
+    {
+      "id": "q0703",
+      "chapterId": "ch07",
+      "type": "blank",
+      "question": "样本 10、12、11、13、9 的标准差约为________。",
+      "options": [],
+      "answer": "1.58",
+      "explain": "偏差平方和 10，除以自由度 4 得 2.5，开方约 1.581。"
+    },
+    {
+      "id": "q0801",
+      "chapterId": "ch08",
+      "type": "single",
+      "question": "xₙ₊₁ = 0.8xₙ + 20 的平衡点是？",
+      "options": [
+        "20",
+        "80",
+        "100",
+        "120"
+      ],
+      "answer": 2,
+      "explain": "令 x = 0.8x + 20，得 0.2x = 20，x = 100。"
+    },
+    {
+      "id": "q0802",
+      "chapterId": "ch08",
+      "type": "single",
+      "question": "一阶系统稳定的条件是？",
+      "options": [
+        "|a| < 1",
+        "a > 0",
+        "b = 0",
+        "|a| > 1"
+      ],
+      "answer": 0,
+      "explain": "每期误差按 a 倍缩放，|a| < 1 才会衰减到零。"
+    },
+    {
+      "id": "q0803",
+      "chapterId": "ch08",
+      "type": "blank",
+      "question": "Leslie 矩阵的主特征值大于 1 表示种群长期________。",
+      "options": [],
+      "answer": "增长",
+      "explain": "主特征值是每期的渐近增长倍数，大于 1 意味着规模逐年扩大。"
+    },
+    {
+      "id": "q0901",
+      "chapterId": "ch09",
+      "type": "single",
+      "question": "SVM 中决定分类边界的点是？",
+      "options": [
+        "所有样本点",
+        "支持向量",
+        "离边界最远的点",
+        "标签为 0 的点"
+      ],
+      "answer": 1,
+      "explain": "只有支持向量进入约束的等号，其他点删掉不影响 w 与 b。"
+    },
+    {
+      "id": "q0902",
+      "chapterId": "ch09",
+      "type": "single",
+      "question": "惩罚参数 C 增大，通常会导致？",
+      "options": [
+        "间隔变宽，偏差增大",
+        "间隔变窄，更容易过拟合",
+        "模型变成线性回归",
+        "支持向量消失"
+      ],
+      "answer": 1,
+      "explain": "C 大意味着不容忍越界，边界被拉紧贴住样本，方差上升。"
+    },
+    {
+      "id": "q0903",
+      "chapterId": "ch09",
+      "type": "blank",
+      "question": "核函数的作用是隐式地把数据映射到________空间。",
+      "options": [],
+      "answer": "高维",
+      "explain": "在高维空间更容易线性可分，核技巧避免显式计算高维坐标。"
+    },
+    {
+      "id": "q1001",
+      "chapterId": "ch10",
+      "type": "single",
+      "question": "K-means 必须预先确定的是？",
+      "options": [
+        "距离度量",
+        "聚类数 k",
+        "特征个数",
+        "样本标签"
+      ],
+      "answer": 1,
+      "explain": "k 是超参数，通常用肘部法或轮廓系数辅助选择。"
+    },
+    {
+      "id": "q1002",
+      "chapterId": "ch10",
+      "type": "single",
+      "question": "PCA 中「贡献率」指的是？",
+      "options": [
+        "某个样本的解释比例",
+        "某主成分特征值占全部特征值之和的比例",
+        "分类准确率",
+        "变量个数占比"
+      ],
+      "answer": 1,
+      "explain": "特征值代表该方向上的方差，占比即该主成分保留的信息比例。"
+    },
+    {
+      "id": "q1003",
+      "chapterId": "ch10",
+      "type": "blank",
+      "question": "有标签、要给新样本归类的分析叫________分析。",
+      "options": [],
+      "answer": "判别",
+      "explain": "判别分析先学类别再分类；聚类没有标签。"
+    },
+    {
+      "id": "q1101",
+      "chapterId": "ch11",
+      "type": "single",
+      "question": "多重共线性的典型后果是？",
+      "options": [
+        "模型无法求解",
+        "回归系数方差变大、符号可能反常",
+        "R² 一定下降",
+        "样本量自动减少"
+      ],
+      "answer": 1,
+      "explain": "共线让设计矩阵接近奇异，系数估计对数据扰动极度敏感。"
+    },
+    {
+      "id": "q1102",
+      "chapterId": "ch11",
+      "type": "single",
+      "question": "PLS 与 PCA 的核心区别是？",
+      "options": [
+        "PLS 不做降维",
+        "PLS 提取成分时同时考虑与 Y 的相关",
+        "PCA 只能用于分类",
+        "PLS 不需要数据"
+      ],
+      "answer": 1,
+      "explain": "PCA 只看 X 的方差，PLS 看 X 与 Y 的协方差。"
+    },
+    {
+      "id": "q1103",
+      "chapterId": "ch11",
+      "type": "blank",
+      "question": "判断变量重要性常用指标是________值，通常大于 1 视为重要。",
+      "options": [],
+      "answer": "VIP",
+      "explain": "VIP 综合了各成分对 Y 的解释力与变量在成分上的载荷。"
+    },
+    {
+      "id": "q1201",
+      "chapterId": "ch12",
+      "type": "single",
+      "question": "模拟退火中温度 T 的主要作用是？",
+      "options": [
+        "控制迭代次数",
+        "控制接受较差解的概率",
+        "决定编码长度",
+        "计算适应度"
+      ],
+      "answer": 1,
+      "explain": "P = exp(−Δ/T)，T 越大越容易接受差解，用于跳出局部最优。"
+    },
+    {
+      "id": "q1202",
+      "chapterId": "ch12",
+      "type": "single",
+      "question": "TSP 使用遗传算法时，普通交叉会导致？",
+      "options": [
+        "收敛过快",
+        "路径中出现重复或缺失城市",
+        "适应度无法计算",
+        "种群规模爆炸"
+      ],
+      "answer": 1,
+      "explain": "普通单点交叉会重复片段，必须用顺序交叉等保序算子。"
+    },
+    {
+      "id": "q1203",
+      "chapterId": "ch12",
+      "type": "blank",
+      "question": "启发式算法论文必须报告多次独立运行的________，而不只是最好值。",
+      "options": [],
+      "answer": "分布（平均值与标准差）",
+      "explain": "单次结果无法区分「算法稳定」与「运气好」。"
+    },
+    {
+      "id": "q1301",
+      "chapterId": "ch13",
+      "type": "single",
+      "question": "灰度化时绿色通道权重最大的原因是？",
+      "options": [
+        "绿色像素最多",
+        "人眼对绿光最敏感",
+        "绿色通道噪声最小",
+        "计算方便"
+      ],
+      "answer": 1,
+      "explain": "加权系数按人眼亮度感知设定，绿光权重 0.587 最高。"
+    },
+    {
+      "id": "q1302",
+      "chapterId": "ch13",
+      "type": "single",
+      "question": "椒盐噪声最适合用哪种滤波？",
+      "options": [
+        "均值滤波",
+        "中值滤波",
+        "高通滤波",
+        "直方图均衡"
+      ],
+      "answer": 1,
+      "explain": "中值滤波能剔除极端值同时保住边缘，均值会把噪声摊到整片区域。"
+    },
+    {
+      "id": "q1303",
+      "chapterId": "ch13",
+      "type": "blank",
+      "question": "3×3 均值滤波窗口中，每个位置的权重是________。",
+      "options": [],
+      "answer": "1/9",
+      "explain": "九个像素等权平均，总和为 1，保证整体亮度不漂移。"
+    },
+    {
+      "id": "q1401",
+      "chapterId": "ch14",
+      "type": "single",
+      "question": "成本型指标标准化时应该？",
+      "options": [
+        "直接除以最大值",
+        "用 (max − x)/(max − min)",
+        "取对数",
+        "平方后归一"
+      ],
+      "answer": 1,
+      "explain": "成本型越小越好，极差法要反向，使标准化后仍是越大越好。"
+    },
+    {
+      "id": "q1402",
+      "chapterId": "ch14",
+      "type": "single",
+      "question": "熵权法的权重反映的是？",
+      "options": [
+        "指标的业务重要性",
+        "指标在方案间的区分度",
+        "指标间的相关性",
+        "样本量大小"
+      ],
+      "answer": 1,
+      "explain": "熵小说明分布不均、区分度大，权重高；与重要性无必然关系。"
+    },
+    {
+      "id": "q1403",
+      "chapterId": "ch14",
+      "type": "blank",
+      "question": "TOPSIS 通过计算方案到正理想解与负理想解的________来排序。",
+      "options": [],
+      "answer": "距离",
+      "explain": "离正理想越近、离负理想越远，综合得分越高。"
+    },
+    {
+      "id": "q1501",
+      "chapterId": "ch15",
+      "type": "single",
+      "question": "GM(1,1) 适合的数据特征是？",
+      "options": [
+        "大样本、强季节性",
+        "小样本、近似指数趋势",
+        "状态离散、转移稳定",
+        "多变量非线性"
+      ],
+      "answer": 1,
+      "explain": "GM 通过一次累加把序列变成近似指数，适合数据点少的单调趋势。"
+    },
+    {
+      "id": "q1502",
+      "chapterId": "ch15",
+      "type": "single",
+      "question": "ARIMA 中的 d 表示？",
+      "options": [
+        "差分次数",
+        "自回归阶数",
+        "移动平均阶数",
+        "样本量"
+      ],
+      "answer": 0,
+      "explain": "d 是把非平稳序列差分成平稳序列所需的次数。"
+    },
+    {
+      "id": "q1503",
+      "chapterId": "ch15",
+      "type": "blank",
+      "question": "评估预测精度必须做________检验，而不是只看样本内拟合。",
+      "options": [],
+      "answer": "样本外",
+      "explain": "样本内拟合优度高不代表泛化能力好，留出末段数据做真实验证才有意义。"
+    },
+    {
+      "id": "q1601",
+      "chapterId": "ch16",
+      "type": "single",
+      "question": "Pareto 有效解的含义是？",
+      "options": [
+        "所有目标都最大",
+        "不存在全面更优的解",
+        "加权和最大的解",
+        "约束最少的解"
+      ],
+      "answer": 1,
+      "explain": "有效解指不被任何其他解全面超越，可能有很多个。"
+    },
+    {
+      "id": "q1602",
+      "chapterId": "ch16",
+      "type": "single",
+      "question": "加权和法的主要局限是？",
+      "options": [
+        "不能处理两个以上目标",
+        "非凸前沿上会漏掉中间解",
+        "必须用整数规划",
+        "权重必须相等"
+      ],
+      "answer": 1,
+      "explain": "加权和只能取到支撑点，非凸部分取不到，需改用 ε 约束法。"
+    },
+    {
+      "id": "q1603",
+      "chapterId": "ch16",
+      "type": "blank",
+      "question": "目标规划中 d⁺ 表示实际值相对目标值的________量。",
+      "options": [],
+      "answer": "超出",
+      "explain": "d⁺ 是正偏差（超出），d⁻ 是负偏差（不足），两者不能同时非零。"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "f01",
+      "chapterId": "ch01",
+      "front": "线性规划的最优解一定在哪里？",
+      "back": "可行域的顶点（或边界），只要最优解存在",
+      "tags": [
+        "线性规划",
+        "几何"
+      ]
+    },
+    {
+      "id": "f02",
+      "chapterId": "ch01",
+      "front": "影子价格的含义？",
+      "back": "约束右端项每增加一个单位，目标函数能增加的量，等于对偶变量",
+      "tags": [
+        "线性规划",
+        "对偶"
+      ]
+    },
+    {
+      "id": "f03",
+      "chapterId": "ch01",
+      "front": "影子价格为 0 说明什么？",
+      "back": "该约束未起作用，资源有闲置，追加投入不改变最优值",
+      "tags": [
+        "线性规划",
+        "排错"
+      ]
+    },
+    {
+      "id": "f04",
+      "chapterId": "ch02",
+      "front": "为什么整数规划不能解完取整？",
+      "back": "取整可能违反约束，也可能错过更优的格点，例：max 3x₁+4x₂, 3x₁+5x₂≤8 真正最优是 (1,1) 得 7",
+      "tags": [
+        "整数规划",
+        "常见错误"
+      ]
+    },
+    {
+      "id": "f05",
+      "chapterId": "ch02",
+      "front": "0-1 变量怎么表达「最多选一个」？",
+      "back": "y_A + y_B ≤ 1",
+      "tags": [
+        "整数规划",
+        "建模技巧"
+      ]
+    },
+    {
+      "id": "f06",
+      "chapterId": "ch02",
+      "front": "分枝定界的剪枝依据？",
+      "back": "节点的线性松弛值已不如现有整数解，该分支不可能更优",
+      "tags": [
+        "整数规划",
+        "算法"
+      ]
+    },
+    {
+      "id": "f07",
+      "chapterId": "ch03",
+      "front": "凸规划的好处？",
+      "back": "局部最优即全局最优，梯度类算法不会停在半山腰",
+      "tags": [
+        "非线性规划"
+      ]
+    },
+    {
+      "id": "f08",
+      "chapterId": "ch03",
+      "front": "KKT 互补松弛的含义？",
+      "back": "约束未起作用时乘子为零，起作用时乘子可正，λᵢgᵢ = 0",
+      "tags": [
+        "非线性规划",
+        "理论"
+      ]
+    },
+    {
+      "id": "f09",
+      "chapterId": "ch04",
+      "front": "Dijkstra 的前提条件？",
+      "back": "边权非负；有负权要改 Bellman-Ford 或 Floyd",
+      "tags": [
+        "图论",
+        "算法"
+      ]
+    },
+    {
+      "id": "f10",
+      "chapterId": "ch04",
+      "front": "最短路与最小生成树的区别？",
+      "back": "前者求一对点之间路径最短，后者求连通全图的边集总权最小",
+      "tags": [
+        "图论"
+      ]
+    },
+    {
+      "id": "f11",
+      "chapterId": "ch04",
+      "front": "n 个点的生成树有几条边？",
+      "back": "n−1 条，且无环、连通",
+      "tags": [
+        "图论",
+        "基础"
+      ]
+    },
+    {
+      "id": "f12",
+      "chapterId": "ch05",
+      "front": "插值与拟合的根本区别？",
+      "back": "插值必须穿过每个数据点，拟合只要求整体误差最小",
+      "tags": [
+        "插值拟合"
+      ]
+    },
+    {
+      "id": "f13",
+      "chapterId": "ch05",
+      "front": "Runge 现象说明什么？",
+      "back": "等距节点上提高多项式次数，边缘振荡加剧，误差反而变大",
+      "tags": [
+        "插值拟合",
+        "常见错误"
+      ]
+    },
+    {
+      "id": "f14",
+      "chapterId": "ch05",
+      "front": "三次样条比高次多项式好在哪？",
+      "back": "分段低次、节点处一二阶导数连续，稳定且光滑",
+      "tags": [
+        "插值拟合"
+      ]
+    },
+    {
+      "id": "f15",
+      "chapterId": "ch06",
+      "front": "微分方程建模的第一步？",
+      "back": "找出「变化率等于什么」，即把机制写成 dX/dt = f",
+      "tags": [
+        "微分方程"
+      ]
+    },
+    {
+      "id": "f16",
+      "chapterId": "ch06",
+      "front": "Euler 法与 RK4 的精度阶数？",
+      "back": "Euler 一阶，RK4 四阶；步长减半可检验收敛性",
+      "tags": [
+        "微分方程",
+        "数值解"
+      ]
+    },
+    {
+      "id": "f17",
+      "chapterId": "ch06",
+      "front": "R₀ 的定义与含义？",
+      "back": "R₀ = β/γ，一个感染者平均传染的人数，大于 1 疫情扩散",
+      "tags": [
+        "微分方程",
+        "传染病"
+      ]
+    },
+    {
+      "id": "f18",
+      "chapterId": "ch07",
+      "front": "p 值的准确含义？",
+      "back": "H₀ 为真时，出现当前或更极端结果的概率，不是 H₀ 为真的概率",
+      "tags": [
+        "统计",
+        "假设检验"
+      ]
+    },
+    {
+      "id": "f19",
+      "chapterId": "ch07",
+      "front": "不拒绝 H₀ 该怎么表述？",
+      "back": "没有足够证据说明有差异，不能说「两者相等」",
+      "tags": [
+        "统计",
+        "表述"
+      ]
+    },
+    {
+      "id": "f20",
+      "chapterId": "ch07",
+      "front": "Bootstrap 的核心操作？",
+      "back": "有放回重抽样，重复计算统计量，用其分布代替理论抽样分布",
+      "tags": [
+        "统计"
+      ]
+    },
+    {
+      "id": "f21",
+      "chapterId": "ch08",
+      "front": "一阶差分方程 xₙ₊₁ = axₙ + b 的平衡点？",
+      "back": "x* = b/(1−a)，稳定条件 |a| < 1",
+      "tags": [
+        "差分方程"
+      ]
+    },
+    {
+      "id": "f22",
+      "chapterId": "ch08",
+      "front": "Leslie 矩阵的结构？",
+      "back": "首行各年龄组繁殖率，次对角线为存活率，主特征值定长期增长率",
+      "tags": [
+        "差分方程",
+        "种群"
+      ]
+    },
+    {
+      "id": "f23",
+      "chapterId": "ch09",
+      "front": "SVM 的间隔公式？",
+      "back": "2/‖w‖，要求支持向量处 wᵀx + b = ±1",
+      "tags": [
+        "SVM"
+      ]
+    },
+    {
+      "id": "f24",
+      "chapterId": "ch09",
+      "front": "SVM 的 C 增大意味着什么？",
+      "back": "更不容忍越界，间隔变窄，方差上升，容易过拟合",
+      "tags": [
+        "SVM",
+        "调参"
+      ]
+    },
+    {
+      "id": "f25",
+      "chapterId": "ch09",
+      "front": "核函数的作用？",
+      "back": "隐式映射到高维，使线性不可分变可分，无需算高维坐标",
+      "tags": [
+        "SVM"
+      ]
+    },
+    {
+      "id": "f26",
+      "chapterId": "ch10",
+      "front": "聚类与判别的区别？",
+      "back": "聚类无标签按相似度分组，判别有标签学分类规则",
+      "tags": [
+        "多元分析"
+      ]
+    },
+    {
+      "id": "f27",
+      "chapterId": "ch10",
+      "front": "PCA 的贡献率是什么？",
+      "back": "某主成分特征值占全部特征值之和的比例，即保留的方差份额",
+      "tags": [
+        "多元分析",
+        "降维"
+      ]
+    },
+    {
+      "id": "f28",
+      "chapterId": "ch10",
+      "front": "PCA 与因子分析的区别？",
+      "back": "PCA 是线性变换无模型假设，因子分析假设潜在因子生成观测变量",
+      "tags": [
+        "多元分析"
+      ]
+    },
+    {
+      "id": "f29",
+      "chapterId": "ch11",
+      "front": "多重共线性的后果？",
+      "back": "系数方差大、符号反常、可解释性丧失，VIF > 10 是常见判据",
+      "tags": [
+        "回归",
+        "偏最小二乘"
+      ]
+    },
+    {
+      "id": "f30",
+      "chapterId": "ch11",
+      "front": "PLS 与 PCA 的关键差别？",
+      "back": "PLS 提取成分时同时考虑与 Y 的协方差，PCA 只看 X 的方差",
+      "tags": [
+        "偏最小二乘"
+      ]
+    },
+    {
+      "id": "f31",
+      "chapterId": "ch12",
+      "front": "模拟退火的接受概率？",
+      "back": "P = exp(−Δ/T)，Δ 为变差量，T 为温度，温度高更易接受差解",
+      "tags": [
+        "启发式算法"
+      ]
+    },
+    {
+      "id": "f32",
+      "chapterId": "ch12",
+      "front": "遗传算法五件套？",
+      "back": "编码、适应度、选择、交叉、变异",
+      "tags": [
+        "启发式算法"
+      ]
+    },
+    {
+      "id": "f33",
+      "chapterId": "ch12",
+      "front": "启发式结果必须报告什么？",
+      "back": "多次独立运行的最好值、平均值、标准差，而不只是最好值",
+      "tags": [
+        "启发式算法",
+        "论文规范"
+      ]
+    },
+    {
+      "id": "f34",
+      "chapterId": "ch13",
+      "front": "图像在计算机里是什么？",
+      "back": "灰度图是 m×n 矩阵，彩色图是 m×n×3 的三通道矩阵",
+      "tags": [
+        "图像处理"
+      ]
+    },
+    {
+      "id": "f35",
+      "chapterId": "ch13",
+      "front": "均值滤波与中值滤波的取舍？",
+      "back": "均值去噪但糊边，中值保边、适合椒盐噪声",
+      "tags": [
+        "图像处理"
+      ]
+    },
+    {
+      "id": "f36",
+      "chapterId": "ch14",
+      "front": "综合评价的四步？",
+      "back": "定指标、标准化、定权重、合成排序",
+      "tags": [
+        "综合评价"
+      ]
+    },
+    {
+      "id": "f37",
+      "chapterId": "ch14",
+      "front": "熵权法权重反映什么？",
+      "back": "指标在方案间的区分度，不是业务重要性",
+      "tags": [
+        "综合评价",
+        "权重"
+      ]
+    },
+    {
+      "id": "f38",
+      "chapterId": "ch14",
+      "front": "TOPSIS 的排序依据？",
+      "back": "到正理想解与负理想解的欧氏距离，离正近、离负远者优",
+      "tags": [
+        "综合评价"
+      ]
+    },
+    {
+      "id": "f39",
+      "chapterId": "ch15",
+      "front": "GM(1,1) 适合什么数据？",
+      "back": "小样本、近似指数趋势的单调序列，先做级比检验",
+      "tags": [
+        "预测"
+      ]
+    },
+    {
+      "id": "f40",
+      "chapterId": "ch15",
+      "front": "预测精度必须包含什么？",
+      "back": "样本外检验指标（MAE/RMSE/MAPE）与预测区间",
+      "tags": [
+        "预测",
+        "论文规范"
+      ]
+    },
+    {
+      "id": "f41",
+      "chapterId": "ch16",
+      "front": "Pareto 有效解？",
+      "back": "不存在所有目标都不差且至少一个更好的解，多目标输出的是前沿",
+      "tags": [
+        "多目标"
+      ]
+    },
+    {
+      "id": "f42",
+      "chapterId": "ch16",
+      "front": "加权和法的局限？",
+      "back": "非凸 Pareto 前沿上会漏掉中间解，只能取到支撑点",
+      "tags": [
+        "多目标"
+      ]
+    },
+    {
+      "id": "f43",
+      "chapterId": "ch16",
+      "front": "目标规划中的偏差变量？",
+      "back": "d⁺ 为超出目标的量，d⁻ 为不足的量，两者不能同时非零",
+      "tags": [
+        "多目标",
+        "目标规划"
+      ]
+    }
+  ],
+  "companion": "modeling学习伴侣.html"
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "cases",
+  "title": "竞赛论文案例库",
+  "subtitle": "2016–2023 国赛优秀论文怎么读、怎么借、怎么改",
+  "book": {"title": "全国大学生数学建模竞赛优秀论文（2016–2023）", "author": "全国大学生数学建模竞赛组委会", "source": ["2016-2023年——全国大学生数学建模竞赛优秀论文.rar"]},
+  "audience": "准备参赛或第一次系统读论文的学生",
+  "goal": "能独立拆解一篇优秀论文并改造成自己的方案",
+  "chapters": [
+    {"id": "ch01", "file": "chapters/ch01-how-to-read-a-paper.md", "difficulty": 1},
+    {"id": "ch02", "file": "chapters/ch02-paper-map.md", "difficulty": 1},
+    {"id": "ch03", "file": "chapters/ch03-from-case-to-own.md", "difficulty": 2}
+  ],
+  "learningPath": [
+    {"step": "01", "title": "学会拆论文", "chapterIds": ["ch01"], "checkpoint": "40 分钟完成一张方法卡"},
+    {"step": "02", "title": "摸清资料包", "chapterIds": ["ch02"], "checkpoint": "能按年份与题号挑出三篇同题论文"},
+    {"step": "03", "title": "改成自己的方案", "chapterIds": ["ch03"], "checkpoint": "写出含来源与改动的借鉴说明"}
+  ]
+}

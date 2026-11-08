@@ -1,0 +1,24 @@
+{
+  "slug": "latex",
+  "title": "LaTeX 与论文排版",
+  "subtitle": "从装环境到排出一份合规的竞赛论文",
+  "book": {"title": "LaTeX 入门", "author": "刘海洋", "source": ["LaTeX入门(刘海洋) .pdf"]},
+  "audience": "没接触过 LaTeX 的本科生",
+  "goal": "能独立排版一份含公式、图表、文献的中文论文",
+  "chapters": [
+    {"id": "ch01", "file": "chapters/ch01-setup.md", "difficulty": 1},
+    {"id": "ch02", "file": "chapters/ch02-chinese-layout.md", "difficulty": 2},
+    {"id": "ch03", "file": "chapters/ch03-math-formulas.md", "difficulty": 2},
+    {"id": "ch04", "file": "chapters/ch04-figures-tables.md", "difficulty": 2},
+    {"id": "ch05", "file": "chapters/ch05-automation.md", "difficulty": 2},
+    {"id": "ch06", "file": "chapters/ch06-paper-template.md", "difficulty": 2}
+  ],
+  "learningPath": [
+    {"step": "01", "title": "跑通第一份 PDF", "chapterIds": ["ch01"], "checkpoint": "xelatex 编译成功，中文不乱码"},
+    {"step": "02", "title": "排中文版式", "chapterIds": ["ch02"], "checkpoint": "字号、边距、页眉三项都改过一次"},
+    {"step": "03", "title": "写公式", "chapterIds": ["ch03"], "checkpoint": "能用 align 与 cases 各排一段"},
+    {"step": "04", "title": "放图表", "chapterIds": ["ch04"], "checkpoint": "三线表与子图都能正确显示图注"},
+    {"step": "05", "title": "做引用与文献", "chapterIds": ["ch05"], "checkpoint": "文献编号出现，无 [?]"},
+    {"step": "06", "title": "套论文模板", "chapterIds": ["ch06"], "checkpoint": "四级编号 1.1.1.1 正确，摘要独立成页"}
+  ]
+}

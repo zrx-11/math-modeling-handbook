@@ -1,0 +1,633 @@
+{
+  "slug": "latex",
+  "title": "LaTeX 与论文排版",
+  "subtitle": "从装环境到排出一份合规的竞赛论文",
+  "book": {
+    "title": "LaTeX 入门",
+    "author": "刘海洋",
+    "source": [
+      "LaTeX入门(刘海洋) .pdf"
+    ]
+  },
+  "audience": "没接触过 LaTeX 的本科生",
+  "goal": "能独立排版一份含公式、图表、文献的中文论文",
+  "learningPath": [
+    {
+      "step": "01",
+      "title": "跑通第一份 PDF",
+      "chapterIds": [
+        "ch01"
+      ],
+      "checkpoint": "xelatex 编译成功，中文不乱码"
+    },
+    {
+      "step": "02",
+      "title": "排中文版式",
+      "chapterIds": [
+        "ch02"
+      ],
+      "checkpoint": "字号、边距、页眉三项都改过一次"
+    },
+    {
+      "step": "03",
+      "title": "写公式",
+      "chapterIds": [
+        "ch03"
+      ],
+      "checkpoint": "能用 align 与 cases 各排一段"
+    },
+    {
+      "step": "04",
+      "title": "放图表",
+      "chapterIds": [
+        "ch04"
+      ],
+      "checkpoint": "三线表与子图都能正确显示图注"
+    },
+    {
+      "step": "05",
+      "title": "做引用与文献",
+      "chapterIds": [
+        "ch05"
+      ],
+      "checkpoint": "文献编号出现，无 [?]"
+    },
+    {
+      "step": "06",
+      "title": "套论文模板",
+      "chapterIds": [
+        "ch06"
+      ],
+      "checkpoint": "四级编号 1.1.1.1 正确，摘要独立成页"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch01",
+      "title": "第 1 章：环境与第一次编译",
+      "file": "chapters/ch01-setup.md",
+      "difficulty": 1
+    },
+    {
+      "id": "ch02",
+      "title": "第 2 章：中文文档与版式",
+      "file": "chapters/ch02-chinese-layout.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch03",
+      "title": "第 3 章：数学公式",
+      "file": "chapters/ch03-math-formulas.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch04",
+      "title": "第 4 章：图表与浮动体",
+      "file": "chapters/ch04-figures-tables.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch05",
+      "title": "第 5 章：目录、交叉引用与参考文献",
+      "file": "chapters/ch05-automation.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch06",
+      "title": "第 6 章：数模论文模板实战",
+      "file": "chapters/ch06-paper-template.md",
+      "difficulty": 2
+    }
+  ],
+  "concepts": [],
+  "patterns": {
+    "file": "patterns.md"
+  },
+  "cheatsheet": {
+    "file": "cheatsheet.md"
+  },
+  "glossary": [
+    {
+      "term": "TeX 发行版",
+      "def": "把编译器、宏包、字体打包的整体，如 TeX Live",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "xelatex",
+      "def": "原生支持 UTF-8 与系统字体的编译引擎，中文首选",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "ctex 文档类",
+      "def": "专为中文设计的文档类，自动处理字体与间距",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "aux 文件",
+      "def": "编译时记录标签与页码的中间文件，目录与引用靠它",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "zihao",
+      "def": "ctex 的字号参数，-4 表示小四",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "secnumdepth",
+      "def": "控制标题编号到第几级的计数器",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "tocdepth",
+      "def": "控制目录显示到第几级的计数器",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "fancyhdr",
+      "def": "设置页眉页脚的宏包",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "行内公式",
+      "def": "与文字同行的公式，用 $...$ 包裹",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "行间公式",
+      "def": "单独成行的公式，用 \\[...\\] 或 equation 环境",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "align 环境",
+      "def": "多行公式按 & 对齐、逐行编号的环境",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "cases 环境",
+      "def": "排分段函数的左大括号结构",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "浮动体",
+      "def": "figure 与 table 这类由 LaTeX 自动安排位置的对象",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "三线表",
+      "def": "只有顶线、表头线、底线的表格，booktabs 提供",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "tabularx",
+      "def": "支持自动换行列宽的表格式宏包",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "子图",
+      "def": "一张图内并排多个小图，用 subcaption 实现",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "交叉引用",
+      "def": "用 label 与 ref 自动维护编号的机制",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "BibTeX",
+      "def": "读 bib 数据库生成文献列表的工具",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "gbt7714",
+      "def": "符合国标 GB/T 7714 的参考文献样式宏包",
+      "chapterId": "ch05"
+    },
+    {
+      "term": "listings",
+      "def": "排代码的宏包，支持行号与语法高亮",
+      "chapterId": "ch06"
+    },
+    {
+      "term": "导言区",
+      "def": "begin document 之前的配置区，放宏包与全局参数",
+      "chapterId": "ch06"
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "q0101",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "编译中文文档应使用哪个引擎？",
+      "options": [
+        "pdflatex",
+        "xelatex",
+        "latex",
+        "bibtex"
+      ],
+      "answer": 1,
+      "explain": "xelatex 原生支持 UTF-8 与系统字体，配合 ctex 文档类处理中文最稳。"
+    },
+    {
+      "id": "q0102",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "目录为空最可能的原因是？",
+      "options": [
+        "没有写 \\tableofcontents",
+        "只编译了一遍，aux 未生成",
+        "文档类不支持目录",
+        "缺少 hyperref"
+      ],
+      "answer": 1,
+      "explain": "目录内容来自 aux 文件，需要至少两遍编译。"
+    },
+    {
+      "id": "q0103",
+      "chapterId": "ch01",
+      "type": "blank",
+      "question": "TeX Live 缺宏包时，安装命令是 `tlmgr ________ 包名`。",
+      "options": [],
+      "answer": "install",
+      "explain": "tlmgr 是 TeX Live 的包管理器，install 后重启编辑器即可识别。"
+    },
+    {
+      "id": "q0201",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "要让第四级标题也带编号，应设置？",
+      "options": [
+        "\\setcounter{tocdepth}{4}",
+        "\\setcounter{secnumdepth}{4}",
+        "\\linespread{1.3}",
+        "\\pagestyle{fancy}"
+      ],
+      "answer": 1,
+      "explain": "secnumdepth 控制编号深度，tocdepth 只控制目录显示。"
+    },
+    {
+      "id": "q0202",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "页眉重复出现两遍，最可能的原因是？",
+      "options": [
+        "没有 \\fancyhf{}",
+        "没有加载 ctex",
+        "编译次数不够",
+        "字号设置错误"
+      ],
+      "answer": 0,
+      "explain": "默认页眉未清空，新设置叠加上去就会重复。"
+    },
+    {
+      "id": "q0203",
+      "chapterId": "ch02",
+      "type": "blank",
+      "question": "要让「10」与「mm」不被断行分开，应写成 `10~mm`，其中 `~` 表示________空格。",
+      "options": [],
+      "answer": "不断行",
+      "explain": "`~` 在 LaTeX 中是不断行空格，保证两个词始终在同一行。"
+    },
+    {
+      "id": "q0301",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "需要多行对齐并统一编号，应使用？",
+      "options": [
+        "equation",
+        "align",
+        "\\[ \\]",
+        "cases"
+      ],
+      "answer": 1,
+      "explain": "align 提供对齐点与逐行编号，equation 只适合单行公式。"
+    },
+    {
+      "id": "q0302",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "文本中写「准确率 95%」正确的是？",
+      "options": [
+        "95%",
+        "95\\%",
+        "95$\\%$",
+        "95 percent"
+      ],
+      "answer": 1,
+      "explain": "% 是注释符，必须转义为 \\%。"
+    },
+    {
+      "id": "q0303",
+      "chapterId": "ch03",
+      "type": "blank",
+      "question": "分段函数用________环境，矩阵用 pmatrix 或 bmatrix。",
+      "options": [],
+      "answer": "cases",
+      "explain": "cases 左侧一个大括号、右侧两列条件，是标准写法。"
+    },
+    {
+      "id": "q0401",
+      "chapterId": "ch04",
+      "type": "single",
+      "question": "图注要显示在图下方，`\\caption` 应放在？",
+      "options": [
+        "`\\includegraphics` 之前",
+        "`\\includegraphics` 之后",
+        "`\\label` 之前",
+        "figure 环境之外"
+      ],
+      "answer": 1,
+      "explain": "caption 的位置决定图注上下，放后面才在图下。"
+    },
+    {
+      "id": "q0402",
+      "chapterId": "ch04",
+      "type": "single",
+      "question": "三线表需要加载哪个宏包？",
+      "options": [
+        "graphicx",
+        "booktabs",
+        "hyperref",
+        "listings"
+      ],
+      "answer": 1,
+      "explain": "booktabs 提供 \\toprule、\\midrule、\\bottomrule。"
+    },
+    {
+      "id": "q0403",
+      "chapterId": "ch04",
+      "type": "blank",
+      "question": "让图片按正文宽度八成显示，应写 `width=________\\linewidth`。",
+      "options": [],
+      "answer": "0.8",
+      "explain": "用相对宽度而不是绝对厘米，换版式时不用逐张改。"
+    },
+    {
+      "id": "q0501",
+      "chapterId": "ch05",
+      "type": "single",
+      "question": "`\\ref{fig:risk}` 输出的是什么？",
+      "options": [
+        "图的文件名",
+        "图的编号",
+        "图的标题",
+        "图的页码"
+      ],
+      "answer": 1,
+      "explain": "ref 输出编号，页码用 pageref，标题不会被引用。"
+    },
+    {
+      "id": "q0502",
+      "chapterId": "ch05",
+      "type": "single",
+      "question": "文献列表显示 `[?]`，最先检查？",
+      "options": [
+        "图片路径",
+        "是否跑了 bibtex、cite key 是否匹配",
+        "字号设置",
+        "页边距"
+      ],
+      "answer": 1,
+      "explain": "`[?]` 表示引用键找不到对应条目，先查编译链与 key。"
+    },
+    {
+      "id": "q0503",
+      "chapterId": "ch05",
+      "type": "blank",
+      "question": "国标顺序编码制的宏包是________。",
+      "options": [],
+      "answer": "gbt7714",
+      "explain": "gbt7714 提供符合 GB/T 7714 的样式，配合 BibTeX 或 biblatex 使用。"
+    },
+    {
+      "id": "q0601",
+      "chapterId": "ch06",
+      "type": "single",
+      "question": "要让四级标题带编号，除设置 number 外还必须？",
+      "options": [
+        "改 tocdepth",
+        "把 secnumdepth 调到 4 以上",
+        "加载 hyperref",
+        "用 appendix"
+      ],
+      "answer": 1,
+      "explain": "编号深度由 secnumdepth 控制，默认只到 3 级。"
+    },
+    {
+      "id": "q0602",
+      "chapterId": "ch06",
+      "type": "single",
+      "question": "摘要页后的正文要重新从第 1 页编号，应该？",
+      "options": [
+        "直接 \\setcounter{page}{1}",
+        "用 \\pagenumbering{arabic} 重置",
+        "改 fancyhdr",
+        "重新编译"
+      ],
+      "answer": 1,
+      "explain": "pagenumbering 会重置页码计数器，setcounter 只改数值不重置样式。"
+    },
+    {
+      "id": "q0603",
+      "chapterId": "ch06",
+      "type": "blank",
+      "question": "代码附录应使用________环境，配合 listings 宏包。",
+      "options": [],
+      "answer": "lstlisting",
+      "explain": "lstlisting 支持语法高亮、行号、自动换行，是排代码的标准环境。"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "f01",
+      "chapterId": "ch01",
+      "front": "中文文档该用哪个编译引擎？",
+      "back": "xelatex，配合 ctexart / ctexrep / ctexbook 文档类",
+      "tags": [
+        "编译"
+      ]
+    },
+    {
+      "id": "f02",
+      "chapterId": "ch01",
+      "front": "为什么目录是空的？",
+      "back": "只编译了一遍，aux 文件还没生成目录信息，至少跑两遍",
+      "tags": [
+        "编译",
+        "排错"
+      ]
+    },
+    {
+      "id": "f03",
+      "chapterId": "ch01",
+      "front": "TeX Live 缺宏包怎么装？",
+      "back": "`tlmgr install 包名`",
+      "tags": [
+        "编译",
+        "环境"
+      ]
+    },
+    {
+      "id": "f04",
+      "chapterId": "ch02",
+      "front": "控制标题编号到第几级的是哪个计数器？",
+      "back": "secnumdepth；目录深度是 tocdepth，两者分开设",
+      "tags": [
+        "版式",
+        "编号"
+      ]
+    },
+    {
+      "id": "f05",
+      "chapterId": "ch02",
+      "front": "页眉重复两遍的原因？",
+      "back": "没有先 `\\fancyhf{}` 清空默认设置",
+      "tags": [
+        "版式",
+        "fancyhdr"
+      ]
+    },
+    {
+      "id": "f06",
+      "chapterId": "ch02",
+      "front": "中文与英文之间怎么加空隙？",
+      "back": "手写 `\\ ` 或设 `\\xeCJKsetup{CJKspace=true}`",
+      "tags": [
+        "版式",
+        "中文"
+      ]
+    },
+    {
+      "id": "f07",
+      "chapterId": "ch03",
+      "front": "行内公式与行间公式的写法？",
+      "back": "行内 `$...$`；行间 `\\[...\\]`；带编号 `\\begin{equation}...\\end{equation}`",
+      "tags": [
+        "公式"
+      ]
+    },
+    {
+      "id": "f08",
+      "chapterId": "ch03",
+      "front": "多行对齐带编号用哪个环境？",
+      "back": "align；不要编号用 align*",
+      "tags": [
+        "公式"
+      ]
+    },
+    {
+      "id": "f09",
+      "chapterId": "ch03",
+      "front": "分段函数用哪个环境？",
+      "back": "cases",
+      "tags": [
+        "公式"
+      ]
+    },
+    {
+      "id": "f10",
+      "chapterId": "ch03",
+      "front": "文本里的百分号怎么打？",
+      "back": "`\\%`，未转义会被当注释吞掉整行",
+      "tags": [
+        "公式",
+        "排错"
+      ]
+    },
+    {
+      "id": "f11",
+      "chapterId": "ch04",
+      "front": "图注在图下、表注在表上，caption 分别放哪？",
+      "back": "图注放 `\\includegraphics` 之后，表注放 `\\begin{tabular}` 之前",
+      "tags": [
+        "图表"
+      ]
+    },
+    {
+      "id": "f12",
+      "chapterId": "ch04",
+      "front": "三线表用哪个宏包？",
+      "back": "booktabs，配 \\toprule \\midrule \\bottomrule",
+      "tags": [
+        "图表"
+      ]
+    },
+    {
+      "id": "f13",
+      "chapterId": "ch04",
+      "front": "浮动体位置参数 htbp 各表示什么？",
+      "back": "here 此处、top 页顶、bottom 页底、page 单独一页",
+      "tags": [
+        "图表",
+        "浮动体"
+      ]
+    },
+    {
+      "id": "f14",
+      "chapterId": "ch04",
+      "front": "label 应该放在 caption 前还是后？",
+      "back": "之后，否则引用编号会指错",
+      "tags": [
+        "图表",
+        "引用"
+      ]
+    },
+    {
+      "id": "f15",
+      "chapterId": "ch05",
+      "front": "文献显示 [?] 怎么排查？",
+      "back": "先查是否跑了 bibtex、cite key 是否与 bib 完全一致",
+      "tags": [
+        "文献"
+      ]
+    },
+    {
+      "id": "f16",
+      "chapterId": "ch05",
+      "front": "国标参考文献样式用哪个宏包？",
+      "back": "gbt7714",
+      "tags": [
+        "文献"
+      ]
+    },
+    {
+      "id": "f17",
+      "chapterId": "ch05",
+      "front": "带文献的完整编译链？",
+      "back": "xelatex → bibtex → xelatex → xelatex",
+      "tags": [
+        "文献",
+        "编译"
+      ]
+    },
+    {
+      "id": "f18",
+      "chapterId": "ch06",
+      "front": "四级标题 6.3.2.1 需要什么设置？",
+      "back": "secnumdepth 设为 4 以上，并给 paragraph 配 number",
+      "tags": [
+        "编号"
+      ]
+    },
+    {
+      "id": "f19",
+      "chapterId": "ch06",
+      "front": "摘要页后正文重新从第 1 页编号？",
+      "back": "`\\pagenumbering{arabic}` 重置页码计数器",
+      "tags": [
+        "模板"
+      ]
+    },
+    {
+      "id": "f20",
+      "chapterId": "ch06",
+      "front": "代码附录用什么环境？",
+      "back": "lstlisting，配 listings 宏包",
+      "tags": [
+        "模板",
+        "代码"
+      ]
+    }
+  ],
+  "companion": "latex学习伴侣.html"
+}

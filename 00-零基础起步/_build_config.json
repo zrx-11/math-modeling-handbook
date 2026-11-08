@@ -1,0 +1,22 @@
+{
+  "slug": "start",
+  "title": "零基础起步：数学建模的第一本书",
+  "subtitle": "把问题翻成式子，再把结果翻回人话",
+  "book": {"title": "数学建模入门讲义（自编）", "author": "点化整理", "source": ["数学建模算法与应用（第3版）", "数学建模算法与应用习题解答（第3版）"]},
+  "audience": "零基础，大二理工科",
+  "goal": "能独立走完建模五步并写出带数字的论文摘要",
+  "chapters": [
+    {"id": "ch01", "file": "chapters/ch01-what-is-modeling.md", "difficulty": 1},
+    {"id": "ch02", "file": "chapters/ch02-math-prep.md", "difficulty": 1},
+    {"id": "ch03", "file": "chapters/ch03-tools.md", "difficulty": 1},
+    {"id": "ch04", "file": "chapters/ch04-paper-skeleton.md", "difficulty": 2},
+    {"id": "ch05", "file": "chapters/ch05-72h-workflow.md", "difficulty": 1}
+  ],
+  "learningPath": [
+    {"step": "01", "title": "先弄清建模是什么", "chapterIds": ["ch01"], "checkpoint": "能不看笔记讲出五步流程与三把检验尺"},
+    {"step": "02", "title": "补齐够用的数学", "chapterIds": ["ch02"], "checkpoint": "能把一个新问题归到变化/累积/线性/随机四类之一"},
+    {"step": "03", "title": "跑通第一个求解器", "chapterIds": ["ch03"], "checkpoint": "本地跑出 (2, 6) 与 26，并能读 status"},
+    {"step": "04", "title": "学会写论文骨架", "chapterIds": ["ch04"], "checkpoint": "把一段空话摘要改写成带数字的四段"},
+    {"step": "05", "title": "排出作战流程", "chapterIds": ["ch05"], "checkpoint": "写出自己队 72 小时时间表与交卷清单"}
+  ]
+}

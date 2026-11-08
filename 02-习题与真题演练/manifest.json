@@ -1,0 +1,400 @@
+{
+  "slug": "exercises",
+  "title": "习题与真题演练",
+  "subtitle": "把方法落到笔上：12 道手算题 + 原书题解定位",
+  "book": {
+    "title": "数学建模算法与应用习题解答（第3版）配套练习",
+    "author": "点化整理",
+    "source": [
+      "数学建模算法与应用习题解答 第3版 (司守奎, 孙玺青) .pdf"
+    ]
+  },
+  "audience": "已读完主册对应章节的学习者",
+  "goal": "每类题型都能独立手算并说明易错点",
+  "learningPath": [
+    {
+      "step": "01",
+      "title": "优化类",
+      "chapterIds": [
+        "ch01"
+      ],
+      "checkpoint": "三题全对，能说出每题的易错点"
+    },
+    {
+      "step": "02",
+      "title": "图论与动态",
+      "chapterIds": [
+        "ch02"
+      ],
+      "checkpoint": "Dijkstra 与 Kruskal 手跑无误"
+    },
+    {
+      "step": "03",
+      "title": "数据与统计",
+      "chapterIds": [
+        "ch03"
+      ],
+      "checkpoint": "斜率与 t 值算对，结论措辞规范"
+    },
+    {
+      "step": "04",
+      "title": "算法与评价",
+      "chapterIds": [
+        "ch04"
+      ],
+      "checkpoint": "完成一次权重灵敏度并解释冠军变化"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch01",
+      "title": "第 1 章：优化类训练",
+      "file": "chapters/ch01-optimization-drills.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch02",
+      "title": "第 2 章：图论与动态过程训练",
+      "file": "chapters/ch02-graph-dynamics-drills.md",
+      "difficulty": 2
+    },
+    {
+      "id": "ch03",
+      "title": "第 3 章：数据与统计训练",
+      "file": "chapters/ch03-data-statistics-drills.md",
+      "difficulty": 3
+    },
+    {
+      "id": "ch04",
+      "title": "第 4 章：智能算法与综合评价训练",
+      "file": "chapters/ch04-ai-evaluation-drills.md",
+      "difficulty": 2
+    }
+  ],
+  "concepts": [],
+  "patterns": {
+    "file": "patterns.md"
+  },
+  "cheatsheet": {
+    "file": "cheatsheet.md"
+  },
+  "glossary": [
+    {
+      "term": "整数间隙",
+      "def": "线性松弛最优值与整数最优值之差",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "顶点枚举",
+      "def": "逐个计算可行域顶点目标值找最优的办法",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "距离表",
+      "def": "Dijkstra 中记录起点到各点当前最短距离的表格",
+      "chapterId": "ch02"
+    },
+    {
+      "term": "顺序交叉",
+      "def": "TSP 遗传算法中保持城市不重复的交叉算子",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "中心化",
+      "def": "把每个观测减去均值，使数据中心落在原点",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "拒绝域",
+      "def": "检验统计量落入即拒绝原假设的区间",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "方差膨胀因子",
+      "def": "变量被其余变量解释程度的指标，VIF>10 视为严重共线",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "锦标赛选择",
+      "def": "随机取若干个体、留最优作为父代的选择方式",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "精英保留",
+      "def": "每代把最优个体直接复制到下一代",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "指数平滑",
+      "def": "用 α 加权当前值与上期平滑值的预测方法",
+      "chapterId": "ch04"
+    },
+    {
+      "term": "权重灵敏度",
+      "def": "改变权重看排序是否翻转的检验",
+      "chapterId": "ch04"
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "q0101",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "线性规划题列顶点时，最容易漏掉的是？",
+      "options": [
+        "两约束交点",
+        "与坐标轴的交点",
+        "原点",
+        "目标函数等值线上的点"
+      ],
+      "answer": 1,
+      "explain": "很多人只算约束交点，忘记坐标轴截距也是顶点，可能正好是最优点。"
+    },
+    {
+      "id": "q0102",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "整数间隙指的是？",
+      "options": [
+        "两个整数解之间的距离",
+        "松弛最优值与整数最优值之差",
+        "约束个数与变量个数之差",
+        "目标系数的最大值与最小值之差"
+      ],
+      "answer": 1,
+      "explain": "松弛允许小数，整数不允许，两者最优值之差就是间隙。"
+    },
+    {
+      "id": "q0103",
+      "chapterId": "ch01",
+      "type": "blank",
+      "question": "目标规划中，若要求「利润不低于 60」，不足部分用偏差变量________表示。",
+      "options": [],
+      "answer": "d₁⁻",
+      "explain": "负偏差表示实际值低于目标，正偏差表示超出。"
+    },
+    {
+      "id": "q0201",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "Kruskal 算法每次加入新边前必须检查？",
+      "options": [
+        "边是否最短",
+        "是否形成环",
+        "顶点是否用完",
+        "权值是否为正"
+      ],
+      "answer": 1,
+      "explain": "成环就跳过，这是维持「树」的结构的关键。"
+    },
+    {
+      "id": "q0202",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "差分方程 |a| > 1 时系统？",
+      "options": [
+        "稳定收敛",
+        "不稳定，偏离平衡点",
+        "等幅振荡",
+        "恒为常数"
+      ],
+      "answer": 1,
+      "explain": "误差每期按 a 倍放大，模大于 1 时发散。"
+    },
+    {
+      "id": "q0203",
+      "chapterId": "ch02",
+      "type": "blank",
+      "question": "五点的最小生成树需要________条边。",
+      "options": [],
+      "answer": "4",
+      "explain": "n 个点的树有 n−1 条边。"
+    },
+    {
+      "id": "q0301",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "最小二乘斜率公式的分母是？",
+      "options": [
+        "∑xᵢ²",
+        "∑(xᵢ − x̄)²",
+        "∑yᵢ²",
+        "n"
+      ],
+      "answer": 1,
+      "explain": "分母是 x 的中心化平方和，未中心化会引入截距相关项。"
+    },
+    {
+      "id": "q0302",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "t = 2.83、临界值 2.78，正确结论是？",
+      "options": [
+        "证明均值等于 8",
+        "在 5% 水平下拒绝原假设",
+        "样本一定有问题",
+        "需要增大 α 才能判断"
+      ],
+      "answer": 1,
+      "explain": "t 超过临界值即落入拒绝域，结论是拒绝 H₀，而非证明任何事。"
+    },
+    {
+      "id": "q0303",
+      "chapterId": "ch03",
+      "type": "blank",
+      "question": "VIF 大于________通常视为严重多重共线性。",
+      "options": [],
+      "answer": "10",
+      "explain": "经验阈值，超过 10 说明该变量被其余变量解释程度过高。"
+    },
+    {
+      "id": "q0401",
+      "chapterId": "ch04",
+      "type": "single",
+      "question": "遗传算法中精英保留的作用是？",
+      "options": [
+        "增加种群规模",
+        "防止最优个体在迭代中丢失",
+        "提高变异率",
+        "缩短编码长度"
+      ],
+      "answer": 1,
+      "explain": "把当代最优直接复制到下一代，避免选择与变异破坏已找到的好解。"
+    },
+    {
+      "id": "q0402",
+      "chapterId": "ch04",
+      "type": "single",
+      "question": "权重从 0.4/0.35/0.25 改成 0.6/0.25/0.15，冠军变化说明？",
+      "options": [
+        "数据算错了",
+        "排序对权重敏感，必须做灵敏度",
+        "应该取平均权重",
+        "评价方法无效"
+      ],
+      "answer": 1,
+      "explain": "权重代表偏好，偏好变则排序变，这是评价方法的固有性质。"
+    },
+    {
+      "id": "q0403",
+      "chapterId": "ch04",
+      "type": "blank",
+      "question": "指数平滑中 α 越小，记忆长度越________。",
+      "options": [],
+      "answer": "长",
+      "explain": "α 小则历史权重衰减慢，长期数据影响更大。"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "f01",
+      "chapterId": "ch01",
+      "front": "列线性规划顶点要算哪三类点？",
+      "back": "与两坐标轴的截距、约束之间的交点、原点",
+      "tags": [
+        "线性规划",
+        "手算"
+      ]
+    },
+    {
+      "id": "f02",
+      "chapterId": "ch01",
+      "front": "整数间隙是什么？",
+      "back": "线性松弛最优值与整数最优值之差，例 20.33 与 19",
+      "tags": [
+        "整数规划"
+      ]
+    },
+    {
+      "id": "f03",
+      "chapterId": "ch01",
+      "front": "目标规划里利润不足用哪个偏差变量？",
+      "back": "d⁻，负偏差表示低于目标",
+      "tags": [
+        "目标规划"
+      ]
+    },
+    {
+      "id": "f04",
+      "chapterId": "ch02",
+      "front": "Dijkstra 每轮确定几个点？",
+      "back": "一个，选当前距离最小的未确定点",
+      "tags": [
+        "图论"
+      ]
+    },
+    {
+      "id": "f05",
+      "chapterId": "ch02",
+      "front": "生成树的三要素？",
+      "back": "连通、无环、恰好 n−1 条边",
+      "tags": [
+        "图论"
+      ]
+    },
+    {
+      "id": "f06",
+      "chapterId": "ch02",
+      "front": "差分方程 xₙ₊₁=1.2xₙ−10 的平衡点与稳定性？",
+      "back": "平衡点 50，|1.2|>1 不稳定，数值发散",
+      "tags": [
+        "差分方程"
+      ]
+    },
+    {
+      "id": "f07",
+      "chapterId": "ch03",
+      "front": "最小二乘斜率的分母？",
+      "back": "∑(xᵢ−x̄)²，中心化平方和",
+      "tags": [
+        "拟合"
+      ]
+    },
+    {
+      "id": "f08",
+      "chapterId": "ch03",
+      "front": "t=2.83 超过临界值 2.78 的正确结论？",
+      "back": "在 5% 水平拒绝原假设，不能说「证明均值等于 8」",
+      "tags": [
+        "统计"
+      ]
+    },
+    {
+      "id": "f09",
+      "chapterId": "ch03",
+      "front": "共线性的三种处理？",
+      "back": "删掉一个、合并变量、改用主成分回归或偏最小二乘",
+      "tags": [
+        "回归"
+      ]
+    },
+    {
+      "id": "f10",
+      "chapterId": "ch04",
+      "front": "TSP 遗传算法为什么不能用普通交叉？",
+      "back": "会产生重复与缺失城市，要用顺序交叉等保序算子",
+      "tags": [
+        "遗传算法"
+      ]
+    },
+    {
+      "id": "f11",
+      "chapterId": "ch04",
+      "front": "评价排序随权重改变说明什么？",
+      "back": "结论对偏好敏感，必须做权重灵敏度并在论文中写明",
+      "tags": [
+        "综合评价"
+      ]
+    },
+    {
+      "id": "f12",
+      "chapterId": "ch04",
+      "front": "移动平均与指数平滑的记忆差别？",
+      "back": "移动平均只看窗口内几期，指数平滑对所有历史加权，α 越小记忆越长",
+      "tags": [
+        "预测"
+      ]
+    }
+  ],
+  "companion": "exercises学习伴侣.html"
+}

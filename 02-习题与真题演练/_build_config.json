@@ -1,0 +1,20 @@
+{
+  "slug": "exercises",
+  "title": "习题与真题演练",
+  "subtitle": "把方法落到笔上：12 道手算题 + 原书题解定位",
+  "book": {"title": "数学建模算法与应用习题解答（第3版）配套练习", "author": "点化整理", "source": ["数学建模算法与应用习题解答 第3版 (司守奎, 孙玺青) .pdf"]},
+  "audience": "已读完主册对应章节的学习者",
+  "goal": "每类题型都能独立手算并说明易错点",
+  "chapters": [
+    {"id": "ch01", "file": "chapters/ch01-optimization-drills.md", "difficulty": 2},
+    {"id": "ch02", "file": "chapters/ch02-graph-dynamics-drills.md", "difficulty": 2},
+    {"id": "ch03", "file": "chapters/ch03-data-statistics-drills.md", "difficulty": 3},
+    {"id": "ch04", "file": "chapters/ch04-ai-evaluation-drills.md", "difficulty": 2}
+  ],
+  "learningPath": [
+    {"step": "01", "title": "优化类", "chapterIds": ["ch01"], "checkpoint": "三题全对，能说出每题的易错点"},
+    {"step": "02", "title": "图论与动态", "chapterIds": ["ch02"], "checkpoint": "Dijkstra 与 Kruskal 手跑无误"},
+    {"step": "03", "title": "数据与统计", "chapterIds": ["ch03"], "checkpoint": "斜率与 t 值算对，结论措辞规范"},
+    {"step": "04", "title": "算法与评价", "chapterIds": ["ch04"], "checkpoint": "完成一次权重灵敏度并解释冠军变化"}
+  ]
+}

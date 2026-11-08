@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>习题与真题演练</title>
+<style>
+:root{
+  --bg:#f7f7f8; --panel:#ffffff; --text:#1f2328; --muted:#6b7280;
+  --accent:#2563eb; --accent-soft:#dbeafe; --border:#e5e7eb;
+  --ok:#16a34a; --bad:#dc2626; --code-bg:#f3f4f6;
+}
+[data-theme="dark"]{
+  --bg:#111318; --panel:#1a1d24; --text:#e5e7eb; --muted:#9ca3af;
+  --accent:#60a5fa; --accent-soft:#1e3a5f; --border:#2d333d;
+  --ok:#4ade80; --bad:#f87171; --code-bg:#20242c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:290px;flex:none;background:var(--panel);border-right:1px solid var(--border);
+  padding:14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar h1{font-size:17px;margin:2px 0 2px}
+.sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:10px}
+#q{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px}
+.nav-sec{font-size:12px;color:var(--muted);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.4px}
+.nav-item{display:block;padding:5px 10px;border-radius:6px;color:var(--text);font-size:14px}
+.nav-item:hover{background:var(--accent-soft);text-decoration:none}
+.nav-item.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.nav-item .done{float:right;color:var(--ok);font-size:12px}
+#nav-toggle{display:none}
+.main{flex:1;min-width:0;padding:28px 40px 80px;max-width:920px}
+.page h1{font-size:26px;border-bottom:2px solid var(--border);padding-bottom:8px;margin-top:0}
+.page h2{font-size:20px;margin-top:26px}
+.page h3{font-size:17px;margin-top:22px}
+.page table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+.page th,.page td{border:1px solid var(--border);padding:6px 10px;text-align:left}
+.page th{background:var(--code-bg)}
+.page code{background:var(--code-bg);padding:2px 5px;border-radius:4px;font-size:.9em}
+.page pre{background:var(--code-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:13px}
+.page pre code{background:none;padding:0}
+.page blockquote{border-left:4px solid var(--accent);margin:12px 0;padding:6px 14px;background:var(--accent-soft);border-radius:0 6px 6px 0}
+.page blockquote blockquote{border-color:var(--muted)}
+.page img{max-width:100%}
+.mermaid{background:var(--code-bg);padding:14px;border-radius:8px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;white-space:pre;color:var(--muted)}
+.mermaid-hint{font-size:12px;color:var(--muted);margin:4px 0 14px}
+svg{max-width:100%;height:auto}
+.quiz-item{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;background:var(--panel)}
+.quiz-q{margin:0 0 8px;font-weight:500}
+.quiz-opts label{display:block;padding:4px 0;cursor:pointer}
+.quiz-blank{width:60%;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)}
+.quiz-check{margin-top:10px;padding:6px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;cursor:pointer}
+.quiz-feedback{margin-left:12px;font-size:13px}
+.fb-ok{color:var(--ok)}.fb-bad{color:var(--bad)}
+.quiz-explain{margin-top:8px;font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:6px}
+.flashcard{perspective:1200px;margin:24px auto;max-width:520px;cursor:pointer;user-select:none}
+.fc-inner{position:relative;width:100%;height:240px;transform-style:preserve-3d;transition:transform .5s}
+.flashcard.flip .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;
+  padding:22px;border-radius:14px;border:1px solid var(--border);background:var(--panel);font-size:16px;text-align:center}
+.fc-back{transform:rotateY(180deg);background:var(--accent-soft);color:var(--text)}
+.card-controls{display:flex;gap:14px;align-items:center;margin:12px 0;flex-wrap:wrap}
+.card-actions{display:flex;gap:12px;justify-content:center}
+.card-actions button{padding:8px 22px;border:none;border-radius:8px;cursor:pointer;font-size:14px}
+#card-known-btn{background:var(--ok);color:#fff}
+#card-again-btn{background:var(--bad);color:#fff}
+.card-counts{color:var(--muted);font-size:13px}
+.path-step{margin:8px 0;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel)}
+.path-step.passed{border-color:var(--ok)}
+#glossary-filter{width:100%;max-width:380px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px}
+#glossary-list li{padding:6px 0;border-bottom:1px dashed var(--border)}
+.glossary-ref{color:var(--muted);font-size:12px}
+.search-hit{margin:10px 0}
+.topbar{position:sticky;top:0;background:var(--bg);padding:8px 0;display:flex;justify-content:flex-end;z-index:10}
+#theme-btn{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:5px 12px;cursor:pointer;white-space:nowrap}
+#progress-bar{height:5px;background:var(--border);border-radius:3px;margin:8px 0;overflow:hidden}
+#progress-bar>div{height:100%;width:0;background:var(--accent);transition:width .3s}
+.empty{color:var(--muted);padding:20px 0}
+@media print{.sidebar,.topbar,.quiz-actions,.card-actions,.card-controls{display:none!important}.main{max-width:none;padding:0}}
+@media (max-width:760px){.sidebar{width:100%;height:auto;position:static;padding:10px 14px}
+  #nav{display:none}.sidebar.open #nav{display:block}
+  #nav-toggle{display:block;width:100%;padding:8px 10px;margin:4px 0;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:14px;text-align:left;cursor:pointer}
+  .layout{flex-direction:column}.main{padding:16px}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>习题与真题演练</h1>
+    <div class="sub">把方法落到笔上：12 道手算题 + 原书题解定位</div>
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    <div class="sub" id="progress-label">进度 0%</div>
+    <input id="q" type="search" placeholder="搜索章节 / 概念 / 术语 / 全文…">
+    <nav id="nav"></nav>
+  </aside>
+  <main class="main">
+    <div class="topbar"><button id="theme-btn">🌙 深色</button></div>
+    <div id="view" class="page"></div>
+  </main>
+</div>
+<script>
+const DATA = {"manifest": {"slug": "exercises", "title": "习题与真题演练", "subtitle": "把方法落到笔上：12 道手算题 + 原书题解定位", "book": {"title": "数学建模算法与应用习题解答（第3版）配套练习", "author": "点化整理", "source": ["数学建模算法与应用习题解答 第3版 (司守奎, 孙玺青) .pdf"]}, "audience": "已读完主册对应章节的学习者", "goal": "每类题型都能独立手算并说明易错点", "learningPath": [{"step": "01", "title": "优化类", "chapterIds": ["ch01"], "checkpoint": "三题全对，能说出每题的易错点"}, {"step": "02", "title": "图论与动态", "chapterIds": ["ch02"], "checkpoint": "Dijkstra 与 Kruskal 手跑无误"}, {"step": "03", "title": "数据与统计", "chapterIds": ["ch03"], "checkpoint": "斜率与 t 值算对，结论措辞规范"}, {"step": "04", "title": "算法与评价", "chapterIds": ["ch04"], "checkpoint": "完成一次权重灵敏度并解释冠军变化"}], "chapters": [{"id": "ch01", "title": "第 1 章：优化类训练", "file": "chapters/ch01-optimization-drills.md", "difficulty": 2}, {"id": "ch02", "title": "第 2 章：图论与动态过程训练", "file": "chapters/ch02-graph-dynamics-drills.md", "difficulty": 2}, {"id": "ch03", "title": "第 3 章：数据与统计训练", "file": "chapters/ch03-data-statistics-drills.md", "difficulty": 3}, {"id": "ch04", "title": "第 4 章：智能算法与综合评价训练", "file": "chapters/ch04-ai-evaluation-drills.md", "difficulty": 2}], "concepts": [], "patterns": {"file": "patterns.md"}, "cheatsheet": {"file": "cheatsheet.md"}, "glossary": [{"term": "整数间隙", "def": "线性松弛最优值与整数最优值之差", "chapterId": "ch01"}, {"term": "顶点枚举", "def": "逐个计算可行域顶点目标值找最优的办法", "chapterId": "ch01"}, {"term": "距离表", "def": "Dijkstra 中记录起点到各点当前最短距离的表格", "chapterId": "ch02"}, {"term": "顺序交叉", "def": "TSP 遗传算法中保持城市不重复的交叉算子", "chapterId": "ch04"}, {"term": "中心化", "def": "把每个观测减去均值，使数据中心落在原点", "chapterId": "ch03"}, {"term": "拒绝域", "def": "检验统计量落入即拒绝原假设的区间", "chapterId": "ch03"}, {"term": "方差膨胀因子", "def": "变量被其余变量解释程度的指标，VIF>10 视为严重共线", "chapterId": "ch03"}, {"term": "锦标赛选择", "def": "随机取若干个体、留最优作为父代的选择方式", "chapterId": "ch04"}, {"term": "精英保留", "def": "每代把最优个体直接复制到下一代", "chapterId": "ch04"}, {"term": "指数平滑", "def": "用 α 加权当前值与上期平滑值的预测方法", "chapterId": "ch04"}, {"term": "权重灵敏度", "def": "改变权重看排序是否翻转的检验", "chapterId": "ch04"}], "quizzes": [{"id": "q0101", "chapterId": "ch01", "type": "single", "question": "线性规划题列顶点时，最容易漏掉的是？", "options": ["两约束交点", "与坐标轴的交点", "原点", "目标函数等值线上的点"], "answer": 1, "explain": "很多人只算约束交点，忘记坐标轴截距也是顶点，可能正好是最优点。"}, {"id": "q0102", "chapterId": "ch01", "type": "single", "question": "整数间隙指的是？", "options": ["两个整数解之间的距离", "松弛最优值与整数最优值之差", "约束个数与变量个数之差", "目标系数的最大值与最小值之差"], "answer": 1, "explain": "松弛允许小数，整数不允许，两者最优值之差就是间隙。"}, {"id": "q0103", "chapterId": "ch01", "type": "blank", "question": "目标规划中，若要求「利润不低于 60」，不足部分用偏差变量________表示。", "options": [], "answer": "d₁⁻", "explain": "负偏差表示实际值低于目标，正偏差表示超出。"}, {"id": "q0201", "chapterId": "ch02", "type": "single", "question": "Kruskal 算法每次加入新边前必须检查？", "options": ["边是否最短", "是否形成环", "顶点是否用完", "权值是否为正"], "answer": 1, "explain": "成环就跳过，这是维持「树」的结构的关键。"}, {"id": "q0202", "chapterId": "ch02", "type": "single", "question": "差分方程 |a| > 1 时系统？", "options": ["稳定收敛", "不稳定，偏离平衡点", "等幅振荡", "恒为常数"], "answer": 1, "explain": "误差每期按 a 倍放大，模大于 1 时发散。"}, {"id": "q0203", "chapterId": "ch02", "type": "blank", "question": "五点的最小生成树需要________条边。", "options": [], "answer": "4", "explain": "n 个点的树有 n−1 条边。"}, {"id": "q0301", "chapterId": "ch03", "type": "single", "question": "最小二乘斜率公式的分母是？", "options": ["∑xᵢ²", "∑(xᵢ − x̄)²", "∑yᵢ²", "n"], "answer": 1, "explain": "分母是 x 的中心化平方和，未中心化会引入截距相关项。"}, {"id": "q0302", "chapterId": "ch03", "type": "single", "question": "t = 2.83、临界值 2.78，正确结论是？", "options": ["证明均值等于 8", "在 5% 水平下拒绝原假设", "样本一定有问题", "需要增大 α 才能判断"], "answer": 1, "explain": "t 超过临界值即落入拒绝域，结论是拒绝 H₀，而非证明任何事。"}, {"id": "q0303", "chapterId": "ch03", "type": "blank", "question": "VIF 大于________通常视为严重多重共线性。", "options": [], "answer": "10", "explain": "经验阈值，超过 10 说明该变量被其余变量解释程度过高。"}, {"id": "q0401", "chapterId": "ch04", "type": "single", "question": "遗传算法中精英保留的作用是？", "options": ["增加种群规模", "防止最优个体在迭代中丢失", "提高变异率", "缩短编码长度"], "answer": 1, "explain": "把当代最优直接复制到下一代，避免选择与变异破坏已找到的好解。"}, {"id": "q0402", "chapterId": "ch04", "type": "single", "question": "权重从 0.4/0.35/0.25 改成 0.6/0.25/0.15，冠军变化说明？", "options": ["数据算错了", "排序对权重敏感，必须做灵敏度", "应该取平均权重", "评价方法无效"], "answer": 1, "explain": "权重代表偏好，偏好变则排序变，这是评价方法的固有性质。"}, {"id": "q0403", "chapterId": "ch04", "type": "blank", "question": "指数平滑中 α 越小，记忆长度越________。", "options": [], "answer": "长", "explain": "α 小则历史权重衰减慢，长期数据影响更大。"}], "flashcards": [{"id": "f01", "chapterId": "ch01", "front": "列线性规划顶点要算哪三类点？", "back": "与两坐标轴的截距、约束之间的交点、原点", "tags": ["线性规划", "手算"]}, {"id": "f02", "chapterId": "ch01", "front": "整数间隙是什么？", "back": "线性松弛最优值与整数最优值之差，例 20.33 与 19", "tags": ["整数规划"]}, {"id": "f03", "chapterId": "ch01", "front": "目标规划里利润不足用哪个偏差变量？", "back": "d⁻，负偏差表示低于目标", "tags": ["目标规划"]}, {"id": "f04", "chapterId": "ch02", "front": "Dijkstra 每轮确定几个点？", "back": "一个，选当前距离最小的未确定点", "tags": ["图论"]}, {"id": "f05", "chapterId": "ch02", "front": "生成树的三要素？", "back": "连通、无环、恰好 n−1 条边", "tags": ["图论"]}, {"id": "f06", "chapterId": "ch02", "front": "差分方程 xₙ₊₁=1.2xₙ−10 的平衡点与稳定性？", "back": "平衡点 50，|1.2|>1 不稳定，数值发散", "tags": ["差分方程"]}, {"id": "f07", "chapterId": "ch03", "front": "最小二乘斜率的分母？", "back": "∑(xᵢ−x̄)²，中心化平方和", "tags": ["拟合"]}, {"id": "f08", "chapterId": "ch03", "front": "t=2.83 超过临界值 2.78 的正确结论？", "back": "在 5% 水平拒绝原假设，不能说「证明均值等于 8」", "tags": ["统计"]}, {"id": "f09", "chapterId": "ch03", "front": "共线性的三种处理？", "back": "删掉一个、合并变量、改用主成分回归或偏最小二乘", "tags": ["回归"]}, {"id": "f10", "chapterId": "ch04", "front": "TSP 遗传算法为什么不能用普通交叉？", "back": "会产生重复与缺失城市，要用顺序交叉等保序算子", "tags": ["遗传算法"]}, {"id": "f11", "chapterId": "ch04", "front": "评价排序随权重改变说明什么？", "back": "结论对偏好敏感，必须做权重灵敏度并在论文中写明", "tags": ["综合评价"]}, {"id": "f12", "chapterId": "ch04", "front": "移动平均与指数平滑的记忆差别？", "back": "移动平均只看窗口内几期，指数平滑对所有历史加权，α 越小记忆越长", "tags": ["预测"]}], "companion": "exercises学习伴侣.html"}, "pages": {"ch01": {"html": "<h1>第 1 章：优化类训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 1–3、16 章 | <strong>原书题解定位<\/strong>：第 1 章 p1–11、第 2 章 p12–29、第 3 章 p30–37、第 16 章 p158–164\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n不看答案独立解一个二元线性规划，并列出全部顶点；\n<\/li><li>\n判断整数最优与松弛最优的差距，说明为什么不能取整；\n<\/li><li>\n把一段文字需求翻译成目标规划的三组约束。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>优化题的分数，八成给在「模型写对」和「顶点列全」，两成给在算对。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（线性规划，手算）<\/h3>\n<p>max z = 5x₁ + 4x₂，s.t. 2x₁ + 3x₂ ≤ 12，2x₁ + x₂ ≤ 8，x₁, x₂ ≥ 0。<\/p>\n<p><strong>解<\/strong>：列顶点。<\/p>\n<ul><li>\n与 x₂ 轴交点：x₁ = 0 时 3x₂ ≤ 12 → (0, 4)，z = 16。\n<\/li><li>\n与 x₁ 轴交点：x₂ = 0 时 2x₁ ≤ 8 → (4, 0)，z = 20。\n<\/li><li>\n两约束交点：2x₁ + 3x₂ = 12 与 2x₁ + x₂ = 8 相减得 2x₂ = 4，x₂ = 2，代回 x₁ = 3，(3, 2)，z = 15 + 8 = 23。\n<\/li><li>\n还要检查交点是否满足全部约束：2×3 + 3×2 = 12 恰好取等，2×3 + 2 = 8 取等，可行。\n<\/ul>\n<p>最优 (3, 2)，z = 23。<strong>易错点<\/strong>：漏掉 (0,4) 这一顶点；或把交点算成 (3, 2) 后忘记代回验证。<\/p>\n<h3>题 2（整数规划，松弛与取整对比）<\/h3>\n<p>max z = 4x₁ + 3x₂，s.t. 2x₁ + x₂ ≤ 9，x₁ + 2x₂ ≤ 8，x₁, x₂ ≥ 0 且为整数。<\/p>\n<p><strong>解<\/strong>：先解松弛。两约束交点：第一式乘 2 得 4x₁ + 2x₂ = 18，减去第二式得 3x₁ = 10，x₁ = 3.333，x₂ = 2.333，z = 13.333 + 7 = 20.333。<\/p>\n<p>枚举附近整数点：<\/p>\n<table><thead><tr><th>点<\/th><th>约束检查<\/th><th>z<\/th><\/tr><\/thead><tbody><tr><td>(3, 2)<\/td><td>8 ≤ 9，7 ≤ 8<\/td><td>18<\/td><\/tr><tr><td>(4, 1)<\/td><td>9 ≤ 9，6 ≤ 8<\/td><td>19<\/td><\/tr><tr><td>(2, 3)<\/td><td>7 ≤ 9，8 ≤ 8<\/td><td>17<\/td><\/tr><tr><td>(3, 3)<\/td><td>9 ≤ 9，9 &gt; 8 不可行<\/td><td>—<\/td><\/tr><\/tbody><\/table>\n<p>最优 (4, 1)，z = 19。松弛值 20.333 与整数最优 19 的差叫<strong>整数间隙<\/strong>，它说明取整必然损失。<\/p>\n<h3>题 3（目标规划，只建模）<\/h3>\n<p>某厂两产品每件利润 3 千元与 2 千元，用工 2 小时与 1 小时。要求利润不低于 60 千元，用工不超过 45 小时。利润每差 1 千元罚 4 个单位，用工每超 1 小时罚 1 个单位，且利润优先级更高。<\/p>\n<p><strong>解<\/strong>：设产量 x₁、x₂，偏差变量 d₁⁻、d₁⁺、d₂⁻、d₂⁺ 全非负。<\/p>\n<pre class=\"lang-text\"><code>min P₁·4d₁⁻ + P₂·1d₂⁺\ns.t. 3x₁ + 2x₂ + d₁⁻ − d₁⁺ = 60\n     2x₁ + x₂ + d₂⁻ − d₂⁺ = 45\n     x₁, x₂ ≥ 0，d 全 ≥ 0<\/code><\/pre>\n<p><strong>易错点<\/strong>：利润不足用 d₁⁻、用工超出用 d₂⁺，两个方向写反是这类题最常见的失分。P₁ 与 P₂ 表示优先级，不是权重，写成分层求解。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 1 章 线性规划<\/td><td>p1–11<\/td><td>重点做投资组合与运输问题两题，练建模<\/td><\/tr><tr><td>第 2 章 整数规划<\/td><td>p12–29<\/td><td>做指派问题与背包，练 0-1 建模<\/td><\/tr><tr><td>第 3 章 非线性规划<\/td><td>p30–37<\/td><td>做二次规划题，练 KKT 验证<\/td><\/tr><tr><td>第 16 章 多目标<\/td><td>p158–164<\/td><td>做目标规划，练偏差变量方向<\/td><\/tr><\/tbody><\/table>\n<p>对答案时不要只看数字，要对照题解里的建模步骤：变量定义、约束方向、目标系数。数字对而模型错，考试照样扣分。<\/p>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】线性规划题列顶点时，最容易漏掉的是？<\/h3>\n<ul><li>\nA. 两约束交点\n<\/li><li>\nB. 与坐标轴的交点\n<\/li><li>\nC. 原点\n<\/li><li>\nD. 目标函数等值线上的点\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：很多人只算约束交点，忘记坐标轴截距也是顶点，可能正好是最优点。<\/p>\n<\/ul>\n<h3>Q2 【单选】整数间隙指的是？<\/h3>\n<ul><li>\nA. 两个整数解之间的距离\n<\/li><li>\nB. 松弛最优值与整数最优值之差\n<\/li><li>\nC. 约束个数与变量个数之差\n<\/li><li>\nD. 目标系数的最大值与最小值之差\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：松弛允许小数，整数不允许，两者最优值之差就是间隙。<\/p>\n<\/ul>\n<h3>Q3 【填空】目标规划中，若要求「利润不低于 60」，不足部分用偏差变量________表示。<\/h3>\n<p><strong>答案<\/strong>：d₁⁻ <strong>解析<\/strong>：负偏差表示实际值低于目标，正偏差表示超出。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n列顶点要算三类：轴截距、约束交点、原点。\n<\/li><li>\n整数最优必在松弛最优附近，但取整不一定可行。\n<\/li><li>\n目标规划先定方向：不足用负偏差，超出用正偏差。\n<\/ul>", "kind": "chapter", "title": "第 1 章：优化类训练"}, "ch02": {"html": "<h1>第 2 章：图论与动态过程训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 4、6、8 章 | <strong>原书题解定位<\/strong>：第 4 章 p38–58、第 6 章 p68–83、第 8 章 p91–98\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n手跑 Dijkstra 与 Kruskal，并写出每步的距离表或边集；\n<\/li><li>\n判断差分方程平衡点的稳定性，并预测长期趋势；\n<\/li><li>\n把「每年更新设备」这类过程写成递推式。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>图论题的关键是建图（边和权怎么定），动态题的关键是找递推关系（这一期由上一期怎么决定）。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（最短路，Dijkstra）<\/h3>\n<p>五个点 A、B、C、D、E。边权：A-B 4、A-C 2、C-B 1、B-D 5、C-D 8、D-E 2、C-E 10。求 A 到 E 的最短距离与路径。<\/p>\n<p><strong>解<\/strong>：距离表初始化 A=0，其余 ∞。<\/p>\n<ol><li>\n确定 A，更新 B=4、C=2。\n<\/li><li>\n确定 C（2），更新 B=min(4, 2+1)=3、D=min(∞, 2+8)=10、E=2+10=12。\n<\/li><li>\n确定 B（3），更新 D=min(10, 3+5)=8。\n<\/li><li>\n确定 D（8），更新 E=min(12, 8+2)=10。\n<\/li><li>\n确定 E（10），结束。\n<\/ol>\n<p>最短路 A→C→B→D→E，长度 10。<strong>易错点<\/strong>：把 A-B-D-E 算成 4+5+2=11 就收工，忘了 C-B 只有 1。<\/p>\n<h3>题 2（最小生成树，Kruskal）<\/h3>\n<p>五个点，边：A-B 1、A-C 4、B-C 2、B-D 5、C-D 3、D-E 6。求最小生成树总权。<\/p>\n<p><strong>解<\/strong>：按权排序 1、2、3、4、5、6。<\/p>\n<p>取 A-B（1）、B-C（2）、C-D（3）、D-E（6）。四条边连通五点且无环，总权 1+2+3+6 = 12。<\/p>\n<p>若取 A-C（4）替代 B-C（2），总权变 14，不是最小。<strong>易错点<\/strong>：忘记生成树需要恰好 n−1 = 4 条边，多取一条就成环。<\/p>\n<h3>题 3（差分方程，稳定性）<\/h3>\n<p>某类设备数量每年按上年的 1.2 倍扩张，同时每年淘汰 10 台，即 xₙ₊₁ = 1.2xₙ − 10，x₀ = 80。<\/p>\n<p><strong>解<\/strong>：平衡点 x* = −10/(1 − 1.2) = 50。<\/p>\n<p>递推：x₁ = 1.2×80 − 10 = 86；x₂ = 1.2×86 − 10 = 93.2；x₃ = 101.84。<\/p>\n<p>初值 80 已经高于平衡点 50，而 |1.2| &gt; 1 说明系统不稳定，于是数值继续上升、越走越远。这说明「扩张倍数大于 1」的模型没有上限约束，长期必然发散，实际建模要加容量上限或改成饱和增长。<\/p>\n<p><strong>易错点<\/strong>：只算平衡点不判稳定性，得出「长期稳定在 50 台」的错误结论。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 4 章 图与网络<\/td><td>p38–58<\/td><td>钢管订购与运输一题值得完整做，含建图与优化两层<\/td><\/tr><tr><td>第 6 章 微分方程<\/td><td>p68–83<\/td><td>传染病预测题要对着参数做灵敏度<\/td><\/tr><tr><td>第 8 章 差分方程<\/td><td>p91–98<\/td><td>捕鱼策略题注意 Leslie 矩阵的年龄分组<\/td><\/tr><\/tbody><\/table>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】Kruskal 算法每次加入新边前必须检查？<\/h3>\n<ul><li>\nA. 边是否最短\n<\/li><li>\nB. 是否形成环\n<\/li><li>\nC. 顶点是否用完\n<\/li><li>\nD. 权值是否为正\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：成环就跳过，这是维持「树」的结构的关键。<\/p>\n<\/ul>\n<h3>Q2 【单选】差分方程 |a| &gt; 1 时系统？<\/h3>\n<ul><li>\nA. 稳定收敛\n<\/li><li>\nB. 不稳定，偏离平衡点\n<\/li><li>\nC. 等幅振荡\n<\/li><li>\nD. 恒为常数\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：误差每期按 a 倍放大，模大于 1 时发散。<\/p>\n<\/ul>\n<h3>Q3 【填空】五点的最小生成树需要________条边。<\/h3>\n<p><strong>答案<\/strong>：4 <strong>解析<\/strong>：n 个点的树有 n−1 条边。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\nDijkstra 每步只确定一个点，距离表要逐轮更新。\n<\/li><li>\n生成树 = 连通 + 无环 + n−1 条边。\n<\/li><li>\n平衡点存在不等于稳定，先看特征根模。\n<\/ul>", "kind": "chapter", "title": "第 2 章：图论与动态过程训练"}, "ch03": {"html": "<h1>第 3 章：数据与统计训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★★ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 5、7、10、11 章 | <strong>原书题解定位<\/strong>：第 5 章 p59–67、第 7 章 p84–90、第 10 章 p103–126、第 11 章 p127–132\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n手算一条最小二乘直线，并算出残差平方和；\n<\/li><li>\n完整做一次单样本 t 检验，把结论写成评审能接受的话；\n<\/li><li>\n判断一组数据是否适合直接做回归，还是先要处理共线性。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>统计题的错误很少出在算错，多半出在「假设不满足还硬做」和「结论说得比证据强」。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（最小二乘拟合）<\/h3>\n<p>数据：x = 0, 1, 2, 3；y = 1, 2, 4, 5。求拟合直线并算残差平方和。<\/p>\n<p><strong>解<\/strong>：x̄ = 1.5，ȳ = 3。<\/p>\n<p>Sxy = (−1.5)(−2) + (−0.5)(−1) + (0.5)(1) + (1.5)(2) = 3 + 0.5 + 0.5 + 3 = 7。 Sxx = 2.25 + 0.25 + 0.25 + 2.25 = 4.75。 斜率 b = 7/4.75 = 1.474，截距 a = 3 − 1.474×1.5 = 0.789。<\/p>\n<p>预测值：0.789、2.263、3.737、5.211。 残差：0.211、−0.263、0.263、−0.211。 残差平方和 = 0.045 + 0.069 + 0.069 + 0.045 ≈ 0.23。<\/p>\n<p>结论：y ≈ 0.79 + 1.47x。<strong>易错点<\/strong>：把 Sxx 算成 ∑x² = 14，那是没中心化的写法，会得到错误斜率。<\/p>\n<h3>题 2（单样本 t 检验）<\/h3>\n<p>某零件标准长度 8 mm，抽 5 件测得 8、10、9、11、12，问是否显著偏离 8（α = 0.05）。<\/p>\n<p><strong>解<\/strong>：x̄ = 10，偏差 −2、0、−1、1、2，平方和 10，s² = 10/4 = 2.5，s = 1.581。 SE = 1.581/√5 = 0.707。 t = (10 − 8)/0.707 = 2.828，df = 4。 双侧 5% 临界值 t₀.₀₂₅,₄ = 2.776。2.828 &gt; 2.776，拒绝 H₀。<\/p>\n<p>结论：「在 5% 显著性水平下，样本均值与 8 mm 存在显著差异，估计均值 10 mm，95% 置信区间约 [8.04, 11.96]」。<\/p>\n<p><strong>易错点<\/strong>：算出 t 大于临界值却写「证明均值是 10」，统计只能说不拒绝或拒绝，不能说证明。<\/p>\n<h3>题 3（共线性诊断）<\/h3>\n<p>某回归有 4 个自变量，相关矩阵中 x₁ 与 x₂ 的相关系数为 0.98，x₃ 与 x₄ 为 0.15。问该怎么处理。<\/p>\n<p><strong>解<\/strong>：x₁ 与 x₂ 高度相关，直接回归会出现系数符号反常、方差膨胀。<\/p>\n<p>三种处理：<\/p>\n<ol><li>\n删掉一个：若业务上 x₂ 可由 x₁ 解释，保留更有解释力的那个。\n<\/li><li>\n合并：用 x₁ + x₂ 或均值作为一个新变量。\n<\/li><li>\n换方法：用主成分回归或偏最小二乘，把相关变量打包成成分。\n<\/ol>\n<p>处理前后都要报告 VIF。VIF &gt; 10 通常视为严重共线，计算式 VIFⱼ = 1/(1 − Rⱼ²)，Rⱼ² 是第 j 个变量被其余变量回归的解释度。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 5 章 插值与拟合<\/td><td>p59–67<\/td><td>黄河小浪底一题练「先拟合再优化」的两层结构<\/td><\/tr><tr><td>第 7 章 数理统计<\/td><td>p84–90<\/td><td>参数估计与假设检验各做一题，重点写结论措辞<\/td><\/tr><tr><td>第 10 章 多元分析<\/td><td>p103–126<\/td><td>聚类与主成分各一题，注意标准化<\/td><\/tr><tr><td>第 11 章 偏最小二乘<\/td><td>p127–132<\/td><td>练成分数选择与 VIP 解读<\/td><\/tr><\/tbody><\/table>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】最小二乘斜率公式的分母是？<\/h3>\n<ul><li>\nA. ∑xᵢ²\n<\/li><li>\nB. ∑(xᵢ − x̄)²\n<\/li><li>\nC. ∑yᵢ²\n<\/li><li>\nD. n\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：分母是 x 的中心化平方和，未中心化会引入截距相关项。<\/p>\n<\/ul>\n<h3>Q2 【单选】t = 2.83、临界值 2.78，正确结论是？<\/h3>\n<ul><li>\nA. 证明均值等于 8\n<\/li><li>\nB. 在 5% 水平下拒绝原假设\n<\/li><li>\nC. 样本一定有问题\n<\/li><li>\nD. 需要增大 α 才能判断\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：t 超过临界值即落入拒绝域，结论是拒绝 H₀，而非证明任何事。<\/p>\n<\/ul>\n<h3>Q3 【填空】VIF 大于________通常视为严重多重共线性。<\/h3>\n<p><strong>答案<\/strong>：10 <strong>解析<\/strong>：经验阈值，超过 10 说明该变量被其余变量解释程度过高。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n拟合先中心化，斜率 = 协方差/方差。\n<\/li><li>\n检验结论只有「拒绝」与「不拒绝」，没有「证明」。\n<\/li><li>\n共线三招：删、合并、换方法。\n<\/ul>", "kind": "chapter", "title": "第 3 章：数据与统计训练"}, "ch04": {"html": "<h1>第 4 章：智能算法与综合评价训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 9、12、14、15 章 | <strong>原书题解定位<\/strong>：第 9 章 p99–102、第 12 章 p133–139、第 13 章 p140–143、第 14 章 p144–150、第 15 章 p151–157\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n为一个小规模 TSP 设计完整的遗传算法五件套；\n<\/li><li>\n手算一次多指标加权评价，并解释权重变化对排序的影响；\n<\/li><li>\n用移动平均与指数平滑各做一次预测，说清两者的差别。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>这类题不考公式推导，考的是「参数与口径交代得够不够清楚，别人能不能照你的描述复现」。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（遗传算法设计）<\/h3>\n<p>8 个城市，坐标已知，求最短遍历回路。写出编码、适应度、选择、交叉、变异与终止条件。<\/p>\n<p><strong>解<\/strong>：<\/p>\n<ul><li>\n<strong>编码<\/strong>：整数序列，如 [3,1,5,2,8,4,7,6]，表示访问顺序。\n<\/li><li>\n<strong>适应度<\/strong>：f = 1/总路程。路程越短适应度越高。\n<\/li><li>\n<strong>选择<\/strong>：锦标赛，每次随机取 3 个个体，留最短的。\n<\/li><li>\n<strong>交叉<\/strong>：顺序交叉（OX）。父代 A = [1 2 3 4 5 6 7 8]，B = [4 5 2 1 8 7 6 3]。取 A 的片段 [3 4 5]，剩余位置按 B 的顺序补 2、1、8、7、6，得 [2 1 8 3 4 5 7 6]。\n<\/li><li>\n<strong>变异<\/strong>：随机交换两个位置，或反转一段（2-opt）。\n<\/li><li>\n<strong>终止<\/strong>：迭代 500 代，或连续 50 代最优值不改进。\n<\/ul>\n<p>参数：种群 100，交叉率 0.8，变异率 0.05，精英保留 2 个。<\/p>\n<p>报告要求：独立运行 20 次，给出最好、平均、标准差。只报一次最好值不合格。<\/p>\n<h3>题 2（综合评价）<\/h3>\n<p>四个方案，三个指标（成本、质量、交付），已标准化为 0–1 且统一为越大越好：S1 (0.9, 0.5, 0.6)、S2 (0.7, 0.8, 0.5)、S3 (0.6, 0.9, 0.7)、S4 (0.5, 0.6, 0.9)。权重 0.4、0.35、0.25，排序。<\/p>\n<p><strong>解<\/strong>：<\/p>\n<ul><li>\nS1 = 0.4×0.9 + 0.35×0.5 + 0.25×0.6 = 0.36 + 0.175 + 0.15 = 0.685\n<\/li><li>\nS2 = 0.28 + 0.28 + 0.125 = 0.685\n<\/li><li>\nS3 = 0.24 + 0.315 + 0.175 = 0.73\n<\/li><li>\nS4 = 0.20 + 0.21 + 0.225 = 0.635\n<\/ul>\n<p>排序 S3 &gt; S1 = S2 &gt; S4。S1 与 S2 并列，说明成本优势恰好被质量劣势抵消。<\/p>\n<p><strong>灵敏度<\/strong>：把成本权重从 0.4 提到 0.6（质量 0.25、交付 0.15）：<\/p>\n<ul><li>\nS1 = 0.54 + 0.125 + 0.09 = 0.755\n<\/li><li>\nS2 = 0.42 + 0.20 + 0.075 = 0.695\n<\/li><li>\nS3 = 0.36 + 0.225 + 0.105 = 0.69\n<\/ul>\n<p>排序变成 S1 &gt; S2 &gt; S3，冠军换了人。这就是为什么权重必须做灵敏度，且要在论文里写明。<\/p>\n<h3>题 3（预测对比）<\/h3>\n<p>销量序列 10、12、14、15、17，分别用 3 期移动平均与 α = 0.5 的指数平滑预测下一期。<\/p>\n<p><strong>解<\/strong>：<\/p>\n<ul><li>\n移动平均：(14 + 15 + 17)/3 = 15.33。\n<\/li><li>\n指数平滑：S₁ = 10，S₂ = 0.5×12 + 0.5×10 = 11，S₃ = 12.5，S₄ = 13.75，S₅ = 15.375。\n<\/ul>\n<p>两者接近，差别在记忆长度：移动平均只看最近 3 期，指数平滑对所有历史加权，α 越小记忆越长。数据有突变时移动平均反应更快，平稳时指数平滑更稳。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 9 章 SVM<\/td><td>p99–102<\/td><td>练核函数与 C 的对比实验<\/td><\/tr><tr><td>第 12 章 现代优化<\/td><td>p133–139<\/td><td>退火与遗传各做一题，记录参数表<\/td><\/tr><tr><td>第 13 章 图像处理<\/td><td>p140–143<\/td><td>做一次滤波与直方图均衡的对比<\/td><\/tr><tr><td>第 14 章 综合评价<\/td><td>p144–150<\/td><td>公务员招聘一题完整做，含权重灵敏度<\/td><\/tr><tr><td>第 15 章 预测<\/td><td>p151–157<\/td><td>灰色预测一题，写出级比检验<\/td><\/tr><\/tbody><\/table>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】遗传算法中精英保留的作用是？<\/h3>\n<ul><li>\nA. 增加种群规模\n<\/li><li>\nB. 防止最优个体在迭代中丢失\n<\/li><li>\nC. 提高变异率\n<\/li><li>\nD. 缩短编码长度\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：把当代最优直接复制到下一代，避免选择与变异破坏已找到的好解。<\/p>\n<\/ul>\n<h3>Q2 【单选】权重从 0.4/0.35/0.25 改成 0.6/0.25/0.15，冠军变化说明？<\/h3>\n<ul><li>\nA. 数据算错了\n<\/li><li>\nB. 排序对权重敏感，必须做灵敏度\n<\/li><li>\nC. 应该取平均权重\n<\/li><li>\nD. 评价方法无效\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：权重代表偏好，偏好变则排序变，这是评价方法的固有性质。<\/p>\n<\/ul>\n<h3>Q3 【填空】指数平滑中 α 越小，记忆长度越________。<\/h3>\n<p><strong>答案<\/strong>：长 <strong>解析<\/strong>：α 小则历史权重衰减慢，长期数据影响更大。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n启发式要给完整参数表与多次运行分布。\n<\/li><li>\n评价要给权重来源与灵敏度。\n<\/li><li>\n移动平均看窗口，指数平滑看 α。\n<\/ul>", "kind": "chapter", "title": "第 4 章：智能算法与综合评价训练"}, "__path__": {"html": "<h1>学习路径<\/h1><p>按推荐顺序学习；每步通过检查点（自测题）后再继续。<\/p><ol class='path-list'><li class='path-step' id='path-01'><strong>步骤 01：优化类<\/strong><br>阅读：<a href=\"#/chapter/ch01\">第 1 章：优化类训练<\/a><br>检查点：三题全对，能说出每题的易错点<\/li><li class='path-step' id='path-02'><strong>步骤 02：图论与动态<\/strong><br>阅读：<a href=\"#/chapter/ch02\">第 2 章：图论与动态过程训练<\/a><br>检查点：Dijkstra 与 Kruskal 手跑无误<\/li><li class='path-step' id='path-03'><strong>步骤 03：数据与统计<\/strong><br>阅读：<a href=\"#/chapter/ch03\">第 3 章：数据与统计训练<\/a><br>检查点：斜率与 t 值算对，结论措辞规范<\/li><li class='path-step' id='path-04'><strong>步骤 04：算法与评价<\/strong><br>阅读：<a href=\"#/chapter/ch04\">第 4 章：智能算法与综合评价训练<\/a><br>检查点：完成一次权重灵敏度并解释冠军变化<\/li><\/ol><p>进度：<span id='path-progress-label'>0/0<\/span><\/p>", "kind": "path", "title": "学习路径"}, "__quiz_all__": {"html": "<p>（无综合题）<\/p>", "kind": "quiz", "title": "综合测验"}, "__quiz_ch01__": {"html": "<h1>测验：第 1 章：优化类训练<\/h1><div class='quiz-item' data-qid='q0101' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 线性规划题列顶点时，最容易漏掉的是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0101' value='0'> 两约束交点<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='1'> 与坐标轴的交点<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='2'> 原点<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='3'> 目标函数等值线上的点<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0102' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 整数间隙指的是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0102' value='0'> 两个整数解之间的距离<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='1'> 松弛最优值与整数最优值之差<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='2'> 约束个数与变量个数之差<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='3'> 目标系数的最大值与最小值之差<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0103' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 目标规划中，若要求「利润不低于 60」，不足部分用偏差变量________表示。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "kind": "quiz", "title": "测验"}, "__quiz_ch02__": {"html": "<h1>测验：第 2 章：图论与动态过程训练<\/h1><div class='quiz-item' data-qid='q0201' data-type='single'><p class='quiz-q'><b>Q1.<\/b> Kruskal 算法每次加入新边前必须检查？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0201' value='0'> 边是否最短<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='1'> 是否形成环<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='2'> 顶点是否用完<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='3'> 权值是否为正<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0202' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 差分方程 |a| &gt; 1 时系统？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0202' value='0'> 稳定收敛<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='1'> 不稳定，偏离平衡点<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='2'> 等幅振荡<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='3'> 恒为常数<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0203' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 五点的最小生成树需要________条边。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "kind": "quiz", "title": "测验"}, "__quiz_ch03__": {"html": "<h1>测验：第 3 章：数据与统计训练<\/h1><div class='quiz-item' data-qid='q0301' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 最小二乘斜率公式的分母是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0301' value='0'> ∑xᵢ²<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='1'> ∑(xᵢ − x̄)²<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='2'> ∑yᵢ²<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='3'> n<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0302' data-type='single'><p class='quiz-q'><b>Q2.<\/b> t = 2.83、临界值 2.78，正确结论是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0302' value='0'> 证明均值等于 8<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='1'> 在 5% 水平下拒绝原假设<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='2'> 样本一定有问题<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='3'> 需要增大 α 才能判断<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0303' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> VIF 大于________通常视为严重多重共线性。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "kind": "quiz", "title": "测验"}, "__quiz_ch04__": {"html": "<h1>测验：第 4 章：智能算法与综合评价训练<\/h1><div class='quiz-item' data-qid='q0401' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 遗传算法中精英保留的作用是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0401' value='0'> 增加种群规模<\/label><label class='quiz-opt'><input type='radio' name='q0401' value='1'> 防止最优个体在迭代中丢失<\/label><label class='quiz-opt'><input type='radio' name='q0401' value='2'> 提高变异率<\/label><label class='quiz-opt'><input type='radio' name='q0401' value='3'> 缩短编码长度<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0402' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 权重从 0.4/0.35/0.25 改成 0.6/0.25/0.15，冠军变化说明？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0402' value='0'> 数据算错了<\/label><label class='quiz-opt'><input type='radio' name='q0402' value='1'> 排序对权重敏感，必须做灵敏度<\/label><label class='quiz-opt'><input type='radio' name='q0402' value='2'> 应该取平均权重<\/label><label class='quiz-opt'><input type='radio' name='q0402' value='3'> 评价方法无效<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0403' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 指数平滑中 α 越小，记忆长度越________。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "kind": "quiz", "title": "测验"}, "__cards__": {"html": "<h1>抽认卡<\/h1><p>点击卡片翻面；判断「认识 / 不熟」以记录复习状态。<\/p><div class='card-controls'><label>按章节筛选：<select id='card-filter'><option value=''>全部<\/option><\/select><\/label><span class='card-counts'>认识 <b id='card-known'>0<\/b> · 不熟 <b id='card-again'>0<\/b> · 剩余 <b id='card-left'>0<\/b><\/span><\/div><div id='card-stage'><div class='flashcard' id='flashcard'><div class='fc-inner'><div class='fc-front'><\/div><div class='fc-back'><\/div><\/div><\/div><\/div><div class='card-actions'><button id='card-again-btn'>不熟<\/button><button id='card-known-btn'>认识<\/button><\/div>", "kind": "cards", "title": "抽认卡"}, "__glossary__": {"html": "<h1>术语表<\/h1><input id='glossary-filter' type='search' placeholder='筛选术语…'><ul id='glossary-list'><li data-term='整数间隙'>整数间隙 — 线性松弛最优值与整数最优值之差 <span class=glossary-ref>（第 1 章：优化类训练）<\/span><\/li><li data-term='顶点枚举'>顶点枚举 — 逐个计算可行域顶点目标值找最优的办法 <span class=glossary-ref>（第 1 章：优化类训练）<\/span><\/li><li data-term='距离表'>距离表 — Dijkstra 中记录起点到各点当前最短距离的表格 <span class=glossary-ref>（第 2 章：图论与动态过程训练）<\/span><\/li><li data-term='顺序交叉'>顺序交叉 — TSP 遗传算法中保持城市不重复的交叉算子 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='中心化'>中心化 — 把每个观测减去均值，使数据中心落在原点 <span class=glossary-ref>（第 3 章：数据与统计训练）<\/span><\/li><li data-term='拒绝域'>拒绝域 — 检验统计量落入即拒绝原假设的区间 <span class=glossary-ref>（第 3 章：数据与统计训练）<\/span><\/li><li data-term='方差膨胀因子'>方差膨胀因子 — 变量被其余变量解释程度的指标，VIF&gt;10 视为严重共线 <span class=glossary-ref>（第 3 章：数据与统计训练）<\/span><\/li><li data-term='锦标赛选择'>锦标赛选择 — 随机取若干个体、留最优作为父代的选择方式 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='精英保留'>精英保留 — 每代把最优个体直接复制到下一代 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='指数平滑'>指数平滑 — 用 α 加权当前值与上期平滑值的预测方法 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='权重灵敏度'>权重灵敏度 — 改变权重看排序是否翻转的检验 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><\/ul>", "kind": "glossary", "title": "术语表"}}, "base_dir": "/home/user/Doubao/chats/38451429143789314/数学建模学习手册/02-习题与真题演练", "nav": [{"label": "学习路径", "href": "#/path"}, {"label": "章节", "children": [{"label": "第 1 章：优化类训练", "href": "#/chapter/ch01"}, {"label": "第 2 章：图论与动态过程训练", "href": "#/chapter/ch02"}, {"label": "第 3 章：数据与统计训练", "href": "#/chapter/ch03"}, {"label": "第 4 章：智能算法与综合评价训练", "href": "#/chapter/ch04"}]}, {"label": "测验", "children": [{"label": "综合测验", "href": "#/quiz/all"}, {"label": "测验：第 1 章：优化类训练", "href": "#/quiz/ch01"}, {"label": "测验：第 2 章：图论与动态过程训练", "href": "#/quiz/ch02"}, {"label": "测验：第 3 章：数据与统计训练", "href": "#/quiz/ch03"}, {"label": "测验：第 4 章：智能算法与综合评价训练", "href": "#/quiz/ch04"}]}, {"label": "抽认卡", "href": "#/cards"}, {"label": "术语表", "href": "#/glossary"}], "rendered": {"ch01": "<h1>第 1 章：优化类训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 1–3、16 章 | <strong>原书题解定位<\/strong>：第 1 章 p1–11、第 2 章 p12–29、第 3 章 p30–37、第 16 章 p158–164\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n不看答案独立解一个二元线性规划，并列出全部顶点；\n<\/li><li>\n判断整数最优与松弛最优的差距，说明为什么不能取整；\n<\/li><li>\n把一段文字需求翻译成目标规划的三组约束。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>优化题的分数，八成给在「模型写对」和「顶点列全」，两成给在算对。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（线性规划，手算）<\/h3>\n<p>max z = 5x₁ + 4x₂，s.t. 2x₁ + 3x₂ ≤ 12，2x₁ + x₂ ≤ 8，x₁, x₂ ≥ 0。<\/p>\n<p><strong>解<\/strong>：列顶点。<\/p>\n<ul><li>\n与 x₂ 轴交点：x₁ = 0 时 3x₂ ≤ 12 → (0, 4)，z = 16。\n<\/li><li>\n与 x₁ 轴交点：x₂ = 0 时 2x₁ ≤ 8 → (4, 0)，z = 20。\n<\/li><li>\n两约束交点：2x₁ + 3x₂ = 12 与 2x₁ + x₂ = 8 相减得 2x₂ = 4，x₂ = 2，代回 x₁ = 3，(3, 2)，z = 15 + 8 = 23。\n<\/li><li>\n还要检查交点是否满足全部约束：2×3 + 3×2 = 12 恰好取等，2×3 + 2 = 8 取等，可行。\n<\/ul>\n<p>最优 (3, 2)，z = 23。<strong>易错点<\/strong>：漏掉 (0,4) 这一顶点；或把交点算成 (3, 2) 后忘记代回验证。<\/p>\n<h3>题 2（整数规划，松弛与取整对比）<\/h3>\n<p>max z = 4x₁ + 3x₂，s.t. 2x₁ + x₂ ≤ 9，x₁ + 2x₂ ≤ 8，x₁, x₂ ≥ 0 且为整数。<\/p>\n<p><strong>解<\/strong>：先解松弛。两约束交点：第一式乘 2 得 4x₁ + 2x₂ = 18，减去第二式得 3x₁ = 10，x₁ = 3.333，x₂ = 2.333，z = 13.333 + 7 = 20.333。<\/p>\n<p>枚举附近整数点：<\/p>\n<table><thead><tr><th>点<\/th><th>约束检查<\/th><th>z<\/th><\/tr><\/thead><tbody><tr><td>(3, 2)<\/td><td>8 ≤ 9，7 ≤ 8<\/td><td>18<\/td><\/tr><tr><td>(4, 1)<\/td><td>9 ≤ 9，6 ≤ 8<\/td><td>19<\/td><\/tr><tr><td>(2, 3)<\/td><td>7 ≤ 9，8 ≤ 8<\/td><td>17<\/td><\/tr><tr><td>(3, 3)<\/td><td>9 ≤ 9，9 &gt; 8 不可行<\/td><td>—<\/td><\/tr><\/tbody><\/table>\n<p>最优 (4, 1)，z = 19。松弛值 20.333 与整数最优 19 的差叫<strong>整数间隙<\/strong>，它说明取整必然损失。<\/p>\n<h3>题 3（目标规划，只建模）<\/h3>\n<p>某厂两产品每件利润 3 千元与 2 千元，用工 2 小时与 1 小时。要求利润不低于 60 千元，用工不超过 45 小时。利润每差 1 千元罚 4 个单位，用工每超 1 小时罚 1 个单位，且利润优先级更高。<\/p>\n<p><strong>解<\/strong>：设产量 x₁、x₂，偏差变量 d₁⁻、d₁⁺、d₂⁻、d₂⁺ 全非负。<\/p>\n<pre class=\"lang-text\"><code>min P₁·4d₁⁻ + P₂·1d₂⁺\ns.t. 3x₁ + 2x₂ + d₁⁻ − d₁⁺ = 60\n     2x₁ + x₂ + d₂⁻ − d₂⁺ = 45\n     x₁, x₂ ≥ 0，d 全 ≥ 0<\/code><\/pre>\n<p><strong>易错点<\/strong>：利润不足用 d₁⁻、用工超出用 d₂⁺，两个方向写反是这类题最常见的失分。P₁ 与 P₂ 表示优先级，不是权重，写成分层求解。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 1 章 线性规划<\/td><td>p1–11<\/td><td>重点做投资组合与运输问题两题，练建模<\/td><\/tr><tr><td>第 2 章 整数规划<\/td><td>p12–29<\/td><td>做指派问题与背包，练 0-1 建模<\/td><\/tr><tr><td>第 3 章 非线性规划<\/td><td>p30–37<\/td><td>做二次规划题，练 KKT 验证<\/td><\/tr><tr><td>第 16 章 多目标<\/td><td>p158–164<\/td><td>做目标规划，练偏差变量方向<\/td><\/tr><\/tbody><\/table>\n<p>对答案时不要只看数字，要对照题解里的建模步骤：变量定义、约束方向、目标系数。数字对而模型错，考试照样扣分。<\/p>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】线性规划题列顶点时，最容易漏掉的是？<\/h3>\n<ul><li>\nA. 两约束交点\n<\/li><li>\nB. 与坐标轴的交点\n<\/li><li>\nC. 原点\n<\/li><li>\nD. 目标函数等值线上的点\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：很多人只算约束交点，忘记坐标轴截距也是顶点，可能正好是最优点。<\/p>\n<\/ul>\n<h3>Q2 【单选】整数间隙指的是？<\/h3>\n<ul><li>\nA. 两个整数解之间的距离\n<\/li><li>\nB. 松弛最优值与整数最优值之差\n<\/li><li>\nC. 约束个数与变量个数之差\n<\/li><li>\nD. 目标系数的最大值与最小值之差\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：松弛允许小数，整数不允许，两者最优值之差就是间隙。<\/p>\n<\/ul>\n<h3>Q3 【填空】目标规划中，若要求「利润不低于 60」，不足部分用偏差变量________表示。<\/h3>\n<p><strong>答案<\/strong>：d₁⁻ <strong>解析<\/strong>：负偏差表示实际值低于目标，正偏差表示超出。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n列顶点要算三类：轴截距、约束交点、原点。\n<\/li><li>\n整数最优必在松弛最优附近，但取整不一定可行。\n<\/li><li>\n目标规划先定方向：不足用负偏差，超出用正偏差。\n<\/ul>", "ch02": "<h1>第 2 章：图论与动态过程训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 4、6、8 章 | <strong>原书题解定位<\/strong>：第 4 章 p38–58、第 6 章 p68–83、第 8 章 p91–98\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n手跑 Dijkstra 与 Kruskal，并写出每步的距离表或边集；\n<\/li><li>\n判断差分方程平衡点的稳定性，并预测长期趋势；\n<\/li><li>\n把「每年更新设备」这类过程写成递推式。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>图论题的关键是建图（边和权怎么定），动态题的关键是找递推关系（这一期由上一期怎么决定）。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（最短路，Dijkstra）<\/h3>\n<p>五个点 A、B、C、D、E。边权：A-B 4、A-C 2、C-B 1、B-D 5、C-D 8、D-E 2、C-E 10。求 A 到 E 的最短距离与路径。<\/p>\n<p><strong>解<\/strong>：距离表初始化 A=0，其余 ∞。<\/p>\n<ol><li>\n确定 A，更新 B=4、C=2。\n<\/li><li>\n确定 C（2），更新 B=min(4, 2+1)=3、D=min(∞, 2+8)=10、E=2+10=12。\n<\/li><li>\n确定 B（3），更新 D=min(10, 3+5)=8。\n<\/li><li>\n确定 D（8），更新 E=min(12, 8+2)=10。\n<\/li><li>\n确定 E（10），结束。\n<\/ol>\n<p>最短路 A→C→B→D→E，长度 10。<strong>易错点<\/strong>：把 A-B-D-E 算成 4+5+2=11 就收工，忘了 C-B 只有 1。<\/p>\n<h3>题 2（最小生成树，Kruskal）<\/h3>\n<p>五个点，边：A-B 1、A-C 4、B-C 2、B-D 5、C-D 3、D-E 6。求最小生成树总权。<\/p>\n<p><strong>解<\/strong>：按权排序 1、2、3、4、5、6。<\/p>\n<p>取 A-B（1）、B-C（2）、C-D（3）、D-E（6）。四条边连通五点且无环，总权 1+2+3+6 = 12。<\/p>\n<p>若取 A-C（4）替代 B-C（2），总权变 14，不是最小。<strong>易错点<\/strong>：忘记生成树需要恰好 n−1 = 4 条边，多取一条就成环。<\/p>\n<h3>题 3（差分方程，稳定性）<\/h3>\n<p>某类设备数量每年按上年的 1.2 倍扩张，同时每年淘汰 10 台，即 xₙ₊₁ = 1.2xₙ − 10，x₀ = 80。<\/p>\n<p><strong>解<\/strong>：平衡点 x* = −10/(1 − 1.2) = 50。<\/p>\n<p>递推：x₁ = 1.2×80 − 10 = 86；x₂ = 1.2×86 − 10 = 93.2；x₃ = 101.84。<\/p>\n<p>初值 80 已经高于平衡点 50，而 |1.2| &gt; 1 说明系统不稳定，于是数值继续上升、越走越远。这说明「扩张倍数大于 1」的模型没有上限约束，长期必然发散，实际建模要加容量上限或改成饱和增长。<\/p>\n<p><strong>易错点<\/strong>：只算平衡点不判稳定性，得出「长期稳定在 50 台」的错误结论。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 4 章 图与网络<\/td><td>p38–58<\/td><td>钢管订购与运输一题值得完整做，含建图与优化两层<\/td><\/tr><tr><td>第 6 章 微分方程<\/td><td>p68–83<\/td><td>传染病预测题要对着参数做灵敏度<\/td><\/tr><tr><td>第 8 章 差分方程<\/td><td>p91–98<\/td><td>捕鱼策略题注意 Leslie 矩阵的年龄分组<\/td><\/tr><\/tbody><\/table>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】Kruskal 算法每次加入新边前必须检查？<\/h3>\n<ul><li>\nA. 边是否最短\n<\/li><li>\nB. 是否形成环\n<\/li><li>\nC. 顶点是否用完\n<\/li><li>\nD. 权值是否为正\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：成环就跳过，这是维持「树」的结构的关键。<\/p>\n<\/ul>\n<h3>Q2 【单选】差分方程 |a| &gt; 1 时系统？<\/h3>\n<ul><li>\nA. 稳定收敛\n<\/li><li>\nB. 不稳定，偏离平衡点\n<\/li><li>\nC. 等幅振荡\n<\/li><li>\nD. 恒为常数\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：误差每期按 a 倍放大，模大于 1 时发散。<\/p>\n<\/ul>\n<h3>Q3 【填空】五点的最小生成树需要________条边。<\/h3>\n<p><strong>答案<\/strong>：4 <strong>解析<\/strong>：n 个点的树有 n−1 条边。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\nDijkstra 每步只确定一个点，距离表要逐轮更新。\n<\/li><li>\n生成树 = 连通 + 无环 + n−1 条边。\n<\/li><li>\n平衡点存在不等于稳定，先看特征根模。\n<\/ul>", "ch03": "<h1>第 3 章：数据与统计训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★★ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 5、7、10、11 章 | <strong>原书题解定位<\/strong>：第 5 章 p59–67、第 7 章 p84–90、第 10 章 p103–126、第 11 章 p127–132\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n手算一条最小二乘直线，并算出残差平方和；\n<\/li><li>\n完整做一次单样本 t 检验，把结论写成评审能接受的话；\n<\/li><li>\n判断一组数据是否适合直接做回归，还是先要处理共线性。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>统计题的错误很少出在算错，多半出在「假设不满足还硬做」和「结论说得比证据强」。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（最小二乘拟合）<\/h3>\n<p>数据：x = 0, 1, 2, 3；y = 1, 2, 4, 5。求拟合直线并算残差平方和。<\/p>\n<p><strong>解<\/strong>：x̄ = 1.5，ȳ = 3。<\/p>\n<p>Sxy = (−1.5)(−2) + (−0.5)(−1) + (0.5)(1) + (1.5)(2) = 3 + 0.5 + 0.5 + 3 = 7。 Sxx = 2.25 + 0.25 + 0.25 + 2.25 = 4.75。 斜率 b = 7/4.75 = 1.474，截距 a = 3 − 1.474×1.5 = 0.789。<\/p>\n<p>预测值：0.789、2.263、3.737、5.211。 残差：0.211、−0.263、0.263、−0.211。 残差平方和 = 0.045 + 0.069 + 0.069 + 0.045 ≈ 0.23。<\/p>\n<p>结论：y ≈ 0.79 + 1.47x。<strong>易错点<\/strong>：把 Sxx 算成 ∑x² = 14，那是没中心化的写法，会得到错误斜率。<\/p>\n<h3>题 2（单样本 t 检验）<\/h3>\n<p>某零件标准长度 8 mm，抽 5 件测得 8、10、9、11、12，问是否显著偏离 8（α = 0.05）。<\/p>\n<p><strong>解<\/strong>：x̄ = 10，偏差 −2、0、−1、1、2，平方和 10，s² = 10/4 = 2.5，s = 1.581。 SE = 1.581/√5 = 0.707。 t = (10 − 8)/0.707 = 2.828，df = 4。 双侧 5% 临界值 t₀.₀₂₅,₄ = 2.776。2.828 &gt; 2.776，拒绝 H₀。<\/p>\n<p>结论：「在 5% 显著性水平下，样本均值与 8 mm 存在显著差异，估计均值 10 mm，95% 置信区间约 [8.04, 11.96]」。<\/p>\n<p><strong>易错点<\/strong>：算出 t 大于临界值却写「证明均值是 10」，统计只能说不拒绝或拒绝，不能说证明。<\/p>\n<h3>题 3（共线性诊断）<\/h3>\n<p>某回归有 4 个自变量，相关矩阵中 x₁ 与 x₂ 的相关系数为 0.98，x₃ 与 x₄ 为 0.15。问该怎么处理。<\/p>\n<p><strong>解<\/strong>：x₁ 与 x₂ 高度相关，直接回归会出现系数符号反常、方差膨胀。<\/p>\n<p>三种处理：<\/p>\n<ol><li>\n删掉一个：若业务上 x₂ 可由 x₁ 解释，保留更有解释力的那个。\n<\/li><li>\n合并：用 x₁ + x₂ 或均值作为一个新变量。\n<\/li><li>\n换方法：用主成分回归或偏最小二乘，把相关变量打包成成分。\n<\/ol>\n<p>处理前后都要报告 VIF。VIF &gt; 10 通常视为严重共线，计算式 VIFⱼ = 1/(1 − Rⱼ²)，Rⱼ² 是第 j 个变量被其余变量回归的解释度。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 5 章 插值与拟合<\/td><td>p59–67<\/td><td>黄河小浪底一题练「先拟合再优化」的两层结构<\/td><\/tr><tr><td>第 7 章 数理统计<\/td><td>p84–90<\/td><td>参数估计与假设检验各做一题，重点写结论措辞<\/td><\/tr><tr><td>第 10 章 多元分析<\/td><td>p103–126<\/td><td>聚类与主成分各一题，注意标准化<\/td><\/tr><tr><td>第 11 章 偏最小二乘<\/td><td>p127–132<\/td><td>练成分数选择与 VIP 解读<\/td><\/tr><\/tbody><\/table>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】最小二乘斜率公式的分母是？<\/h3>\n<ul><li>\nA. ∑xᵢ²\n<\/li><li>\nB. ∑(xᵢ − x̄)²\n<\/li><li>\nC. ∑yᵢ²\n<\/li><li>\nD. n\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：分母是 x 的中心化平方和，未中心化会引入截距相关项。<\/p>\n<\/ul>\n<h3>Q2 【单选】t = 2.83、临界值 2.78，正确结论是？<\/h3>\n<ul><li>\nA. 证明均值等于 8\n<\/li><li>\nB. 在 5% 水平下拒绝原假设\n<\/li><li>\nC. 样本一定有问题\n<\/li><li>\nD. 需要增大 α 才能判断\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：t 超过临界值即落入拒绝域，结论是拒绝 H₀，而非证明任何事。<\/p>\n<\/ul>\n<h3>Q3 【填空】VIF 大于________通常视为严重多重共线性。<\/h3>\n<p><strong>答案<\/strong>：10 <strong>解析<\/strong>：经验阈值，超过 10 说明该变量被其余变量解释程度过高。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n拟合先中心化，斜率 = 协方差/方差。\n<\/li><li>\n检验结论只有「拒绝」与「不拒绝」，没有「证明」。\n<\/li><li>\n共线三招：删、合并、换方法。\n<\/ul>", "ch04": "<h1>第 4 章：智能算法与综合评价训练<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：3 小时 | <strong>前置<\/strong>：主册第 9、12、14、15 章 | <strong>原书题解定位<\/strong>：第 9 章 p99–102、第 12 章 p133–139、第 13 章 p140–143、第 14 章 p144–150、第 15 章 p151–157\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n为一个小规模 TSP 设计完整的遗传算法五件套；\n<\/li><li>\n手算一次多指标加权评价，并解释权重变化对排序的影响；\n<\/li><li>\n用移动平均与指数平滑各做一次预测，说清两者的差别。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>这类题不考公式推导，考的是「参数与口径交代得够不够清楚，别人能不能照你的描述复现」。<\/p>\n<h2>训练题与解答<\/h2>\n<h3>题 1（遗传算法设计）<\/h3>\n<p>8 个城市，坐标已知，求最短遍历回路。写出编码、适应度、选择、交叉、变异与终止条件。<\/p>\n<p><strong>解<\/strong>：<\/p>\n<ul><li>\n<strong>编码<\/strong>：整数序列，如 [3,1,5,2,8,4,7,6]，表示访问顺序。\n<\/li><li>\n<strong>适应度<\/strong>：f = 1/总路程。路程越短适应度越高。\n<\/li><li>\n<strong>选择<\/strong>：锦标赛，每次随机取 3 个个体，留最短的。\n<\/li><li>\n<strong>交叉<\/strong>：顺序交叉（OX）。父代 A = [1 2 3 4 5 6 7 8]，B = [4 5 2 1 8 7 6 3]。取 A 的片段 [3 4 5]，剩余位置按 B 的顺序补 2、1、8、7、6，得 [2 1 8 3 4 5 7 6]。\n<\/li><li>\n<strong>变异<\/strong>：随机交换两个位置，或反转一段（2-opt）。\n<\/li><li>\n<strong>终止<\/strong>：迭代 500 代，或连续 50 代最优值不改进。\n<\/ul>\n<p>参数：种群 100，交叉率 0.8，变异率 0.05，精英保留 2 个。<\/p>\n<p>报告要求：独立运行 20 次，给出最好、平均、标准差。只报一次最好值不合格。<\/p>\n<h3>题 2（综合评价）<\/h3>\n<p>四个方案，三个指标（成本、质量、交付），已标准化为 0–1 且统一为越大越好：S1 (0.9, 0.5, 0.6)、S2 (0.7, 0.8, 0.5)、S3 (0.6, 0.9, 0.7)、S4 (0.5, 0.6, 0.9)。权重 0.4、0.35、0.25，排序。<\/p>\n<p><strong>解<\/strong>：<\/p>\n<ul><li>\nS1 = 0.4×0.9 + 0.35×0.5 + 0.25×0.6 = 0.36 + 0.175 + 0.15 = 0.685\n<\/li><li>\nS2 = 0.28 + 0.28 + 0.125 = 0.685\n<\/li><li>\nS3 = 0.24 + 0.315 + 0.175 = 0.73\n<\/li><li>\nS4 = 0.20 + 0.21 + 0.225 = 0.635\n<\/ul>\n<p>排序 S3 &gt; S1 = S2 &gt; S4。S1 与 S2 并列，说明成本优势恰好被质量劣势抵消。<\/p>\n<p><strong>灵敏度<\/strong>：把成本权重从 0.4 提到 0.6（质量 0.25、交付 0.15）：<\/p>\n<ul><li>\nS1 = 0.54 + 0.125 + 0.09 = 0.755\n<\/li><li>\nS2 = 0.42 + 0.20 + 0.075 = 0.695\n<\/li><li>\nS3 = 0.36 + 0.225 + 0.105 = 0.69\n<\/ul>\n<p>排序变成 S1 &gt; S2 &gt; S3，冠军换了人。这就是为什么权重必须做灵敏度，且要在论文里写明。<\/p>\n<h3>题 3（预测对比）<\/h3>\n<p>销量序列 10、12、14、15、17，分别用 3 期移动平均与 α = 0.5 的指数平滑预测下一期。<\/p>\n<p><strong>解<\/strong>：<\/p>\n<ul><li>\n移动平均：(14 + 15 + 17)/3 = 15.33。\n<\/li><li>\n指数平滑：S₁ = 10，S₂ = 0.5×12 + 0.5×10 = 11，S₃ = 12.5，S₄ = 13.75，S₅ = 15.375。\n<\/ul>\n<p>两者接近，差别在记忆长度：移动平均只看最近 3 期，指数平滑对所有历史加权，α 越小记忆越长。数据有突变时移动平均反应更快，平稳时指数平滑更稳。<\/p>\n<h2>原书习题怎么用<\/h2>\n<table><thead><tr><th>原书章节<\/th><th>题解页码<\/th><th>建议<\/th><\/tr><\/thead><tbody><tr><td>第 9 章 SVM<\/td><td>p99–102<\/td><td>练核函数与 C 的对比实验<\/td><\/tr><tr><td>第 12 章 现代优化<\/td><td>p133–139<\/td><td>退火与遗传各做一题，记录参数表<\/td><\/tr><tr><td>第 13 章 图像处理<\/td><td>p140–143<\/td><td>做一次滤波与直方图均衡的对比<\/td><\/tr><tr><td>第 14 章 综合评价<\/td><td>p144–150<\/td><td>公务员招聘一题完整做，含权重灵敏度<\/td><\/tr><tr><td>第 15 章 预测<\/td><td>p151–157<\/td><td>灰色预测一题，写出级比检验<\/td><\/tr><\/tbody><\/table>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】遗传算法中精英保留的作用是？<\/h3>\n<ul><li>\nA. 增加种群规模\n<\/li><li>\nB. 防止最优个体在迭代中丢失\n<\/li><li>\nC. 提高变异率\n<\/li><li>\nD. 缩短编码长度\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：把当代最优直接复制到下一代，避免选择与变异破坏已找到的好解。<\/p>\n<\/ul>\n<h3>Q2 【单选】权重从 0.4/0.35/0.25 改成 0.6/0.25/0.15，冠军变化说明？<\/h3>\n<ul><li>\nA. 数据算错了\n<\/li><li>\nB. 排序对权重敏感，必须做灵敏度\n<\/li><li>\nC. 应该取平均权重\n<\/li><li>\nD. 评价方法无效\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：权重代表偏好，偏好变则排序变，这是评价方法的固有性质。<\/p>\n<\/ul>\n<h3>Q3 【填空】指数平滑中 α 越小，记忆长度越________。<\/h3>\n<p><strong>答案<\/strong>：长 <strong>解析<\/strong>：α 小则历史权重衰减慢，长期数据影响更大。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n启发式要给完整参数表与多次运行分布。\n<\/li><li>\n评价要给权重来源与灵敏度。\n<\/li><li>\n移动平均看窗口，指数平滑看 α。\n<\/ul>", "__path__": "<h1>学习路径<\/h1><p>按推荐顺序学习；每步通过检查点（自测题）后再继续。<\/p><ol class='path-list'><li class='path-step' id='path-01'><strong>步骤 01：优化类<\/strong><br>阅读：<a href=\"#/chapter/ch01\">第 1 章：优化类训练<\/a><br>检查点：三题全对，能说出每题的易错点<\/li><li class='path-step' id='path-02'><strong>步骤 02：图论与动态<\/strong><br>阅读：<a href=\"#/chapter/ch02\">第 2 章：图论与动态过程训练<\/a><br>检查点：Dijkstra 与 Kruskal 手跑无误<\/li><li class='path-step' id='path-03'><strong>步骤 03：数据与统计<\/strong><br>阅读：<a href=\"#/chapter/ch03\">第 3 章：数据与统计训练<\/a><br>检查点：斜率与 t 值算对，结论措辞规范<\/li><li class='path-step' id='path-04'><strong>步骤 04：算法与评价<\/strong><br>阅读：<a href=\"#/chapter/ch04\">第 4 章：智能算法与综合评价训练<\/a><br>检查点：完成一次权重灵敏度并解释冠军变化<\/li><\/ol><p>进度：<span id='path-progress-label'>0/0<\/span><\/p>", "__quiz_all__": "<p>（无综合题）<\/p>", "__quiz_ch01__": "<h1>测验：第 1 章：优化类训练<\/h1><div class='quiz-item' data-qid='q0101' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 线性规划题列顶点时，最容易漏掉的是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0101' value='0'> 两约束交点<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='1'> 与坐标轴的交点<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='2'> 原点<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='3'> 目标函数等值线上的点<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0102' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 整数间隙指的是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0102' value='0'> 两个整数解之间的距离<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='1'> 松弛最优值与整数最优值之差<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='2'> 约束个数与变量个数之差<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='3'> 目标系数的最大值与最小值之差<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0103' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 目标规划中，若要求「利润不低于 60」，不足部分用偏差变量________表示。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "__quiz_ch02__": "<h1>测验：第 2 章：图论与动态过程训练<\/h1><div class='quiz-item' data-qid='q0201' data-type='single'><p class='quiz-q'><b>Q1.<\/b> Kruskal 算法每次加入新边前必须检查？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0201' value='0'> 边是否最短<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='1'> 是否形成环<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='2'> 顶点是否用完<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='3'> 权值是否为正<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0202' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 差分方程 |a| &gt; 1 时系统？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0202' value='0'> 稳定收敛<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='1'> 不稳定，偏离平衡点<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='2'> 等幅振荡<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='3'> 恒为常数<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0203' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 五点的最小生成树需要________条边。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "__quiz_ch03__": "<h1>测验：第 3 章：数据与统计训练<\/h1><div class='quiz-item' data-qid='q0301' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 最小二乘斜率公式的分母是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0301' value='0'> ∑xᵢ²<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='1'> ∑(xᵢ − x̄)²<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='2'> ∑yᵢ²<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='3'> n<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0302' data-type='single'><p class='quiz-q'><b>Q2.<\/b> t = 2.83、临界值 2.78，正确结论是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0302' value='0'> 证明均值等于 8<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='1'> 在 5% 水平下拒绝原假设<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='2'> 样本一定有问题<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='3'> 需要增大 α 才能判断<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0303' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> VIF 大于________通常视为严重多重共线性。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "__quiz_ch04__": "<h1>测验：第 4 章：智能算法与综合评价训练<\/h1><div class='quiz-item' data-qid='q0401' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 遗传算法中精英保留的作用是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0401' value='0'> 增加种群规模<\/label><label class='quiz-opt'><input type='radio' name='q0401' value='1'> 防止最优个体在迭代中丢失<\/label><label class='quiz-opt'><input type='radio' name='q0401' value='2'> 提高变异率<\/label><label class='quiz-opt'><input type='radio' name='q0401' value='3'> 缩短编码长度<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0402' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 权重从 0.4/0.35/0.25 改成 0.6/0.25/0.15，冠军变化说明？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0402' value='0'> 数据算错了<\/label><label class='quiz-opt'><input type='radio' name='q0402' value='1'> 排序对权重敏感，必须做灵敏度<\/label><label class='quiz-opt'><input type='radio' name='q0402' value='2'> 应该取平均权重<\/label><label class='quiz-opt'><input type='radio' name='q0402' value='3'> 评价方法无效<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0403' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 指数平滑中 α 越小，记忆长度越________。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "__cards__": "<h1>抽认卡<\/h1><p>点击卡片翻面；判断「认识 / 不熟」以记录复习状态。<\/p><div class='card-controls'><label>按章节筛选：<select id='card-filter'><option value=''>全部<\/option><\/select><\/label><span class='card-counts'>认识 <b id='card-known'>0<\/b> · 不熟 <b id='card-again'>0<\/b> · 剩余 <b id='card-left'>0<\/b><\/span><\/div><div id='card-stage'><div class='flashcard' id='flashcard'><div class='fc-inner'><div class='fc-front'><\/div><div class='fc-back'><\/div><\/div><\/div><\/div><div class='card-actions'><button id='card-again-btn'>不熟<\/button><button id='card-known-btn'>认识<\/button><\/div>", "__glossary__": "<h1>术语表<\/h1><input id='glossary-filter' type='search' placeholder='筛选术语…'><ul id='glossary-list'><li data-term='整数间隙'>整数间隙 — 线性松弛最优值与整数最优值之差 <span class=glossary-ref>（第 1 章：优化类训练）<\/span><\/li><li data-term='顶点枚举'>顶点枚举 — 逐个计算可行域顶点目标值找最优的办法 <span class=glossary-ref>（第 1 章：优化类训练）<\/span><\/li><li data-term='距离表'>距离表 — Dijkstra 中记录起点到各点当前最短距离的表格 <span class=glossary-ref>（第 2 章：图论与动态过程训练）<\/span><\/li><li data-term='顺序交叉'>顺序交叉 — TSP 遗传算法中保持城市不重复的交叉算子 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='中心化'>中心化 — 把每个观测减去均值，使数据中心落在原点 <span class=glossary-ref>（第 3 章：数据与统计训练）<\/span><\/li><li data-term='拒绝域'>拒绝域 — 检验统计量落入即拒绝原假设的区间 <span class=glossary-ref>（第 3 章：数据与统计训练）<\/span><\/li><li data-term='方差膨胀因子'>方差膨胀因子 — 变量被其余变量解释程度的指标，VIF&gt;10 视为严重共线 <span class=glossary-ref>（第 3 章：数据与统计训练）<\/span><\/li><li data-term='锦标赛选择'>锦标赛选择 — 随机取若干个体、留最优作为父代的选择方式 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='精英保留'>精英保留 — 每代把最优个体直接复制到下一代 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='指数平滑'>指数平滑 — 用 α 加权当前值与上期平滑值的预测方法 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><li data-term='权重灵敏度'>权重灵敏度 — 改变权重看排序是否翻转的检验 <span class=glossary-ref>（第 4 章：智能算法与综合评价训练）<\/span><\/li><\/ul>"}};
+const pages = DATA.rendered;
+const manifest = DATA.manifest;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SLUG = manifest.slug || 'book';
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(SLUG+':'+k)||'null') }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(SLUG+':'+k, JSON.stringify(v)) }catch(e){} }
+};
+let state = { visited: store.get('visited')||[], quiz: store.get('quiz')||{}, cards: store.get('cards')||{} };
+
+/* ---------- 导航 ---------- */
+function renderNav(){
+  const nav = $('#nav'); nav.innerHTML='';
+  const build = items => items.forEach(it=>{
+    if(it.children){
+      const sec=document.createElement('div'); sec.className='nav-sec'; sec.textContent=it.label; nav.appendChild(sec);
+      it.children.forEach(c=>{
+        const a=document.createElement('a'); a.className='nav-item'; a.href=c.href; a.textContent=c.label;
+        const id=routeId(c.href);
+        if(state.visited.includes(id)) a.innerHTML = esc(c.label)+' <span class="done">✓</span>';
+        nav.appendChild(a);
+      });
+    }else{
+      const a=document.createElement('a'); a.className='nav-item'; a.href=it.href; a.textContent=it.label;
+      const id=routeId(it.href);
+      if(state.visited.includes(id)) a.innerHTML = esc(it.label)+' <span class="done">✓</span>';
+      nav.appendChild(a);
+    }
+  });
+  build(DATA.nav);
+  updateProgress();
+}
+function routeId(href){ return href.replace('#/',''); }
+
+/* ---------- 路由 ---------- */
+function routeIdFromHash(){
+  let h = location.hash.replace(/^#\//,'');
+  if(!h) return 'path';
+  if(h==='path') return 'path';
+  const m = h.match(/^(chapter|concept)\/(.+)$/);
+  if(m) return m[1]+'/'+m[2];
+  return h; // quiz/all, quiz/ch01, cards, glossary, patterns, cheatsheet
+}
+function showPage(rid){
+  const id = rid==='path' ? '__path__' : rid.startsWith('quiz/') ? '__quiz_'+rid.split('/')[1]+'__' : rid==='cards'?'__cards__':rid==='glossary'?'__glossary__':rid==='patterns'?'__patterns__':rid==='cheatsheet'?'__cheatsheet__':rid.startsWith('chapter/')?rid.split('/')[1]:rid.startsWith('concept/')?rid.split('/')[1]:rid;
+  const html = pages[id] || '<div class="empty">页面不存在</div>';
+  $('#view').innerHTML = html;
+  document.querySelectorAll('.nav-item').forEach(a=>a.classList.toggle('active', routeId(a.getAttribute('href'))===rid));
+  if(!state.visited.includes(rid) && (rid.startsWith('chapter/')||rid.startsWith('concept/'))){
+    state.visited.push(rid); store.set('visited', state.visited); renderNav();
+  }
+  window.scrollTo(0,0);
+  if(rid==='cards') initCards();
+  if(rid==='glossary') initGlossary();
+  if(rid.startsWith('quiz')) initQuizzes(rid);
+  if(id==='__path__') updatePath();
+  renderMermaid();
+}
+
+/* ---------- 进度 ---------- */
+function updateProgress(){
+  const chs = (manifest.chapters||[]).length;
+  const done = (manifest.chapters||[]).filter(c=>state.visited.includes('chapter/'+c.id)).length;
+  const pct = chs? Math.round(done/chs*100) : 0;
+  $('#progress-fill').style.width = pct+'%';
+  $('#progress-label').textContent = `进度 ${pct}% · 已学 ${done}/${chs} 章`;
+}
+function updatePath(){
+  document.querySelectorAll('.path-step').forEach(el=>{
+    const step = el.id.replace('path-','');
+    const s = (manifest.learningPath||[]).find(x=>x.step===step);
+    if(s && (s.chapterIds||[]).every(c=>state.visited.includes('chapter/'+c))){
+      el.classList.add('passed');
+      const lbl = el.querySelector('.checkpoint-ok'); if(!lbl){ const sp=document.createElement('span'); sp.className='done'; sp.textContent=' ✓ 已完成'; el.appendChild(sp); }
+    }
+  });
+}
+
+/* ---------- 测验 ---------- */
+function initQuizzes(rid){
+  document.querySelectorAll('.quiz-item').forEach(item=>{
+    const btn = item.querySelector('.quiz-check');
+    if(!btn || item.dataset.inited){ return }
+    item.dataset.inited='1';
+    btn.addEventListener('click', ()=>{
+      const qid = item.dataset.qid; const type = item.dataset.type;
+      const q = (manifest.quizzes||[]).find(x=>x.id===qid); if(!q) return;
+      let user, correct=false, fb;
+      if(type==='single'){
+        const sel = item.querySelector('input:checked');
+        user = sel? parseInt(sel.value) : null;
+        correct = user===q.answer;
+        fb = correct?'✓ 正确':'✗ 错误'+(user==null?'（未作答）':'');
+      } else if(type==='multi'){
+        user = Array.from(item.querySelectorAll('input:checked')).map(i=>parseInt(i.value)).sort();
+        const ans = Array.isArray(q.answer)? q.answer.slice().sort(): [q.answer];
+        correct = user.length>0 && JSON.stringify(user)===JSON.stringify(ans);
+        fb = correct?'✓ 正确':'✗ 错误';
+      } else if(type==='blank'){
+        const v = (item.querySelector('.quiz-blank').value||'').trim().toLowerCase();
+        const a = String(q.answer).trim().toLowerCase();
+        correct = v===a;
+        fb = correct?'✓ 正确':'✗ 错误'+(v?'':'（未作答）');
+      }
+      item.querySelectorAll('input:checked').forEach(i=>{
+        const val=parseInt(i.value);
+        if(Array.isArray(q.answer)? q.answer.includes(val) : val===q.answer) i.parentElement.style.color='var(--ok)';
+        else i.parentElement.style.color='var(--bad)';
+      });
+      const feed = item.querySelector('.quiz-feedback');
+      feed.className = 'quiz-feedback '+(correct?'fb-ok':'fb-bad');
+      feed.textContent = fb;
+      let ex = item.querySelector('.quiz-explain');
+      if(!ex){ ex=document.createElement('div'); ex.className='quiz-explain'; item.appendChild(ex); }
+      ex.innerHTML = '解析：' + esc(q.explain||'');
+      // 记录成绩（按章聚合）
+      const ch = q.chapterId||'__all__';
+      if(!state.quiz[ch]) state.quiz[ch]={done:0,total:0};
+      state.quiz[ch].done = Math.min(state.quiz[ch].total+1, state.quiz[ch].done+1);
+      state.quiz[ch].total += 1;
+      store.set('quiz', state.quiz);
+    });
+  });
+}
+
+/* ---------- 抽认卡 ---------- */
+let cardIdx = 0, cardList = [];
+function initCards(){
+  const cards = manifest.flashcards||[];
+  cardList = cards.slice();
+  cardIdx = 0;
+  const sel = $('#card-filter');
+  sel.innerHTML = '<option value="">全部</option>';
+  [...new Set(cards.map(c=>c.chapterId).filter(Boolean))].forEach(c=>{
+    const o=document.createElement('option'); o.value=c; o.textContent=manifestChTitle(c); sel.appendChild(o);
+  });
+  sel.onchange = ()=>{ const v=sel.value; cardList = v? cards.filter(c=>c.chapterId===v): cards.slice(); cardIdx=0; showCard(); };
+  $('#flashcard').onclick = ()=>$('#flashcard').classList.toggle('flip');
+  $('#card-known-btn').onclick = ()=>{ markCard(true); };
+  $('#card-again-btn').onclick = ()=>{ markCard(false); };
+  showCard();
+}
+function showCard(){
+  updateCardCounts();
+  if(cardIdx>=cardList.length){ $('#card-stage').innerHTML='<div class="empty">本组卡片已全部复习完 🎉</div>'; return; }
+  const c = cardList[cardIdx];
+  document.querySelector('.fc-front').textContent = c.front;
+  document.querySelector('.fc-back').textContent = c.back;
+  $('#flashcard').classList.remove('flip');
+}
+function markCard(known){
+  const c = cardList[cardIdx]; if(!c) return;
+  state.cards[c.id] = known?'known':'again';
+  store.set('cards', state.cards);
+  cardIdx++; showCard();
+}
+function updateCardCounts(){
+  const known = Object.values(state.cards).filter(v=>v==='known').length;
+  const again = Object.values(state.cards).filter(v=>v==='again').length;
+  $('#card-known').textContent = known;
+  $('#card-again').textContent = again;
+  $('#card-left').textContent = Math.max(0, cardList.length-cardIdx);
+}
+function manifestChTitle(id){
+  const c=(manifest.chapters||[]).find(x=>x.id===id); return c? c.title : id;
+}
+
+/* ---------- 术语表 ---------- */
+function initGlossary(){
+  const input = $('#glossary-filter');
+  if(!input || input.dataset.inited) return;
+  input.dataset.inited='1';
+  input.oninput = ()=>{
+    const v = input.value.trim().toLowerCase();
+    document.querySelectorAll('#glossary-list li').forEach(li=>{
+      li.style.display = (!v || li.dataset.term.includes(v)) ? '' : 'none';
+    });
+  };
+}
+
+/* ---------- 搜索 ---------- */
+let searchIndex = null;
+function buildSearchIndex(){
+  if(searchIndex) return searchIndex;
+  searchIndex = [];
+  Object.entries(pages).forEach(([id, htmlText])=>{
+    if(id.startsWith('__')) return;
+    const text = htmlText.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ');
+    searchIndex.push({id, text});
+  });
+  return searchIndex;
+}
+$('#q').addEventListener('input', e=>{
+  const v = e.target.value.trim().toLowerCase();
+  if(!v){ showPage(routeIdFromHash()); return; }
+  buildSearchIndex();
+  const hits = searchIndex.filter(p=>p.text.toLowerCase().includes(v)).slice(0,20);
+  const label = id => id.startsWith('chapter/')? ('章节：'+manifestChTitle(id.split('/')[1])) : id.startsWith('concept/')? ('概念：'+id.split('/')[1]) : id;
+  $('#view').innerHTML = '<h1>搜索结果：'+esc(v)+'</h1>' +
+    (hits.length? hits.map(h=>`<div class="search-hit"><a href="#/${h.id}">${esc(label(h.id))}</a><br><span class="sub">${esc(h.text.slice(0,180))}</span></div>`).join('')
+                 : '<div class="empty">未找到相关页面，试试章节名/概念名/术语。</div>');
+});
+
+/* ---------- Mermaid 懒加载（联网渲染，离线显示源码） ---------- */
+function attachMermaidHint(){document.querySelectorAll('.mermaid').forEach(el=>{if(el.dataset.hinted)return;el.dataset.hinted='1';const h=document.createElement('p');h.className='mermaid-hint';h.textContent='（未能加载绘图脚本：当前显示的是图示源码，联网后刷新即为图形）';el.after(h);});}
+function renderMermaid(){
+  if(!document.querySelector('.mermaid')) return;
+  if(window.__mmFailed){attachMermaidHint();return;}
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+  s.onload=()=>{ try{
+    mermaid.initialize({startOnLoad:false, theme: matchMedia('(prefers-color-scheme: dark)').matches?'dark':'default'});
+    document.querySelectorAll('.mermaid').forEach(el=>{
+      const code=el.textContent;
+      mermaid.render('mm'+Math.random().toString(36).slice(2), code)
+        .then(({svg})=>{ el.innerHTML=svg; })
+        .catch(()=>{ el.textContent=code; });
+    });
+  }catch(e){} };
+  s.onerror=()=>{window.__mmFailed=1;attachMermaidHint();};
+  document.head.appendChild(s);
+}
+
+/* ---------- 深色模式 ---------- */
+const themeBtn=$('#theme-btn');
+themeBtn.onclick=()=>{
+  const d = document.body.dataset.theme==='dark';
+  document.body.dataset.theme = d? '' : 'dark';
+  themeBtn.textContent = d? '🌙 深色' : '☀️ 浅色';
+};
+
+/* ---------- 启动 ---------- */
+renderNav();
+window.addEventListener('hashchange', ()=>showPage(routeIdFromHash()));
+(function(){
+  const sb=document.querySelector('.sidebar'); if(!sb) return;
+  const btn=document.createElement('button'); btn.id='nav-toggle'; btn.textContent='目录（点开选择章节）';
+  btn.onclick=()=>sb.classList.toggle('open');
+  sb.insertBefore(btn, sb.querySelector('#nav'));
+  window.addEventListener('hashchange',()=>{ if(window.innerWidth<=760) sb.classList.remove('open'); });
+})();
+showPage(routeIdFromHash());
+</script>
+</body>
+</html>

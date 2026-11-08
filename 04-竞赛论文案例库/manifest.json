@@ -1,0 +1,315 @@
+{
+  "slug": "cases",
+  "title": "竞赛论文案例库",
+  "subtitle": "2016–2023 国赛优秀论文怎么读、怎么借、怎么改",
+  "book": {
+    "title": "全国大学生数学建模竞赛优秀论文（2016–2023）",
+    "author": "全国大学生数学建模竞赛组委会",
+    "source": [
+      "2016-2023年——全国大学生数学建模竞赛优秀论文.rar"
+    ]
+  },
+  "audience": "准备参赛或第一次系统读论文的学生",
+  "goal": "能独立拆解一篇优秀论文并改造成自己的方案",
+  "learningPath": [
+    {
+      "step": "01",
+      "title": "学会拆论文",
+      "chapterIds": [
+        "ch01"
+      ],
+      "checkpoint": "40 分钟完成一张方法卡"
+    },
+    {
+      "step": "02",
+      "title": "摸清资料包",
+      "chapterIds": [
+        "ch02"
+      ],
+      "checkpoint": "能按年份与题号挑出三篇同题论文"
+    },
+    {
+      "step": "03",
+      "title": "改成自己的方案",
+      "chapterIds": [
+        "ch03"
+      ],
+      "checkpoint": "写出含来源与改动的借鉴说明"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "ch01",
+      "title": "第 1 章：怎么读一篇优秀论文",
+      "file": "chapters/ch01-how-to-read-a-paper.md",
+      "difficulty": 1
+    },
+    {
+      "id": "ch02",
+      "title": "第 2 章：2016–2023 论文地图",
+      "file": "chapters/ch02-paper-map.md",
+      "difficulty": 1
+    },
+    {
+      "id": "ch03",
+      "title": "第 3 章：从案例到自己的方案",
+      "file": "chapters/ch03-from-case-to-own.md",
+      "difficulty": 2
+    }
+  ],
+  "concepts": [],
+  "patterns": {
+    "file": "patterns.md"
+  },
+  "cheatsheet": {
+    "file": "cheatsheet.md"
+  },
+  "glossary": [
+    {
+      "term": "方法卡",
+      "def": "一篇论文一页的结构化记录，含方法、数据、可复用点",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "六步拆解法",
+      "def": "摘要—假设—结构—求解—检验—写法的读论文流程",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "结构层",
+      "def": "章节顺序、图表类型等可以照搬的部分",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "方法层",
+      "def": "模型框架与算法流程，需要改参数后重跑",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "数据层",
+      "def": "具体数值与结论，必须自己计算",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "借鉴说明",
+      "def": "交代方法来源与改动的声明文字",
+      "chapterId": "ch03"
+    },
+    {
+      "term": "灵敏度分析",
+      "def": "改变参数看结论是否翻转的检验",
+      "chapterId": "ch01"
+    },
+    {
+      "term": "扫描件",
+      "def": "以图片形式保存的论文，2019 年资料即此类",
+      "chapterId": "ch02"
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "q0101",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "六步法第一步应该读？",
+      "options": [
+        "参考文献",
+        "摘要",
+        "附录代码",
+        "模型假设"
+      ],
+      "answer": 1,
+      "explain": "摘要给出方法与关键数字，是最快判断论文质量的位置。"
+    },
+    {
+      "id": "q0102",
+      "chapterId": "ch01",
+      "type": "single",
+      "question": "方法卡里最该记的是？",
+      "options": [
+        "作者单位",
+        "可复用的模型结构与数据要求",
+        "页数",
+        "排版软件"
+      ],
+      "answer": 1,
+      "explain": "卡片的目的不是归档，是让自己下次能直接调用。"
+    },
+    {
+      "id": "q0103",
+      "chapterId": "ch01",
+      "type": "blank",
+      "question": "判断论文是否真优秀，关键看假设能否对应到具体________。",
+      "options": [],
+      "answer": "处理（或模型步骤）",
+      "explain": "空话假设不产生任何建模动作，能落地到步骤的假设才有价值。"
+    },
+    {
+      "id": "q0201",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "资料包中五题最齐全的年份是？",
+      "options": [
+        "2018",
+        "2019",
+        "2021",
+        "2023"
+      ],
+      "answer": 2,
+      "explain": "2021 年 34 份，A 到 E 五题都有，且为 PDF。"
+    },
+    {
+      "id": "q0202",
+      "chapterId": "ch02",
+      "type": "single",
+      "question": "2019 年论文的格式是？",
+      "options": [
+        "PDF",
+        "每篇多张 JPG",
+        "Word",
+        "网页"
+      ],
+      "answer": 1,
+      "explain": "按序号排列的扫描图，需要拼页阅读。"
+    },
+    {
+      "id": "q0203",
+      "chapterId": "ch02",
+      "type": "blank",
+      "question": "推荐的读法是同一道题读________篇，比较不同队的拆法。",
+      "options": [],
+      "answer": "三",
+      "explain": "同题对比能暴露假设与方法的差异，比泛读有效。"
+    },
+    {
+      "id": "q0301",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "三层可借度中，哪一层完全不能借？",
+      "options": [
+        "结构层",
+        "方法层",
+        "数据层",
+        "图表类型"
+      ],
+      "answer": 2,
+      "explain": "具体数值与结论必须自己算，照抄属于学术不端。"
+    },
+    {
+      "id": "q0302",
+      "chapterId": "ch03",
+      "type": "single",
+      "question": "改造四步的正确顺序是？",
+      "options": [
+        "换表述 → 换对象 → 换约束 → 换检验",
+        "换对象 → 换约束 → 换检验 → 换表述",
+        "换检验 → 换表述 → 换对象 → 换约束",
+        "任意顺序"
+      ],
+      "answer": 1,
+      "explain": "先把对象与约束改对，再重跑与检验，最后才是表述。"
+    },
+    {
+      "id": "q0303",
+      "chapterId": "ch03",
+      "type": "blank",
+      "question": "借鉴他人模型框架时，应在文中写清来源与________。",
+      "options": [],
+      "answer": "改动",
+      "explain": "交代改了什么，读者才能判断你的贡献在哪。"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "f01",
+      "chapterId": "ch01",
+      "front": "读论文六步法的顺序？",
+      "back": "摘要、假设、模型结构、求解、检验、写法摘抄",
+      "tags": [
+        "读论文"
+      ]
+    },
+    {
+      "id": "f02",
+      "chapterId": "ch01",
+      "front": "方法卡必填的五个字段？",
+      "back": "题目类型、核心方法、数据要求、可复用部分、硬伤",
+      "tags": [
+        "读论文"
+      ]
+    },
+    {
+      "id": "f03",
+      "chapterId": "ch01",
+      "front": "判断论文真优秀的最低标准？",
+      "back": "摘要里的数字能在正文找到且前后一致",
+      "tags": [
+        "读论文"
+      ]
+    },
+    {
+      "id": "f04",
+      "chapterId": "ch02",
+      "front": "资料包中五题最齐全的是哪一年？",
+      "back": "2021 年，34 份 PDF，A 到 E 齐全",
+      "tags": [
+        "资料包"
+      ]
+    },
+    {
+      "id": "f05",
+      "chapterId": "ch02",
+      "front": "2019 年论文是什么格式？",
+      "back": "每篇多张按序号排列的 JPG，扫描件",
+      "tags": [
+        "资料包"
+      ]
+    },
+    {
+      "id": "f06",
+      "chapterId": "ch02",
+      "front": "哪一年的论文明显不全？",
+      "back": "2020 年，只有 3 篇",
+      "tags": [
+        "资料包"
+      ]
+    },
+    {
+      "id": "f07",
+      "chapterId": "ch02",
+      "front": "同题读几篇最有效？",
+      "back": "三篇，比较假设与方法的差异",
+      "tags": [
+        "读论文"
+      ]
+    },
+    {
+      "id": "f08",
+      "chapterId": "ch03",
+      "front": "三层可借度分别是什么？",
+      "back": "结构层可借、方法层要改、数据层不能借",
+      "tags": [
+        "借鉴"
+      ]
+    },
+    {
+      "id": "f09",
+      "chapterId": "ch03",
+      "front": "改造论文方法的四步？",
+      "back": "换对象、换约束、重跑数值、换检验与表述",
+      "tags": [
+        "借鉴"
+      ]
+    },
+    {
+      "id": "f10",
+      "chapterId": "ch03",
+      "front": "借鉴说明要写清哪三件事？",
+      "back": "来源、改动、全部数值重新计算",
+      "tags": [
+        "学术规范"
+      ]
+    }
+  ],
+  "companion": "cases学习伴侣.html"
+}

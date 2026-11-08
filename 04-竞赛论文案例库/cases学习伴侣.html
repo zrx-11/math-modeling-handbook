@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>竞赛论文案例库</title>
+<style>
+:root{
+  --bg:#f7f7f8; --panel:#ffffff; --text:#1f2328; --muted:#6b7280;
+  --accent:#2563eb; --accent-soft:#dbeafe; --border:#e5e7eb;
+  --ok:#16a34a; --bad:#dc2626; --code-bg:#f3f4f6;
+}
+[data-theme="dark"]{
+  --bg:#111318; --panel:#1a1d24; --text:#e5e7eb; --muted:#9ca3af;
+  --accent:#60a5fa; --accent-soft:#1e3a5f; --border:#2d333d;
+  --ok:#4ade80; --bad:#f87171; --code-bg:#20242c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:290px;flex:none;background:var(--panel);border-right:1px solid var(--border);
+  padding:14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar h1{font-size:17px;margin:2px 0 2px}
+.sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:10px}
+#q{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px}
+.nav-sec{font-size:12px;color:var(--muted);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.4px}
+.nav-item{display:block;padding:5px 10px;border-radius:6px;color:var(--text);font-size:14px}
+.nav-item:hover{background:var(--accent-soft);text-decoration:none}
+.nav-item.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.nav-item .done{float:right;color:var(--ok);font-size:12px}
+#nav-toggle{display:none}
+.main{flex:1;min-width:0;padding:28px 40px 80px;max-width:920px}
+.page h1{font-size:26px;border-bottom:2px solid var(--border);padding-bottom:8px;margin-top:0}
+.page h2{font-size:20px;margin-top:26px}
+.page h3{font-size:17px;margin-top:22px}
+.page table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+.page th,.page td{border:1px solid var(--border);padding:6px 10px;text-align:left}
+.page th{background:var(--code-bg)}
+.page code{background:var(--code-bg);padding:2px 5px;border-radius:4px;font-size:.9em}
+.page pre{background:var(--code-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:13px}
+.page pre code{background:none;padding:0}
+.page blockquote{border-left:4px solid var(--accent);margin:12px 0;padding:6px 14px;background:var(--accent-soft);border-radius:0 6px 6px 0}
+.page blockquote blockquote{border-color:var(--muted)}
+.page img{max-width:100%}
+.mermaid{background:var(--code-bg);padding:14px;border-radius:8px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;white-space:pre;color:var(--muted)}
+.mermaid-hint{font-size:12px;color:var(--muted);margin:4px 0 14px}
+svg{max-width:100%;height:auto}
+.quiz-item{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0;background:var(--panel)}
+.quiz-q{margin:0 0 8px;font-weight:500}
+.quiz-opts label{display:block;padding:4px 0;cursor:pointer}
+.quiz-blank{width:60%;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)}
+.quiz-check{margin-top:10px;padding:6px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;cursor:pointer}
+.quiz-feedback{margin-left:12px;font-size:13px}
+.fb-ok{color:var(--ok)}.fb-bad{color:var(--bad)}
+.quiz-explain{margin-top:8px;font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:6px}
+.flashcard{perspective:1200px;margin:24px auto;max-width:520px;cursor:pointer;user-select:none}
+.fc-inner{position:relative;width:100%;height:240px;transform-style:preserve-3d;transition:transform .5s}
+.flashcard.flip .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;
+  padding:22px;border-radius:14px;border:1px solid var(--border);background:var(--panel);font-size:16px;text-align:center}
+.fc-back{transform:rotateY(180deg);background:var(--accent-soft);color:var(--text)}
+.card-controls{display:flex;gap:14px;align-items:center;margin:12px 0;flex-wrap:wrap}
+.card-actions{display:flex;gap:12px;justify-content:center}
+.card-actions button{padding:8px 22px;border:none;border-radius:8px;cursor:pointer;font-size:14px}
+#card-known-btn{background:var(--ok);color:#fff}
+#card-again-btn{background:var(--bad);color:#fff}
+.card-counts{color:var(--muted);font-size:13px}
+.path-step{margin:8px 0;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--panel)}
+.path-step.passed{border-color:var(--ok)}
+#glossary-filter{width:100%;max-width:380px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);margin-bottom:10px}
+#glossary-list li{padding:6px 0;border-bottom:1px dashed var(--border)}
+.glossary-ref{color:var(--muted);font-size:12px}
+.search-hit{margin:10px 0}
+.topbar{position:sticky;top:0;background:var(--bg);padding:8px 0;display:flex;justify-content:flex-end;z-index:10}
+#theme-btn{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:5px 12px;cursor:pointer;white-space:nowrap}
+#progress-bar{height:5px;background:var(--border);border-radius:3px;margin:8px 0;overflow:hidden}
+#progress-bar>div{height:100%;width:0;background:var(--accent);transition:width .3s}
+.empty{color:var(--muted);padding:20px 0}
+@media print{.sidebar,.topbar,.quiz-actions,.card-actions,.card-controls{display:none!important}.main{max-width:none;padding:0}}
+@media (max-width:760px){.sidebar{width:100%;height:auto;position:static;padding:10px 14px}
+  #nav{display:none}.sidebar.open #nav{display:block}
+  #nav-toggle{display:block;width:100%;padding:8px 10px;margin:4px 0;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:14px;text-align:left;cursor:pointer}
+  .layout{flex-direction:column}.main{padding:16px}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>竞赛论文案例库</h1>
+    <div class="sub">2016–2023 国赛优秀论文怎么读、怎么借、怎么改</div>
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    <div class="sub" id="progress-label">进度 0%</div>
+    <input id="q" type="search" placeholder="搜索章节 / 概念 / 术语 / 全文…">
+    <nav id="nav"></nav>
+  </aside>
+  <main class="main">
+    <div class="topbar"><button id="theme-btn">🌙 深色</button></div>
+    <div id="view" class="page"></div>
+  </main>
+</div>
+<script>
+const DATA = {"manifest": {"slug": "cases", "title": "竞赛论文案例库", "subtitle": "2016–2023 国赛优秀论文怎么读、怎么借、怎么改", "book": {"title": "全国大学生数学建模竞赛优秀论文（2016–2023）", "author": "全国大学生数学建模竞赛组委会", "source": ["2016-2023年——全国大学生数学建模竞赛优秀论文.rar"]}, "audience": "准备参赛或第一次系统读论文的学生", "goal": "能独立拆解一篇优秀论文并改造成自己的方案", "learningPath": [{"step": "01", "title": "学会拆论文", "chapterIds": ["ch01"], "checkpoint": "40 分钟完成一张方法卡"}, {"step": "02", "title": "摸清资料包", "chapterIds": ["ch02"], "checkpoint": "能按年份与题号挑出三篇同题论文"}, {"step": "03", "title": "改成自己的方案", "chapterIds": ["ch03"], "checkpoint": "写出含来源与改动的借鉴说明"}], "chapters": [{"id": "ch01", "title": "第 1 章：怎么读一篇优秀论文", "file": "chapters/ch01-how-to-read-a-paper.md", "difficulty": 1}, {"id": "ch02", "title": "第 2 章：2016–2023 论文地图", "file": "chapters/ch02-paper-map.md", "difficulty": 1}, {"id": "ch03", "title": "第 3 章：从案例到自己的方案", "file": "chapters/ch03-from-case-to-own.md", "difficulty": 2}], "concepts": [], "patterns": {"file": "patterns.md"}, "cheatsheet": {"file": "cheatsheet.md"}, "glossary": [{"term": "方法卡", "def": "一篇论文一页的结构化记录，含方法、数据、可复用点", "chapterId": "ch01"}, {"term": "六步拆解法", "def": "摘要—假设—结构—求解—检验—写法的读论文流程", "chapterId": "ch01"}, {"term": "结构层", "def": "章节顺序、图表类型等可以照搬的部分", "chapterId": "ch03"}, {"term": "方法层", "def": "模型框架与算法流程，需要改参数后重跑", "chapterId": "ch03"}, {"term": "数据层", "def": "具体数值与结论，必须自己计算", "chapterId": "ch03"}, {"term": "借鉴说明", "def": "交代方法来源与改动的声明文字", "chapterId": "ch03"}, {"term": "灵敏度分析", "def": "改变参数看结论是否翻转的检验", "chapterId": "ch01"}, {"term": "扫描件", "def": "以图片形式保存的论文，2019 年资料即此类", "chapterId": "ch02"}], "quizzes": [{"id": "q0101", "chapterId": "ch01", "type": "single", "question": "六步法第一步应该读？", "options": ["参考文献", "摘要", "附录代码", "模型假设"], "answer": 1, "explain": "摘要给出方法与关键数字，是最快判断论文质量的位置。"}, {"id": "q0102", "chapterId": "ch01", "type": "single", "question": "方法卡里最该记的是？", "options": ["作者单位", "可复用的模型结构与数据要求", "页数", "排版软件"], "answer": 1, "explain": "卡片的目的不是归档，是让自己下次能直接调用。"}, {"id": "q0103", "chapterId": "ch01", "type": "blank", "question": "判断论文是否真优秀，关键看假设能否对应到具体________。", "options": [], "answer": "处理（或模型步骤）", "explain": "空话假设不产生任何建模动作，能落地到步骤的假设才有价值。"}, {"id": "q0201", "chapterId": "ch02", "type": "single", "question": "资料包中五题最齐全的年份是？", "options": ["2018", "2019", "2021", "2023"], "answer": 2, "explain": "2021 年 34 份，A 到 E 五题都有，且为 PDF。"}, {"id": "q0202", "chapterId": "ch02", "type": "single", "question": "2019 年论文的格式是？", "options": ["PDF", "每篇多张 JPG", "Word", "网页"], "answer": 1, "explain": "按序号排列的扫描图，需要拼页阅读。"}, {"id": "q0203", "chapterId": "ch02", "type": "blank", "question": "推荐的读法是同一道题读________篇，比较不同队的拆法。", "options": [], "answer": "三", "explain": "同题对比能暴露假设与方法的差异，比泛读有效。"}, {"id": "q0301", "chapterId": "ch03", "type": "single", "question": "三层可借度中，哪一层完全不能借？", "options": ["结构层", "方法层", "数据层", "图表类型"], "answer": 2, "explain": "具体数值与结论必须自己算，照抄属于学术不端。"}, {"id": "q0302", "chapterId": "ch03", "type": "single", "question": "改造四步的正确顺序是？", "options": ["换表述 → 换对象 → 换约束 → 换检验", "换对象 → 换约束 → 换检验 → 换表述", "换检验 → 换表述 → 换对象 → 换约束", "任意顺序"], "answer": 1, "explain": "先把对象与约束改对，再重跑与检验，最后才是表述。"}, {"id": "q0303", "chapterId": "ch03", "type": "blank", "question": "借鉴他人模型框架时，应在文中写清来源与________。", "options": [], "answer": "改动", "explain": "交代改了什么，读者才能判断你的贡献在哪。"}], "flashcards": [{"id": "f01", "chapterId": "ch01", "front": "读论文六步法的顺序？", "back": "摘要、假设、模型结构、求解、检验、写法摘抄", "tags": ["读论文"]}, {"id": "f02", "chapterId": "ch01", "front": "方法卡必填的五个字段？", "back": "题目类型、核心方法、数据要求、可复用部分、硬伤", "tags": ["读论文"]}, {"id": "f03", "chapterId": "ch01", "front": "判断论文真优秀的最低标准？", "back": "摘要里的数字能在正文找到且前后一致", "tags": ["读论文"]}, {"id": "f04", "chapterId": "ch02", "front": "资料包中五题最齐全的是哪一年？", "back": "2021 年，34 份 PDF，A 到 E 齐全", "tags": ["资料包"]}, {"id": "f05", "chapterId": "ch02", "front": "2019 年论文是什么格式？", "back": "每篇多张按序号排列的 JPG，扫描件", "tags": ["资料包"]}, {"id": "f06", "chapterId": "ch02", "front": "哪一年的论文明显不全？", "back": "2020 年，只有 3 篇", "tags": ["资料包"]}, {"id": "f07", "chapterId": "ch02", "front": "同题读几篇最有效？", "back": "三篇，比较假设与方法的差异", "tags": ["读论文"]}, {"id": "f08", "chapterId": "ch03", "front": "三层可借度分别是什么？", "back": "结构层可借、方法层要改、数据层不能借", "tags": ["借鉴"]}, {"id": "f09", "chapterId": "ch03", "front": "改造论文方法的四步？", "back": "换对象、换约束、重跑数值、换检验与表述", "tags": ["借鉴"]}, {"id": "f10", "chapterId": "ch03", "front": "借鉴说明要写清哪三件事？", "back": "来源、改动、全部数值重新计算", "tags": ["学术规范"]}], "companion": "cases学习伴侣.html"}, "pages": {"ch01": {"html": "<h1>第 1 章：怎么读一篇优秀论文<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★☆☆ | <strong>预估学时<\/strong>：2 小时 | <strong>前置<\/strong>：起步册第 4 章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n用六步法在 40 分钟内拆完一篇 20 页的竞赛论文；\n<\/li><li>\n做出一张「方法卡」，记录这篇论文能复用什么；\n<\/li><li>\n判断一篇论文是真优秀还是只是排版好看。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>读论文不是读文字，是逆向拆解作者的决策链：他为什么这样假设、为什么选这个方法、凭什么说结果可信。<\/p>\n<h2>零基础讲解<\/h2>\n<h3>概念 1：六步拆解法（难度：基础）<\/h3>\n<ol><li>\n<strong>只读摘要<\/strong>（3 分钟）：抄下每问的方法与关键数字。摘要写不清的论文，后面大概率也乱。\n<\/li><li>\n<strong>列假设<\/strong>（5 分钟）：把假设逐条抄下来，标出哪条是「为了简化」、哪条是「没有数据只好假设」。\n<\/li><li>\n<strong>画模型结构<\/strong>（8 分钟）：用一张图还原「问题 → 变量 → 目标/约束 → 求解」的链条。\n<\/li><li>\n<strong>看求解<\/strong>（10 分钟）：记录用了什么工具、参数怎么定、跑了几次。\n<\/li><li>\n<strong>看检验<\/strong>（8 分钟）：有没有灵敏度、误差分析、与基准方法对比。\n<\/li><li>\n<strong>抄写法<\/strong>（6 分钟）：摘 3 句你以后能用的句式，比如「为避免共线性，将 x₁ 与 x₂ 合并为综合指标」。\n<\/ol>\n<h3>概念 2：方法卡（难度：基础）<\/h3>\n<p>每读一篇，填一张卡：<\/p>\n<table><thead><tr><th>字段<\/th><th>记什么<\/th><\/tr><\/thead><tbody><tr><td>题目类型<\/td><td>优化 / 预测 / 评价 / 分类 / 机理<\/td><\/tr><tr><td>核心方法<\/td><td>一句话，带具体算法名<\/td><\/tr><tr><td>数据要求<\/td><td>需要什么数据、多少量、什么格式<\/td><\/tr><tr><td>可复用部分<\/td><td>模型结构、代码、图表画法<\/td><\/tr><tr><td>硬伤<\/td><td>假设不成立、检验缺失、结论过强<\/td><\/tr><\/tbody><\/table>\n<p>十篇之后，卡片会自己形成一张方法索引，比任何笔记都好用。<\/p>\n<h3>概念 3：辨别真优秀（难度：进阶）<\/h3>\n<p>三个信号说明论文真的好：<\/p>\n<ul><li>\n摘要里的数字能在正文找到，且前后一致；\n<\/li><li>\n假设能对应到具体处理，不是空话；\n<\/li><li>\n有「如果参数变了会怎样」的分析，而不是只报一个最优结果。\n<\/ul>\n<p>两个信号说明只是排版好：图表漂亮但图注不解释结论；模型名词堆得多但每个都只写一句。<\/p>\n<h2>图示<\/h2>\n<div class=\"mermaid\" data-src=\"1\">flowchart LR\n    A[摘要] --&gt; B[假设]\n    B --&gt; C[模型结构]\n    C --&gt; D[求解]\n    D --&gt; E[检验]\n    E --&gt; F[写法摘抄]\n    F --&gt; G[方法卡]<\/div><p class=\"mermaid-hint\">↑ Mermaid 图示：联网时自动渲染为图表；离线时请阅读上方源码与正文说明。<\/p>\n<p>看图说明：箭头是单向的，但第 5 步发现检验缺失时，要退回第 3 步看模型是否根本没法检验。<\/p>\n<h2>类比与实例<\/h2>\n<ul><li>\n<strong>类比<\/strong>：读论文像拆一台别人的机器，先看说明书（摘要），再拆外壳（假设），最后看零件怎么咬合（模型）。失效边界：机器拆完能装回去，论文拆完你未必能复现——数据与代码常常没给全。\n<\/li><li>\n<strong>实例（可操作）<\/strong>：拿 2021 年 A 题的一篇论文，按六步走一遍，限定 40 分钟。第一遍只填方法卡的空格，不追求看懂每个公式。第二遍再针对你要用的那一部分精读。\n<\/ul>\n<h2>常见误解<\/h2>\n<ul><li>\n别以为要从第一页读到最后一页——实际上摘要、假设、检验三处就决定这篇值不值得细读。\n<\/li><li>\n别以为公式看不懂就没收获——实际上建模思路、图表组织、结论表述都能直接借。\n<\/li><li>\n别以为获奖论文没有错——实际上不少论文的假设与结论并不匹配，读的时候要挑。\n<\/ul>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】六步法第一步应该读？<\/h3>\n<ul><li>\nA. 参考文献\n<\/li><li>\nB. 摘要\n<\/li><li>\nC. 附录代码\n<\/li><li>\nD. 模型假设\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：摘要给出方法与关键数字，是最快判断论文质量的位置。<\/p>\n<\/ul>\n<h3>Q2 【单选】方法卡里最该记的是？<\/h3>\n<ul><li>\nA. 作者单位\n<\/li><li>\nB. 可复用的模型结构与数据要求\n<\/li><li>\nC. 页数\n<\/li><li>\nD. 排版软件\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：卡片的目的不是归档，是让自己下次能直接调用。<\/p>\n<\/ul>\n<h3>Q3 【填空】判断论文是否真优秀，关键看假设能否对应到具体________。<\/h3>\n<p><strong>答案<\/strong>：处理（或模型步骤） <strong>解析<\/strong>：空话假设不产生任何建模动作，能落地到步骤的假设才有价值。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n六步：摘要、假设、结构、求解、检验、写法。\n<\/li><li>\n一篇一张方法卡，十篇成一页索引。\n<\/li><li>\n摘要数字与正文一致，是最低可信标准。\n<\/ul>", "kind": "chapter", "title": "第 1 章：怎么读一篇优秀论文"}, "ch02": {"html": "<h1>第 2 章：2016–2023 论文地图<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★☆☆ | <strong>预估学时<\/strong>：1 小时 | <strong>前置<\/strong>：第 1 章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n说清手头这份资料包里每年有多少篇、覆盖哪些题；\n<\/li><li>\n按「同题多篇对比」的方式挑出该读的几篇；\n<\/li><li>\n知道哪几年的资料不完整，别白找。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>读论文的正确顺序不是从 2016 读到 2023，而是同一道题读三篇，看不同队怎么拆同一个问题。<\/p>\n<h2>资料包实际内容<\/h2>\n<p>压缩包 <code>2016-2023年——全国大学生数学建模竞赛优秀论文.rar<\/code> 共 767 个条目，按年份分 8 个目录。实际可用论文数量如下（按文件名统计）：<\/p>\n<table><thead><tr><th>年份<\/th><th>论文份数<\/th><th>覆盖题号<\/th><th>说明<\/th><\/tr><\/thead><tbody><tr><td>2016<\/td><td>23 份 PDF<\/td><td>A、B、C、D<\/td><td>含 4 份赛题讲评<\/td><\/tr><tr><td>2017<\/td><td>33 份 PDF<\/td><td>A、B 为主，另有综合展示<\/td><td>含赛题评析<\/td><\/tr><tr><td>2018<\/td><td>19 份 PDF<\/td><td>A、B、C、D<\/td><td>A 题 9 篇，最全<\/td><\/tr><tr><td>2019<\/td><td>4 篇（扫描图）<\/td><td>A、B、C、D、E<\/td><td>每篇为多张 JPG，需拼页阅读<\/td><\/tr><tr><td>2020<\/td><td>3 份 PDF<\/td><td>A、B<\/td><td>仅 3 篇，明显不全<\/td><\/tr><tr><td>2021<\/td><td>34 份 PDF<\/td><td>A、B、C、D、E<\/td><td>五题齐全，最完整的一年<\/td><\/tr><tr><td>2022<\/td><td>9 份 PDF<\/td><td>A、B、C<\/td><td>数量中等<\/td><\/tr><tr><td>2023<\/td><td>13 份 PDF<\/td><td>A、B、C、D、E<\/td><td>五题都有<\/td><\/tr><\/tbody><\/table>\n<p>两点必须知道：<\/p>\n<ul><li>\n<strong>2019 是图片<\/strong>，不是 PDF。要读得先把每篇的 JPG 按序号拼起来，或者用 OCR 工具转文字。\n<\/li><li>\n<strong>2020 只有 3 篇<\/strong>，别以为是自己解压失败。\n<\/ul>\n<h2>挑选策略<\/h2>\n<h3>概念 1：同题三篇（难度：基础）<\/h3>\n<p>选一道你熟悉的题，找同题的三篇论文，分别读摘要与模型结构，比较：<\/p>\n<ul><li>\n变量定义是否一致；\n<\/li><li>\n假设差在哪；\n<\/li><li>\n一个用规划、一个用启发式时，各自怎么解释选择。\n<\/ul>\n<p>三篇读完，你会发现自己对这道题的理解比对十道不同的题更深。<\/p>\n<h3>概念 2：按方法找（难度：进阶）<\/h3>\n<p>如果你正在练某个方法（比如第 14 章的综合评价），去索引里找用了这个方法的所有论文，横向比较它们怎么处理权重、怎么做灵敏度。这比读教材例题更接近实战。<\/p>\n<h2>图示<\/h2>\n<div class=\"mermaid\" data-src=\"1\">flowchart TD\n    A[资料包 8 个年度] --&gt; B{要练什么}\n    B --&gt;|练某一题型| C[同题三篇对比]\n    B --&gt;|练某个方法| D[按方法横向找]\n    B --&gt;|练写作| E[读摘要与检验部分]\n    C --&gt; F[方法卡]\n    D --&gt; F\n    E --&gt; F<\/div><p class=\"mermaid-hint\">↑ Mermaid 图示：联网时自动渲染为图表；离线时请阅读上方源码与正文说明。<\/p>\n<p>看图说明：三条路都落到方法卡。不要为了「读完」而读，为了「用上」而读。<\/p>\n<h2>类比与实例<\/h2>\n<ul><li>\n<strong>类比<\/strong>：这份资料包像一间旧书店，2021 那排最齐，2020 那排缺了好几本。先看清库存再借书，比一本本翻快。失效边界：书店能补齐，这份包补不齐，缺的年份只能另找。\n<\/li><li>\n<strong>实例（可核算）<\/strong>：2021 年五题共 34 篇，平均每题约 7 篇。按每题读 3 篇算，读完五题需 15 篇，约 10 小时（每篇 40 分钟）。这是可执行的计划，而不是「把 34 篇都读完」。\n<\/ul>\n<h2>常见误解<\/h2>\n<ul><li>\n别以为份数多的年份质量就高——实际上论文是择优展示，份数反映的是收录力度。\n<\/li><li>\n别以为扫描件不能读——实际上拼页后完全可读，只是费时间。\n<\/li><li>\n别以为读得越多越好——实际上同题三篇的收获大于十道不同的题各读一篇。\n<\/ul>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】资料包中五题最齐全的年份是？<\/h3>\n<ul><li>\nA. 2018\n<\/li><li>\nB. 2019\n<\/li><li>\nC. 2021\n<\/li><li>\nD. 2023\n<p><strong>答案<\/strong>：C <strong>解析<\/strong>：2021 年 34 份，A 到 E 五题都有，且为 PDF。<\/p>\n<\/ul>\n<h3>Q2 【单选】2019 年论文的格式是？<\/h3>\n<ul><li>\nA. PDF\n<\/li><li>\nB. 每篇多张 JPG\n<\/li><li>\nC. Word\n<\/li><li>\nD. 网页\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：按序号排列的扫描图，需要拼页阅读。<\/p>\n<\/ul>\n<h3>Q3 【填空】推荐的读法是同一道题读________篇，比较不同队的拆法。<\/h3>\n<p><strong>答案<\/strong>：三 <strong>解析<\/strong>：同题对比能暴露假设与方法的差异，比泛读有效。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n2021 最全、2020 最缺、2019 是图片。\n<\/li><li>\n同题三篇优于十题各一篇。\n<\/li><li>\n按方法横向找，练什么找什么。\n<\/ul>", "kind": "chapter", "title": "第 2 章：2016–2023 论文地图"}, "ch03": {"html": "<h1>第 3 章：从案例到自己的方案<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：2 小时 | <strong>前置<\/strong>：第 1、2 章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n把一篇论文的方法改造成适合自己题目的版本；\n<\/li><li>\n判断哪些部分可以直接抄结构、哪些必须重做；\n<\/li><li>\n写出「借鉴说明」，避免被判定为抄袭。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>案例能借的是结构和流程，不能借的是数据与结论；改一个参数就当成自己的结果，是竞赛里最危险的动作。<\/p>\n<h2>零基础讲解<\/h2>\n<h3>概念 1：三层可借度（难度：基础）<\/h3>\n<table><thead><tr><th>层级<\/th><th>能借什么<\/th><th>处理方式<\/th><\/tr><\/thead><tbody><tr><td>结构层<\/td><td>章节顺序、图表类型、检验方式<\/td><td>直接照搬，注明参考<\/td><\/tr><tr><td>方法层<\/td><td>模型框架、算法流程<\/td><td>改参数、改约束，重跑<\/td><\/tr><tr><td>数据层<\/td><td>具体数值、结论<\/td><td>一律不能借，必须自己算<\/td><\/tr><\/tbody><\/table>\n<p>结构层借用不算抄袭，方法层要说明改动，数据层照抄就是学术不端。<\/p>\n<h3>概念 2：改造四步（难度：进阶）<\/h3>\n<ol><li>\n<strong>换对象<\/strong>：把论文里的「某工厂」换成你的题里的对象，检查量纲与量级是否还成立。\n<\/li><li>\n<strong>换约束<\/strong>：新题往往多一两条限制，加进去后重解，看结论怎么变。\n<\/li><li>\n<strong>换检验<\/strong>：论文做的是参数灵敏度，你的题可能需要误差分析或与基准方法对比。\n<\/li><li>\n<strong>换表述<\/strong>：结论要用你自己的数据说话，不能保留原文的数字。\n<\/ol>\n<h3>概念 3：借鉴说明怎么写（难度：基础）<\/h3>\n<p>在参考文献或脚注写清：<\/p>\n<pre class=\"lang-text\"><code>本文模型框架参考了 2021 年 A 题某队的分层求解思路，将原模型的两阶段改为三阶段，\n增加了约束 …, 全部数值结果由本文程序重新计算。<\/code><\/pre>\n<p>一句话交代来源与改动，比藏着不说安全得多。<\/p>\n<h3>概念 4：把论文变成代码（难度：进阶）<\/h3>\n<p>论文给的是公式，代码要自己写。顺序：<\/p>\n<ol><li>\n先用小数据手算一遍，确认公式能对上论文里的数字；\n<\/li><li>\n写成脚本，跑同一组小数据，对比结果；\n<\/li><li>\n换成自己的数据，检查量级是否合理；\n<\/li><li>\n保存中间结果，论文里的每个数字都要能追到一个输出文件。\n<\/ol>\n<h2>图示<\/h2>\n<div class=\"mermaid\" data-src=\"1\">flowchart TD\n    A[选中一篇论文] --&gt; B[拆结构]\n    B --&gt; C[改对象与约束]\n    C --&gt; D[重跑数值]\n    D --&gt; E[换检验方式]\n    E --&gt; F[写借鉴说明]\n    F --&gt; G[自己的方案]<\/div><p class=\"mermaid-hint\">↑ Mermaid 图示：联网时自动渲染为图表；离线时请阅读上方源码与正文说明。<\/p>\n<p>看图说明：注意「重跑数值」在改完约束之后，顺序颠倒就会把旧结论带进新题。<\/p>\n<h2>类比与实例<\/h2>\n<ul><li>\n<strong>类比<\/strong>：借论文像借菜谱，步骤可以照做，食材必须换成你家的。失效边界：菜谱换了食材味道会变，模型换了数据结论可能完全反过来，所以必须重算而不是微调。\n<\/li><li>\n<strong>实例（可核算）<\/strong>：某论文的线性规划最优解是 (2, 6)、利润 26。你若把乙产品利润从 3 改成 5，最优解变成 (1, 7)、利润 39，与原文完全不同。直接沿用 26，评委会立刻发现数字对不上你的模型。\n<\/ul>\n<h2>常见误解<\/h2>\n<ul><li>\n别以为改几个字就不算抄——实际上模型、数据、结论三处任一重合都可能被查。\n<\/li><li>\n别以为方法一样就没有创新——实际上在新约束下重新求解、给出新的灵敏度，本身就是工作。\n<\/li><li>\n别以为引用越少越显得独立——实际上该引不引，反而显得你不知道来源。\n<\/ul>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】三层可借度中，哪一层完全不能借？<\/h3>\n<ul><li>\nA. 结构层\n<\/li><li>\nB. 方法层\n<\/li><li>\nC. 数据层\n<\/li><li>\nD. 图表类型\n<p><strong>答案<\/strong>：C <strong>解析<\/strong>：具体数值与结论必须自己算，照抄属于学术不端。<\/p>\n<\/ul>\n<h3>Q2 【单选】改造四步的正确顺序是？<\/h3>\n<ul><li>\nA. 换表述 → 换对象 → 换约束 → 换检验\n<\/li><li>\nB. 换对象 → 换约束 → 换检验 → 换表述\n<\/li><li>\nC. 换检验 → 换表述 → 换对象 → 换约束\n<\/li><li>\nD. 任意顺序\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：先把对象与约束改对，再重跑与检验，最后才是表述。<\/p>\n<\/ul>\n<h3>Q3 【填空】借鉴他人模型框架时，应在文中写清来源与________。<\/h3>\n<p><strong>答案<\/strong>：改动 <strong>解析<\/strong>：交代改了什么，读者才能判断你的贡献在哪。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n结构可借、方法要改、数据必重算。\n<\/li><li>\n改造顺序：对象、约束、检验、表述。\n<\/li><li>\n借鉴说明一句话：来源 + 改动 + 全部重算。\n<\/ul>", "kind": "chapter", "title": "第 3 章：从案例到自己的方案"}, "__path__": {"html": "<h1>学习路径<\/h1><p>按推荐顺序学习；每步通过检查点（自测题）后再继续。<\/p><ol class='path-list'><li class='path-step' id='path-01'><strong>步骤 01：学会拆论文<\/strong><br>阅读：<a href=\"#/chapter/ch01\">第 1 章：怎么读一篇优秀论文<\/a><br>检查点：40 分钟完成一张方法卡<\/li><li class='path-step' id='path-02'><strong>步骤 02：摸清资料包<\/strong><br>阅读：<a href=\"#/chapter/ch02\">第 2 章：2016–2023 论文地图<\/a><br>检查点：能按年份与题号挑出三篇同题论文<\/li><li class='path-step' id='path-03'><strong>步骤 03：改成自己的方案<\/strong><br>阅读：<a href=\"#/chapter/ch03\">第 3 章：从案例到自己的方案<\/a><br>检查点：写出含来源与改动的借鉴说明<\/li><\/ol><p>进度：<span id='path-progress-label'>0/0<\/span><\/p>", "kind": "path", "title": "学习路径"}, "__quiz_all__": {"html": "<p>（无综合题）<\/p>", "kind": "quiz", "title": "综合测验"}, "__quiz_ch01__": {"html": "<h1>测验：第 1 章：怎么读一篇优秀论文<\/h1><div class='quiz-item' data-qid='q0101' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 六步法第一步应该读？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0101' value='0'> 参考文献<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='1'> 摘要<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='2'> 附录代码<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='3'> 模型假设<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0102' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 方法卡里最该记的是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0102' value='0'> 作者单位<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='1'> 可复用的模型结构与数据要求<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='2'> 页数<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='3'> 排版软件<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0103' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 判断论文是否真优秀，关键看假设能否对应到具体________。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "kind": "quiz", "title": "测验"}, "__quiz_ch02__": {"html": "<h1>测验：第 2 章：2016–2023 论文地图<\/h1><div class='quiz-item' data-qid='q0201' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 资料包中五题最齐全的年份是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0201' value='0'> 2018<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='1'> 2019<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='2'> 2021<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='3'> 2023<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0202' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 2019 年论文的格式是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0202' value='0'> PDF<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='1'> 每篇多张 JPG<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='2'> Word<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='3'> 网页<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0203' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 推荐的读法是同一道题读________篇，比较不同队的拆法。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "kind": "quiz", "title": "测验"}, "__quiz_ch03__": {"html": "<h1>测验：第 3 章：从案例到自己的方案<\/h1><div class='quiz-item' data-qid='q0301' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 三层可借度中，哪一层完全不能借？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0301' value='0'> 结构层<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='1'> 方法层<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='2'> 数据层<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='3'> 图表类型<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0302' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 改造四步的正确顺序是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0302' value='0'> 换表述 → 换对象 → 换约束 → 换检验<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='1'> 换对象 → 换约束 → 换检验 → 换表述<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='2'> 换检验 → 换表述 → 换对象 → 换约束<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='3'> 任意顺序<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0303' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 借鉴他人模型框架时，应在文中写清来源与________。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "kind": "quiz", "title": "测验"}, "__cards__": {"html": "<h1>抽认卡<\/h1><p>点击卡片翻面；判断「认识 / 不熟」以记录复习状态。<\/p><div class='card-controls'><label>按章节筛选：<select id='card-filter'><option value=''>全部<\/option><\/select><\/label><span class='card-counts'>认识 <b id='card-known'>0<\/b> · 不熟 <b id='card-again'>0<\/b> · 剩余 <b id='card-left'>0<\/b><\/span><\/div><div id='card-stage'><div class='flashcard' id='flashcard'><div class='fc-inner'><div class='fc-front'><\/div><div class='fc-back'><\/div><\/div><\/div><\/div><div class='card-actions'><button id='card-again-btn'>不熟<\/button><button id='card-known-btn'>认识<\/button><\/div>", "kind": "cards", "title": "抽认卡"}, "__glossary__": {"html": "<h1>术语表<\/h1><input id='glossary-filter' type='search' placeholder='筛选术语…'><ul id='glossary-list'><li data-term='方法卡'>方法卡 — 一篇论文一页的结构化记录，含方法、数据、可复用点 <span class=glossary-ref>（第 1 章：怎么读一篇优秀论文）<\/span><\/li><li data-term='六步拆解法'>六步拆解法 — 摘要—假设—结构—求解—检验—写法的读论文流程 <span class=glossary-ref>（第 1 章：怎么读一篇优秀论文）<\/span><\/li><li data-term='结构层'>结构层 — 章节顺序、图表类型等可以照搬的部分 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='方法层'>方法层 — 模型框架与算法流程，需要改参数后重跑 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='数据层'>数据层 — 具体数值与结论，必须自己计算 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='借鉴说明'>借鉴说明 — 交代方法来源与改动的声明文字 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='灵敏度分析'>灵敏度分析 — 改变参数看结论是否翻转的检验 <span class=glossary-ref>（第 1 章：怎么读一篇优秀论文）<\/span><\/li><li data-term='扫描件'>扫描件 — 以图片形式保存的论文，2019 年资料即此类 <span class=glossary-ref>（第 2 章：2016–2023 论文地图）<\/span><\/li><\/ul>", "kind": "glossary", "title": "术语表"}}, "base_dir": "/home/user/Doubao/chats/38451429143789314/数学建模学习手册/04-竞赛论文案例库", "nav": [{"label": "学习路径", "href": "#/path"}, {"label": "章节", "children": [{"label": "第 1 章：怎么读一篇优秀论文", "href": "#/chapter/ch01"}, {"label": "第 2 章：2016–2023 论文地图", "href": "#/chapter/ch02"}, {"label": "第 3 章：从案例到自己的方案", "href": "#/chapter/ch03"}]}, {"label": "测验", "children": [{"label": "综合测验", "href": "#/quiz/all"}, {"label": "测验：第 1 章：怎么读一篇优秀论文", "href": "#/quiz/ch01"}, {"label": "测验：第 2 章：2016–2023 论文地图", "href": "#/quiz/ch02"}, {"label": "测验：第 3 章：从案例到自己的方案", "href": "#/quiz/ch03"}]}, {"label": "抽认卡", "href": "#/cards"}, {"label": "术语表", "href": "#/glossary"}], "rendered": {"ch01": "<h1>第 1 章：怎么读一篇优秀论文<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★☆☆ | <strong>预估学时<\/strong>：2 小时 | <strong>前置<\/strong>：起步册第 4 章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n用六步法在 40 分钟内拆完一篇 20 页的竞赛论文；\n<\/li><li>\n做出一张「方法卡」，记录这篇论文能复用什么；\n<\/li><li>\n判断一篇论文是真优秀还是只是排版好看。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>读论文不是读文字，是逆向拆解作者的决策链：他为什么这样假设、为什么选这个方法、凭什么说结果可信。<\/p>\n<h2>零基础讲解<\/h2>\n<h3>概念 1：六步拆解法（难度：基础）<\/h3>\n<ol><li>\n<strong>只读摘要<\/strong>（3 分钟）：抄下每问的方法与关键数字。摘要写不清的论文，后面大概率也乱。\n<\/li><li>\n<strong>列假设<\/strong>（5 分钟）：把假设逐条抄下来，标出哪条是「为了简化」、哪条是「没有数据只好假设」。\n<\/li><li>\n<strong>画模型结构<\/strong>（8 分钟）：用一张图还原「问题 → 变量 → 目标/约束 → 求解」的链条。\n<\/li><li>\n<strong>看求解<\/strong>（10 分钟）：记录用了什么工具、参数怎么定、跑了几次。\n<\/li><li>\n<strong>看检验<\/strong>（8 分钟）：有没有灵敏度、误差分析、与基准方法对比。\n<\/li><li>\n<strong>抄写法<\/strong>（6 分钟）：摘 3 句你以后能用的句式，比如「为避免共线性，将 x₁ 与 x₂ 合并为综合指标」。\n<\/ol>\n<h3>概念 2：方法卡（难度：基础）<\/h3>\n<p>每读一篇，填一张卡：<\/p>\n<table><thead><tr><th>字段<\/th><th>记什么<\/th><\/tr><\/thead><tbody><tr><td>题目类型<\/td><td>优化 / 预测 / 评价 / 分类 / 机理<\/td><\/tr><tr><td>核心方法<\/td><td>一句话，带具体算法名<\/td><\/tr><tr><td>数据要求<\/td><td>需要什么数据、多少量、什么格式<\/td><\/tr><tr><td>可复用部分<\/td><td>模型结构、代码、图表画法<\/td><\/tr><tr><td>硬伤<\/td><td>假设不成立、检验缺失、结论过强<\/td><\/tr><\/tbody><\/table>\n<p>十篇之后，卡片会自己形成一张方法索引，比任何笔记都好用。<\/p>\n<h3>概念 3：辨别真优秀（难度：进阶）<\/h3>\n<p>三个信号说明论文真的好：<\/p>\n<ul><li>\n摘要里的数字能在正文找到，且前后一致；\n<\/li><li>\n假设能对应到具体处理，不是空话；\n<\/li><li>\n有「如果参数变了会怎样」的分析，而不是只报一个最优结果。\n<\/ul>\n<p>两个信号说明只是排版好：图表漂亮但图注不解释结论；模型名词堆得多但每个都只写一句。<\/p>\n<h2>图示<\/h2>\n<div class=\"mermaid\" data-src=\"1\">flowchart LR\n    A[摘要] --&gt; B[假设]\n    B --&gt; C[模型结构]\n    C --&gt; D[求解]\n    D --&gt; E[检验]\n    E --&gt; F[写法摘抄]\n    F --&gt; G[方法卡]<\/div><p class=\"mermaid-hint\">↑ Mermaid 图示：联网时自动渲染为图表；离线时请阅读上方源码与正文说明。<\/p>\n<p>看图说明：箭头是单向的，但第 5 步发现检验缺失时，要退回第 3 步看模型是否根本没法检验。<\/p>\n<h2>类比与实例<\/h2>\n<ul><li>\n<strong>类比<\/strong>：读论文像拆一台别人的机器，先看说明书（摘要），再拆外壳（假设），最后看零件怎么咬合（模型）。失效边界：机器拆完能装回去，论文拆完你未必能复现——数据与代码常常没给全。\n<\/li><li>\n<strong>实例（可操作）<\/strong>：拿 2021 年 A 题的一篇论文，按六步走一遍，限定 40 分钟。第一遍只填方法卡的空格，不追求看懂每个公式。第二遍再针对你要用的那一部分精读。\n<\/ul>\n<h2>常见误解<\/h2>\n<ul><li>\n别以为要从第一页读到最后一页——实际上摘要、假设、检验三处就决定这篇值不值得细读。\n<\/li><li>\n别以为公式看不懂就没收获——实际上建模思路、图表组织、结论表述都能直接借。\n<\/li><li>\n别以为获奖论文没有错——实际上不少论文的假设与结论并不匹配，读的时候要挑。\n<\/ul>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】六步法第一步应该读？<\/h3>\n<ul><li>\nA. 参考文献\n<\/li><li>\nB. 摘要\n<\/li><li>\nC. 附录代码\n<\/li><li>\nD. 模型假设\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：摘要给出方法与关键数字，是最快判断论文质量的位置。<\/p>\n<\/ul>\n<h3>Q2 【单选】方法卡里最该记的是？<\/h3>\n<ul><li>\nA. 作者单位\n<\/li><li>\nB. 可复用的模型结构与数据要求\n<\/li><li>\nC. 页数\n<\/li><li>\nD. 排版软件\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：卡片的目的不是归档，是让自己下次能直接调用。<\/p>\n<\/ul>\n<h3>Q3 【填空】判断论文是否真优秀，关键看假设能否对应到具体________。<\/h3>\n<p><strong>答案<\/strong>：处理（或模型步骤） <strong>解析<\/strong>：空话假设不产生任何建模动作，能落地到步骤的假设才有价值。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n六步：摘要、假设、结构、求解、检验、写法。\n<\/li><li>\n一篇一张方法卡，十篇成一页索引。\n<\/li><li>\n摘要数字与正文一致，是最低可信标准。\n<\/ul>", "ch02": "<h1>第 2 章：2016–2023 论文地图<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★☆☆ | <strong>预估学时<\/strong>：1 小时 | <strong>前置<\/strong>：第 1 章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n说清手头这份资料包里每年有多少篇、覆盖哪些题；\n<\/li><li>\n按「同题多篇对比」的方式挑出该读的几篇；\n<\/li><li>\n知道哪几年的资料不完整，别白找。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>读论文的正确顺序不是从 2016 读到 2023，而是同一道题读三篇，看不同队怎么拆同一个问题。<\/p>\n<h2>资料包实际内容<\/h2>\n<p>压缩包 <code>2016-2023年——全国大学生数学建模竞赛优秀论文.rar<\/code> 共 767 个条目，按年份分 8 个目录。实际可用论文数量如下（按文件名统计）：<\/p>\n<table><thead><tr><th>年份<\/th><th>论文份数<\/th><th>覆盖题号<\/th><th>说明<\/th><\/tr><\/thead><tbody><tr><td>2016<\/td><td>23 份 PDF<\/td><td>A、B、C、D<\/td><td>含 4 份赛题讲评<\/td><\/tr><tr><td>2017<\/td><td>33 份 PDF<\/td><td>A、B 为主，另有综合展示<\/td><td>含赛题评析<\/td><\/tr><tr><td>2018<\/td><td>19 份 PDF<\/td><td>A、B、C、D<\/td><td>A 题 9 篇，最全<\/td><\/tr><tr><td>2019<\/td><td>4 篇（扫描图）<\/td><td>A、B、C、D、E<\/td><td>每篇为多张 JPG，需拼页阅读<\/td><\/tr><tr><td>2020<\/td><td>3 份 PDF<\/td><td>A、B<\/td><td>仅 3 篇，明显不全<\/td><\/tr><tr><td>2021<\/td><td>34 份 PDF<\/td><td>A、B、C、D、E<\/td><td>五题齐全，最完整的一年<\/td><\/tr><tr><td>2022<\/td><td>9 份 PDF<\/td><td>A、B、C<\/td><td>数量中等<\/td><\/tr><tr><td>2023<\/td><td>13 份 PDF<\/td><td>A、B、C、D、E<\/td><td>五题都有<\/td><\/tr><\/tbody><\/table>\n<p>两点必须知道：<\/p>\n<ul><li>\n<strong>2019 是图片<\/strong>，不是 PDF。要读得先把每篇的 JPG 按序号拼起来，或者用 OCR 工具转文字。\n<\/li><li>\n<strong>2020 只有 3 篇<\/strong>，别以为是自己解压失败。\n<\/ul>\n<h2>挑选策略<\/h2>\n<h3>概念 1：同题三篇（难度：基础）<\/h3>\n<p>选一道你熟悉的题，找同题的三篇论文，分别读摘要与模型结构，比较：<\/p>\n<ul><li>\n变量定义是否一致；\n<\/li><li>\n假设差在哪；\n<\/li><li>\n一个用规划、一个用启发式时，各自怎么解释选择。\n<\/ul>\n<p>三篇读完，你会发现自己对这道题的理解比对十道不同的题更深。<\/p>\n<h3>概念 2：按方法找（难度：进阶）<\/h3>\n<p>如果你正在练某个方法（比如第 14 章的综合评价），去索引里找用了这个方法的所有论文，横向比较它们怎么处理权重、怎么做灵敏度。这比读教材例题更接近实战。<\/p>\n<h2>图示<\/h2>\n<div class=\"mermaid\" data-src=\"1\">flowchart TD\n    A[资料包 8 个年度] --&gt; B{要练什么}\n    B --&gt;|练某一题型| C[同题三篇对比]\n    B --&gt;|练某个方法| D[按方法横向找]\n    B --&gt;|练写作| E[读摘要与检验部分]\n    C --&gt; F[方法卡]\n    D --&gt; F\n    E --&gt; F<\/div><p class=\"mermaid-hint\">↑ Mermaid 图示：联网时自动渲染为图表；离线时请阅读上方源码与正文说明。<\/p>\n<p>看图说明：三条路都落到方法卡。不要为了「读完」而读，为了「用上」而读。<\/p>\n<h2>类比与实例<\/h2>\n<ul><li>\n<strong>类比<\/strong>：这份资料包像一间旧书店，2021 那排最齐，2020 那排缺了好几本。先看清库存再借书，比一本本翻快。失效边界：书店能补齐，这份包补不齐，缺的年份只能另找。\n<\/li><li>\n<strong>实例（可核算）<\/strong>：2021 年五题共 34 篇，平均每题约 7 篇。按每题读 3 篇算，读完五题需 15 篇，约 10 小时（每篇 40 分钟）。这是可执行的计划，而不是「把 34 篇都读完」。\n<\/ul>\n<h2>常见误解<\/h2>\n<ul><li>\n别以为份数多的年份质量就高——实际上论文是择优展示，份数反映的是收录力度。\n<\/li><li>\n别以为扫描件不能读——实际上拼页后完全可读，只是费时间。\n<\/li><li>\n别以为读得越多越好——实际上同题三篇的收获大于十道不同的题各读一篇。\n<\/ul>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】资料包中五题最齐全的年份是？<\/h3>\n<ul><li>\nA. 2018\n<\/li><li>\nB. 2019\n<\/li><li>\nC. 2021\n<\/li><li>\nD. 2023\n<p><strong>答案<\/strong>：C <strong>解析<\/strong>：2021 年 34 份，A 到 E 五题都有，且为 PDF。<\/p>\n<\/ul>\n<h3>Q2 【单选】2019 年论文的格式是？<\/h3>\n<ul><li>\nA. PDF\n<\/li><li>\nB. 每篇多张 JPG\n<\/li><li>\nC. Word\n<\/li><li>\nD. 网页\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：按序号排列的扫描图，需要拼页阅读。<\/p>\n<\/ul>\n<h3>Q3 【填空】推荐的读法是同一道题读________篇，比较不同队的拆法。<\/h3>\n<p><strong>答案<\/strong>：三 <strong>解析<\/strong>：同题对比能暴露假设与方法的差异，比泛读有效。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n2021 最全、2020 最缺、2019 是图片。\n<\/li><li>\n同题三篇优于十题各一篇。\n<\/li><li>\n按方法横向找，练什么找什么。\n<\/ul>", "ch03": "<h1>第 3 章：从案例到自己的方案<\/h1>\n<ul><li>\n<strong>难度<\/strong>：★★☆ | <strong>预估学时<\/strong>：2 小时 | <strong>前置<\/strong>：第 1、2 章\n<\/ul>\n<h2>学习目标<\/h2>\n<p>学完本章，你能：<\/p>\n<ul><li>\n把一篇论文的方法改造成适合自己题目的版本；\n<\/li><li>\n判断哪些部分可以直接抄结构、哪些必须重做；\n<\/li><li>\n写出「借鉴说明」，避免被判定为抄袭。\n<\/ul>\n<h2>一句话核心<\/h2>\n<p>案例能借的是结构和流程，不能借的是数据与结论；改一个参数就当成自己的结果，是竞赛里最危险的动作。<\/p>\n<h2>零基础讲解<\/h2>\n<h3>概念 1：三层可借度（难度：基础）<\/h3>\n<table><thead><tr><th>层级<\/th><th>能借什么<\/th><th>处理方式<\/th><\/tr><\/thead><tbody><tr><td>结构层<\/td><td>章节顺序、图表类型、检验方式<\/td><td>直接照搬，注明参考<\/td><\/tr><tr><td>方法层<\/td><td>模型框架、算法流程<\/td><td>改参数、改约束，重跑<\/td><\/tr><tr><td>数据层<\/td><td>具体数值、结论<\/td><td>一律不能借，必须自己算<\/td><\/tr><\/tbody><\/table>\n<p>结构层借用不算抄袭，方法层要说明改动，数据层照抄就是学术不端。<\/p>\n<h3>概念 2：改造四步（难度：进阶）<\/h3>\n<ol><li>\n<strong>换对象<\/strong>：把论文里的「某工厂」换成你的题里的对象，检查量纲与量级是否还成立。\n<\/li><li>\n<strong>换约束<\/strong>：新题往往多一两条限制，加进去后重解，看结论怎么变。\n<\/li><li>\n<strong>换检验<\/strong>：论文做的是参数灵敏度，你的题可能需要误差分析或与基准方法对比。\n<\/li><li>\n<strong>换表述<\/strong>：结论要用你自己的数据说话，不能保留原文的数字。\n<\/ol>\n<h3>概念 3：借鉴说明怎么写（难度：基础）<\/h3>\n<p>在参考文献或脚注写清：<\/p>\n<pre class=\"lang-text\"><code>本文模型框架参考了 2021 年 A 题某队的分层求解思路，将原模型的两阶段改为三阶段，\n增加了约束 …, 全部数值结果由本文程序重新计算。<\/code><\/pre>\n<p>一句话交代来源与改动，比藏着不说安全得多。<\/p>\n<h3>概念 4：把论文变成代码（难度：进阶）<\/h3>\n<p>论文给的是公式，代码要自己写。顺序：<\/p>\n<ol><li>\n先用小数据手算一遍，确认公式能对上论文里的数字；\n<\/li><li>\n写成脚本，跑同一组小数据，对比结果；\n<\/li><li>\n换成自己的数据，检查量级是否合理；\n<\/li><li>\n保存中间结果，论文里的每个数字都要能追到一个输出文件。\n<\/ol>\n<h2>图示<\/h2>\n<div class=\"mermaid\" data-src=\"1\">flowchart TD\n    A[选中一篇论文] --&gt; B[拆结构]\n    B --&gt; C[改对象与约束]\n    C --&gt; D[重跑数值]\n    D --&gt; E[换检验方式]\n    E --&gt; F[写借鉴说明]\n    F --&gt; G[自己的方案]<\/div><p class=\"mermaid-hint\">↑ Mermaid 图示：联网时自动渲染为图表；离线时请阅读上方源码与正文说明。<\/p>\n<p>看图说明：注意「重跑数值」在改完约束之后，顺序颠倒就会把旧结论带进新题。<\/p>\n<h2>类比与实例<\/h2>\n<ul><li>\n<strong>类比<\/strong>：借论文像借菜谱，步骤可以照做，食材必须换成你家的。失效边界：菜谱换了食材味道会变，模型换了数据结论可能完全反过来，所以必须重算而不是微调。\n<\/li><li>\n<strong>实例（可核算）<\/strong>：某论文的线性规划最优解是 (2, 6)、利润 26。你若把乙产品利润从 3 改成 5，最优解变成 (1, 7)、利润 39，与原文完全不同。直接沿用 26，评委会立刻发现数字对不上你的模型。\n<\/ul>\n<h2>常见误解<\/h2>\n<ul><li>\n别以为改几个字就不算抄——实际上模型、数据、结论三处任一重合都可能被查。\n<\/li><li>\n别以为方法一样就没有创新——实际上在新约束下重新求解、给出新的灵敏度，本身就是工作。\n<\/li><li>\n别以为引用越少越显得独立——实际上该引不引，反而显得你不知道来源。\n<\/ul>\n<h2>自测题（答案与解析）<\/h2>\n<h3>Q1 【单选】三层可借度中，哪一层完全不能借？<\/h3>\n<ul><li>\nA. 结构层\n<\/li><li>\nB. 方法层\n<\/li><li>\nC. 数据层\n<\/li><li>\nD. 图表类型\n<p><strong>答案<\/strong>：C <strong>解析<\/strong>：具体数值与结论必须自己算，照抄属于学术不端。<\/p>\n<\/ul>\n<h3>Q2 【单选】改造四步的正确顺序是？<\/h3>\n<ul><li>\nA. 换表述 → 换对象 → 换约束 → 换检验\n<\/li><li>\nB. 换对象 → 换约束 → 换检验 → 换表述\n<\/li><li>\nC. 换检验 → 换表述 → 换对象 → 换约束\n<\/li><li>\nD. 任意顺序\n<p><strong>答案<\/strong>：B <strong>解析<\/strong>：先把对象与约束改对，再重跑与检验，最后才是表述。<\/p>\n<\/ul>\n<h3>Q3 【填空】借鉴他人模型框架时，应在文中写清来源与________。<\/h3>\n<p><strong>答案<\/strong>：改动 <strong>解析<\/strong>：交代改了什么，读者才能判断你的贡献在哪。<\/p>\n<h2>复习锚点<\/h2>\n<ul><li>\n结构可借、方法要改、数据必重算。\n<\/li><li>\n改造顺序：对象、约束、检验、表述。\n<\/li><li>\n借鉴说明一句话：来源 + 改动 + 全部重算。\n<\/ul>", "__path__": "<h1>学习路径<\/h1><p>按推荐顺序学习；每步通过检查点（自测题）后再继续。<\/p><ol class='path-list'><li class='path-step' id='path-01'><strong>步骤 01：学会拆论文<\/strong><br>阅读：<a href=\"#/chapter/ch01\">第 1 章：怎么读一篇优秀论文<\/a><br>检查点：40 分钟完成一张方法卡<\/li><li class='path-step' id='path-02'><strong>步骤 02：摸清资料包<\/strong><br>阅读：<a href=\"#/chapter/ch02\">第 2 章：2016–2023 论文地图<\/a><br>检查点：能按年份与题号挑出三篇同题论文<\/li><li class='path-step' id='path-03'><strong>步骤 03：改成自己的方案<\/strong><br>阅读：<a href=\"#/chapter/ch03\">第 3 章：从案例到自己的方案<\/a><br>检查点：写出含来源与改动的借鉴说明<\/li><\/ol><p>进度：<span id='path-progress-label'>0/0<\/span><\/p>", "__quiz_all__": "<p>（无综合题）<\/p>", "__quiz_ch01__": "<h1>测验：第 1 章：怎么读一篇优秀论文<\/h1><div class='quiz-item' data-qid='q0101' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 六步法第一步应该读？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0101' value='0'> 参考文献<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='1'> 摘要<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='2'> 附录代码<\/label><label class='quiz-opt'><input type='radio' name='q0101' value='3'> 模型假设<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0102' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 方法卡里最该记的是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0102' value='0'> 作者单位<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='1'> 可复用的模型结构与数据要求<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='2'> 页数<\/label><label class='quiz-opt'><input type='radio' name='q0102' value='3'> 排版软件<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0103' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 判断论文是否真优秀，关键看假设能否对应到具体________。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "__quiz_ch02__": "<h1>测验：第 2 章：2016–2023 论文地图<\/h1><div class='quiz-item' data-qid='q0201' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 资料包中五题最齐全的年份是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0201' value='0'> 2018<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='1'> 2019<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='2'> 2021<\/label><label class='quiz-opt'><input type='radio' name='q0201' value='3'> 2023<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0202' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 2019 年论文的格式是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0202' value='0'> PDF<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='1'> 每篇多张 JPG<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='2'> Word<\/label><label class='quiz-opt'><input type='radio' name='q0202' value='3'> 网页<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0203' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 推荐的读法是同一道题读________篇，比较不同队的拆法。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "__quiz_ch03__": "<h1>测验：第 3 章：从案例到自己的方案<\/h1><div class='quiz-item' data-qid='q0301' data-type='single'><p class='quiz-q'><b>Q1.<\/b> 三层可借度中，哪一层完全不能借？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0301' value='0'> 结构层<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='1'> 方法层<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='2'> 数据层<\/label><label class='quiz-opt'><input type='radio' name='q0301' value='3'> 图表类型<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0302' data-type='single'><p class='quiz-q'><b>Q2.<\/b> 改造四步的正确顺序是？<\/p><div class='quiz-opts'><label class='quiz-opt'><input type='radio' name='q0302' value='0'> 换表述 → 换对象 → 换约束 → 换检验<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='1'> 换对象 → 换约束 → 换检验 → 换表述<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='2'> 换检验 → 换表述 → 换对象 → 换约束<\/label><label class='quiz-opt'><input type='radio' name='q0302' value='3'> 任意顺序<\/label><\/div><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><div class='quiz-item' data-qid='q0303' data-type='blank'><p class='quiz-q'><b>Q3.<\/b> 借鉴他人模型框架时，应在文中写清来源与________。<\/p><input class='quiz-blank' type='text' placeholder='填写答案'><div class='quiz-actions'><button class='quiz-check'>检查答案<\/button><span class='quiz-feedback'><\/span><\/div><\/div><p class='quiz-summary'>完成作答后点击「检查答案」查看得分与解析。<\/p>", "__cards__": "<h1>抽认卡<\/h1><p>点击卡片翻面；判断「认识 / 不熟」以记录复习状态。<\/p><div class='card-controls'><label>按章节筛选：<select id='card-filter'><option value=''>全部<\/option><\/select><\/label><span class='card-counts'>认识 <b id='card-known'>0<\/b> · 不熟 <b id='card-again'>0<\/b> · 剩余 <b id='card-left'>0<\/b><\/span><\/div><div id='card-stage'><div class='flashcard' id='flashcard'><div class='fc-inner'><div class='fc-front'><\/div><div class='fc-back'><\/div><\/div><\/div><\/div><div class='card-actions'><button id='card-again-btn'>不熟<\/button><button id='card-known-btn'>认识<\/button><\/div>", "__glossary__": "<h1>术语表<\/h1><input id='glossary-filter' type='search' placeholder='筛选术语…'><ul id='glossary-list'><li data-term='方法卡'>方法卡 — 一篇论文一页的结构化记录，含方法、数据、可复用点 <span class=glossary-ref>（第 1 章：怎么读一篇优秀论文）<\/span><\/li><li data-term='六步拆解法'>六步拆解法 — 摘要—假设—结构—求解—检验—写法的读论文流程 <span class=glossary-ref>（第 1 章：怎么读一篇优秀论文）<\/span><\/li><li data-term='结构层'>结构层 — 章节顺序、图表类型等可以照搬的部分 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='方法层'>方法层 — 模型框架与算法流程，需要改参数后重跑 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='数据层'>数据层 — 具体数值与结论，必须自己计算 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='借鉴说明'>借鉴说明 — 交代方法来源与改动的声明文字 <span class=glossary-ref>（第 3 章：从案例到自己的方案）<\/span><\/li><li data-term='灵敏度分析'>灵敏度分析 — 改变参数看结论是否翻转的检验 <span class=glossary-ref>（第 1 章：怎么读一篇优秀论文）<\/span><\/li><li data-term='扫描件'>扫描件 — 以图片形式保存的论文，2019 年资料即此类 <span class=glossary-ref>（第 2 章：2016–2023 论文地图）<\/span><\/li><\/ul>"}};
+const pages = DATA.rendered;
+const manifest = DATA.manifest;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SLUG = manifest.slug || 'book';
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(SLUG+':'+k)||'null') }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(SLUG+':'+k, JSON.stringify(v)) }catch(e){} }
+};
+let state = { visited: store.get('visited')||[], quiz: store.get('quiz')||{}, cards: store.get('cards')||{} };
+
+/* ---------- 导航 ---------- */
+function renderNav(){
+  const nav = $('#nav'); nav.innerHTML='';
+  const build = items => items.forEach(it=>{
+    if(it.children){
+      const sec=document.createElement('div'); sec.className='nav-sec'; sec.textContent=it.label; nav.appendChild(sec);
+      it.children.forEach(c=>{
+        const a=document.createElement('a'); a.className='nav-item'; a.href=c.href; a.textContent=c.label;
+        const id=routeId(c.href);
+        if(state.visited.includes(id)) a.innerHTML = esc(c.label)+' <span class="done">✓</span>';
+        nav.appendChild(a);
+      });
+    }else{
+      const a=document.createElement('a'); a.className='nav-item'; a.href=it.href; a.textContent=it.label;
+      const id=routeId(it.href);
+      if(state.visited.includes(id)) a.innerHTML = esc(it.label)+' <span class="done">✓</span>';
+      nav.appendChild(a);
+    }
+  });
+  build(DATA.nav);
+  updateProgress();
+}
+function routeId(href){ return href.replace('#/',''); }
+
+/* ---------- 路由 ---------- */
+function routeIdFromHash(){
+  let h = location.hash.replace(/^#\//,'');
+  if(!h) return 'path';
+  if(h==='path') return 'path';
+  const m = h.match(/^(chapter|concept)\/(.+)$/);
+  if(m) return m[1]+'/'+m[2];
+  return h; // quiz/all, quiz/ch01, cards, glossary, patterns, cheatsheet
+}
+function showPage(rid){
+  const id = rid==='path' ? '__path__' : rid.startsWith('quiz/') ? '__quiz_'+rid.split('/')[1]+'__' : rid==='cards'?'__cards__':rid==='glossary'?'__glossary__':rid==='patterns'?'__patterns__':rid==='cheatsheet'?'__cheatsheet__':rid.startsWith('chapter/')?rid.split('/')[1]:rid.startsWith('concept/')?rid.split('/')[1]:rid;
+  const html = pages[id] || '<div class="empty">页面不存在</div>';
+  $('#view').innerHTML = html;
+  document.querySelectorAll('.nav-item').forEach(a=>a.classList.toggle('active', routeId(a.getAttribute('href'))===rid));
+  if(!state.visited.includes(rid) && (rid.startsWith('chapter/')||rid.startsWith('concept/'))){
+    state.visited.push(rid); store.set('visited', state.visited); renderNav();
+  }
+  window.scrollTo(0,0);
+  if(rid==='cards') initCards();
+  if(rid==='glossary') initGlossary();
+  if(rid.startsWith('quiz')) initQuizzes(rid);
+  if(id==='__path__') updatePath();
+  renderMermaid();
+}
+
+/* ---------- 进度 ---------- */
+function updateProgress(){
+  const chs = (manifest.chapters||[]).length;
+  const done = (manifest.chapters||[]).filter(c=>state.visited.includes('chapter/'+c.id)).length;
+  const pct = chs? Math.round(done/chs*100) : 0;
+  $('#progress-fill').style.width = pct+'%';
+  $('#progress-label').textContent = `进度 ${pct}% · 已学 ${done}/${chs} 章`;
+}
+function updatePath(){
+  document.querySelectorAll('.path-step').forEach(el=>{
+    const step = el.id.replace('path-','');
+    const s = (manifest.learningPath||[]).find(x=>x.step===step);
+    if(s && (s.chapterIds||[]).every(c=>state.visited.includes('chapter/'+c))){
+      el.classList.add('passed');
+      const lbl = el.querySelector('.checkpoint-ok'); if(!lbl){ const sp=document.createElement('span'); sp.className='done'; sp.textContent=' ✓ 已完成'; el.appendChild(sp); }
+    }
+  });
+}
+
+/* ---------- 测验 ---------- */
+function initQuizzes(rid){
+  document.querySelectorAll('.quiz-item').forEach(item=>{
+    const btn = item.querySelector('.quiz-check');
+    if(!btn || item.dataset.inited){ return }
+    item.dataset.inited='1';
+    btn.addEventListener('click', ()=>{
+      const qid = item.dataset.qid; const type = item.dataset.type;
+      const q = (manifest.quizzes||[]).find(x=>x.id===qid); if(!q) return;
+      let user, correct=false, fb;
+      if(type==='single'){
+        const sel = item.querySelector('input:checked');
+        user = sel? parseInt(sel.value) : null;
+        correct = user===q.answer;
+        fb = correct?'✓ 正确':'✗ 错误'+(user==null?'（未作答）':'');
+      } else if(type==='multi'){
+        user = Array.from(item.querySelectorAll('input:checked')).map(i=>parseInt(i.value)).sort();
+        const ans = Array.isArray(q.answer)? q.answer.slice().sort(): [q.answer];
+        correct = user.length>0 && JSON.stringify(user)===JSON.stringify(ans);
+        fb = correct?'✓ 正确':'✗ 错误';
+      } else if(type==='blank'){
+        const v = (item.querySelector('.quiz-blank').value||'').trim().toLowerCase();
+        const a = String(q.answer).trim().toLowerCase();
+        correct = v===a;
+        fb = correct?'✓ 正确':'✗ 错误'+(v?'':'（未作答）');
+      }
+      item.querySelectorAll('input:checked').forEach(i=>{
+        const val=parseInt(i.value);
+        if(Array.isArray(q.answer)? q.answer.includes(val) : val===q.answer) i.parentElement.style.color='var(--ok)';
+        else i.parentElement.style.color='var(--bad)';
+      });
+      const feed = item.querySelector('.quiz-feedback');
+      feed.className = 'quiz-feedback '+(correct?'fb-ok':'fb-bad');
+      feed.textContent = fb;
+      let ex = item.querySelector('.quiz-explain');
+      if(!ex){ ex=document.createElement('div'); ex.className='quiz-explain'; item.appendChild(ex); }
+      ex.innerHTML = '解析：' + esc(q.explain||'');
+      // 记录成绩（按章聚合）
+      const ch = q.chapterId||'__all__';
+      if(!state.quiz[ch]) state.quiz[ch]={done:0,total:0};
+      state.quiz[ch].done = Math.min(state.quiz[ch].total+1, state.quiz[ch].done+1);
+      state.quiz[ch].total += 1;
+      store.set('quiz', state.quiz);
+    });
+  });
+}
+
+/* ---------- 抽认卡 ---------- */
+let cardIdx = 0, cardList = [];
+function initCards(){
+  const cards = manifest.flashcards||[];
+  cardList = cards.slice();
+  cardIdx = 0;
+  const sel = $('#card-filter');
+  sel.innerHTML = '<option value="">全部</option>';
+  [...new Set(cards.map(c=>c.chapterId).filter(Boolean))].forEach(c=>{
+    const o=document.createElement('option'); o.value=c; o.textContent=manifestChTitle(c); sel.appendChild(o);
+  });
+  sel.onchange = ()=>{ const v=sel.value; cardList = v? cards.filter(c=>c.chapterId===v): cards.slice(); cardIdx=0; showCard(); };
+  $('#flashcard').onclick = ()=>$('#flashcard').classList.toggle('flip');
+  $('#card-known-btn').onclick = ()=>{ markCard(true); };
+  $('#card-again-btn').onclick = ()=>{ markCard(false); };
+  showCard();
+}
+function showCard(){
+  updateCardCounts();
+  if(cardIdx>=cardList.length){ $('#card-stage').innerHTML='<div class="empty">本组卡片已全部复习完 🎉</div>'; return; }
+  const c = cardList[cardIdx];
+  document.querySelector('.fc-front').textContent = c.front;
+  document.querySelector('.fc-back').textContent = c.back;
+  $('#flashcard').classList.remove('flip');
+}
+function markCard(known){
+  const c = cardList[cardIdx]; if(!c) return;
+  state.cards[c.id] = known?'known':'again';
+  store.set('cards', state.cards);
+  cardIdx++; showCard();
+}
+function updateCardCounts(){
+  const known = Object.values(state.cards).filter(v=>v==='known').length;
+  const again = Object.values(state.cards).filter(v=>v==='again').length;
+  $('#card-known').textContent = known;
+  $('#card-again').textContent = again;
+  $('#card-left').textContent = Math.max(0, cardList.length-cardIdx);
+}
+function manifestChTitle(id){
+  const c=(manifest.chapters||[]).find(x=>x.id===id); return c? c.title : id;
+}
+
+/* ---------- 术语表 ---------- */
+function initGlossary(){
+  const input = $('#glossary-filter');
+  if(!input || input.dataset.inited) return;
+  input.dataset.inited='1';
+  input.oninput = ()=>{
+    const v = input.value.trim().toLowerCase();
+    document.querySelectorAll('#glossary-list li').forEach(li=>{
+      li.style.display = (!v || li.dataset.term.includes(v)) ? '' : 'none';
+    });
+  };
+}
+
+/* ---------- 搜索 ---------- */
+let searchIndex = null;
+function buildSearchIndex(){
+  if(searchIndex) return searchIndex;
+  searchIndex = [];
+  Object.entries(pages).forEach(([id, htmlText])=>{
+    if(id.startsWith('__')) return;
+    const text = htmlText.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ');
+    searchIndex.push({id, text});
+  });
+  return searchIndex;
+}
+$('#q').addEventListener('input', e=>{
+  const v = e.target.value.trim().toLowerCase();
+  if(!v){ showPage(routeIdFromHash()); return; }
+  buildSearchIndex();
+  const hits = searchIndex.filter(p=>p.text.toLowerCase().includes(v)).slice(0,20);
+  const label = id => id.startsWith('chapter/')? ('章节：'+manifestChTitle(id.split('/')[1])) : id.startsWith('concept/')? ('概念：'+id.split('/')[1]) : id;
+  $('#view').innerHTML = '<h1>搜索结果：'+esc(v)+'</h1>' +
+    (hits.length? hits.map(h=>`<div class="search-hit"><a href="#/${h.id}">${esc(label(h.id))}</a><br><span class="sub">${esc(h.text.slice(0,180))}</span></div>`).join('')
+                 : '<div class="empty">未找到相关页面，试试章节名/概念名/术语。</div>');
+});
+
+/* ---------- Mermaid 懒加载（联网渲染，离线显示源码） ---------- */
+function attachMermaidHint(){document.querySelectorAll('.mermaid').forEach(el=>{if(el.dataset.hinted)return;el.dataset.hinted='1';const h=document.createElement('p');h.className='mermaid-hint';h.textContent='（未能加载绘图脚本：当前显示的是图示源码，联网后刷新即为图形）';el.after(h);});}
+function renderMermaid(){
+  if(!document.querySelector('.mermaid')) return;
+  if(window.__mmFailed){attachMermaidHint();return;}
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+  s.onload=()=>{ try{
+    mermaid.initialize({startOnLoad:false, theme: matchMedia('(prefers-color-scheme: dark)').matches?'dark':'default'});
+    document.querySelectorAll('.mermaid').forEach(el=>{
+      const code=el.textContent;
+      mermaid.render('mm'+Math.random().toString(36).slice(2), code)
+        .then(({svg})=>{ el.innerHTML=svg; })
+        .catch(()=>{ el.textContent=code; });
+    });
+  }catch(e){} };
+  s.onerror=()=>{window.__mmFailed=1;attachMermaidHint();};
+  document.head.appendChild(s);
+}
+
+/* ---------- 深色模式 ---------- */
+const themeBtn=$('#theme-btn');
+themeBtn.onclick=()=>{
+  const d = document.body.dataset.theme==='dark';
+  document.body.dataset.theme = d? '' : 'dark';
+  themeBtn.textContent = d? '🌙 深色' : '☀️ 浅色';
+};
+
+/* ---------- 启动 ---------- */
+renderNav();
+window.addEventListener('hashchange', ()=>showPage(routeIdFromHash()));
+(function(){
+  const sb=document.querySelector('.sidebar'); if(!sb) return;
+  const btn=document.createElement('button'); btn.id='nav-toggle'; btn.textContent='目录（点开选择章节）';
+  btn.onclick=()=>sb.classList.toggle('open');
+  sb.insertBefore(btn, sb.querySelector('#nav'));
+  window.addEventListener('hashchange',()=>{ if(window.innerWidth<=760) sb.classList.remove('open'); });
+})();
+showPage(routeIdFromHash());
+</script>
+</body>
+</html>
